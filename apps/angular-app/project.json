@@ -1,0 +1,27 @@
+{
+  "name": "angular-app",
+  "implicitDependencies": ["auth-keycloak", "fads-keycloak"],
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist"],
+      "options": {
+        "command": "pnpm build",
+        "cwd": "apps/angular-app"
+      },
+      "configurations": {
+        "production": {
+          "command": "pnpm build --configuration=production"
+        }
+      },
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": { "command": "pnpm dev", "cwd": "apps/angular-app" }
+    }
+  },
+  "tags": []
+}

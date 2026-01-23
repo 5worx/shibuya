@@ -1,0 +1,17 @@
+# Hier stehen die Abhängigkeiten, die vor der Entwicklung
+# hochgefahren sein müssen.
+start:
+  infrastructure:
+    - fads-keycloak
+
+dev:
+  apps:
+    - angular-app
+  # Hier stehen die Abhängigkeiten, die mitlaufen müssen
+  packages:
+    - auth-keycloak
+
+# Optionale Flags für den Start
+settings:
+  parallel: 20
+  outputStyle: stream

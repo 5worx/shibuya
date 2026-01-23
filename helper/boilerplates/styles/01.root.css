@@ -1,0 +1,69 @@
+@layer reset, base, grid, layout, components, utils;
+
+:root {
+  --base-ff: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --_fs-xs: clamp(0.75rem, 0.7065rem + 0.2174vw, 0.875rem);
+  --_fs-sm: clamp(0.8438rem, 0.7568rem + 0.4348vw, 1.0938rem);
+  --_fs-md: clamp(0.9492rem, 0.8038rem + 0.7269vw, 1.3672rem);
+  --_fs-lg: clamp(1.0679rem, 0.8449rem + 1.115vw, 1.709rem);
+  --_fs-xl: clamp(1.2014rem, 0.8762rem + 1.6259vw, 2.1362rem);
+  --_fs-xxl: clamp(1.3515rem, 0.8928rem + 2.2935vw, 2.6703rem);
+
+  --base-fs: var(--_fs-sm);
+
+  --_spc: var(--base-fs);
+  --xs: calc(var(--_spc) / 4);
+  --sm: calc(var(--_spc) / 2);
+  --md: var(--_spc);
+  --lg: calc(var(--_spc) * 2);
+  --xl: calc(var(--_spc) * 4);
+
+  --base-signal-danger-dark: #fc5c65;
+  --base-signal-danger-light: #eb3b5a;
+  --base-signal-warning-dark: #fa8231;
+  --base-signal-warning-light: #fa8231;
+  --base-signal-success-dark: #26de81;
+  --base-signal-success-light: #20bf6b;
+  --base-signal-info-dark: #45aaf2;
+  --base-signal-info-light: #2d98da;
+
+  --_primary: #7fbd27;
+  --_secondary: #27649f;
+  --_tertiary: #28a89a;
+
+  --base-text-light: hsl(from currentColor h s calc(l + 30));
+  --base-text-dark: hsl(from currentColor h s calc(l - 30));
+
+  --base-primary-light: hsl(from var(--_primary) h s calc(l - 15));
+  --base-primary-dark: hsl(from var(--_primary) h s calc(l + 15));
+
+  --base-secondary-light: hsl(
+    from var(--_secondary) h s calc(l - 15)
+  );
+  --base-secondary-dark: hsl(from var(--_secondary) h s calc(l + 15));
+
+  --base-tertiary-light: hsl(from var(--_tertiary) h s calc(l - 15));
+  --base-tertiary-dark: hsl(from var(--_tertiary) h s calc(l + 15));
+
+  --base-bg-light: hsl(from var(--_secondary) h s calc(l + 45));
+  --base-bg-dark: hsl(from var(--_secondary) h s calc(l - 30));
+
+  @media (prefers-color-scheme: light) {
+    --theme: 🌞;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --theme: 🌗;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --theme: 🌗;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --theme: 🌞;
+  color-scheme: light;
+}

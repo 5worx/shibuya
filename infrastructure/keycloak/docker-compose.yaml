@@ -1,0 +1,61 @@
+services:
+  keycloak-db:
+    image: postgres:16-alpine
+    container_name: fads-keycloak-db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks:
+      - fads-network
+
+  keycloak-dev:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: fads-keycloak-dev
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 42201
+      KC_HOSTNAME_STRICT: "false"
+      # Admin Credentials (nur für Dev!)
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: Admin123!!
+    ports:
+      - "52201:8080"
+    volumes:
+      - ./import:/opt/keycloak/data/import
+    depends_on:
+      - keycloak-db
+    networks:
+      - fads-network
+
+  # DER NEUE: Speziell für den Testserver / Nginx-Proxy
+  keycloak-test:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: fads-keycloak-test
+    command: start --import-realm --proxy-headers xforwarded
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=password
+      # Hier liegt der Trick:
+      - KC_HOSTNAME=test.builds.keycloak
+      - KC_PROXY=edge
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_HOSTNAME_STRICT=false
+      - KC_HTTP_ENABLED=true
+    ports:
+      - "52901:8080" # Ein anderer interner Port, damit sie sich nicht beißen
+    networks:
+      - fads-network
+
+networks:
+  fads-network:
+    driver: bridge

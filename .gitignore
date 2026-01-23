@@ -1,0 +1,20 @@
+.zed
+.vscode
+
+node_modules
+dist
+build
+
+.nx
+
+*.tsbuildinfo
+
+res/testserver/localhost.crt
+res/testserver/localhost.key
+
+# the readme doc files of the stencil webcomponents
+# are generated during build.
+# It is not recommended to leave them in versioncontrol
+packages/lnk-components/src/components/**/readme.md
+
+res/docs

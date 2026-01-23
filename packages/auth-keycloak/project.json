@@ -1,0 +1,24 @@
+{
+  "name": "auth-keycloak",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/auth-keycloak/dist"],
+      "options": {
+        "command": "pnpm build",
+        "cwd": "packages/auth-keycloak"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/auth-keycloak/src/index.ts"],
+      "options": {
+        "command": "pnpm dev",
+        "cwd": "packages/auth-keycloak"
+      }
+    }
+  },
+  "tags": ["library", "authentication", "keycloak"]
+}

@@ -1,0 +1,49 @@
+@layer base {
+  html {
+    color-scheme: dark light;
+  }
+
+  body {
+    color-scheme: light;
+    --ff: var(--base-ff);
+
+    --signal-danger: var(--base-signal-danger-light);
+    --signal-warning: var(--base-signal-warning-light);
+    --signal-success: var(--base-signal-success-light);
+    --signal-info: var(--base-signal-info-light);
+
+    --surface: var(--base-bg-light);
+    --text: var(--base-text-light);
+
+    --primary: var(--base-primary-light);
+    --secondary: var(--base-secondary-light);
+    --tertiary: var(--base-tertiary-light);
+
+    @container style(--theme: 🌗) {
+      color-scheme: dark;
+      --signal-danger: var(--base-signal-danger-dark);
+      --signal-warning: var(--base-signal-warning-dark);
+      --signal-success: var(--base-signal-success-dark);
+      --signal-info: var(--base-signal-info-dark);
+
+      --surface: var(--base-bg-dark);
+      --text: var(--base-text-dark);
+
+      --primary: var(--base-primary-dark);
+      --secondary: var(--base-secondary-dark);
+      --tertiary: var(--base-tertiary-dark);
+    }
+
+    font-family: var(--ff);
+    font-size: var(--base-fs);
+    line-height: 1.475;
+    text-rendering: optimizeSpeed;
+    overflow-y: scroll;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  [data-v-app] {
+    min-height: 100dvh;
+  }
+}

@@ -1,0 +1,40 @@
+@layer components {
+  .top-logo {
+    a {
+      display: block;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 120%;
+      margin-block: var(--sm);
+      text-transform: uppercase;
+      background: linear-gradient(
+        to right,
+        var(--primary),
+        var(--secondary)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .nav-dashboard {
+    background: hsl(from var(--surface) h s calc(l - 3));
+    border-radius: var(--md);
+    height: 100%;
+    corner-shape: squircle;
+
+    .nav-item {
+      a {
+        padding: var(--md);
+        text-decoration: none;
+        color: currentColor;
+
+        &:hover {
+          color: var(--primary);
+          text-shadow: 0 0 1rem var(--primary);
+        }
+      }
+    }
+  }
+}

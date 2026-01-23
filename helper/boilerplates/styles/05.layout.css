@@ -1,0 +1,13 @@
+@layer layout {
+  .main-grid:has(.dashboard) {
+    align-content: stretch;
+  }
+  .dashboard {
+    grid-column: 2 / -2;
+  }
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--lg);
+  }
+}
