@@ -1,0 +1,24 @@
+{
+  "name": "kiban",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/kiban/dist"],
+      "options": {
+        "command": "pnpm build",
+        "cwd": "packages/kiban"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/packages/kiban/src/index.ts"],
+      "options": {
+        "command": "pnpm dev",
+        "cwd": "packages/kiban"
+      }
+    }
+  },
+  "tags": []
+}
