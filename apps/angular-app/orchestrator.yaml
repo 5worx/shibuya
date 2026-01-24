@@ -5,8 +5,6 @@ start:
     - fads-keycloak
 
 dev:
-  apps:
-    - angular-app
   # Hier stehen die Abhängigkeiten, die mitlaufen müssen
   packages:
     - auth-keycloak
