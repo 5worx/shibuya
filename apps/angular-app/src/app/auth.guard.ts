@@ -1,17 +1,26 @@
-import { inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { inject } from '@angular/core';
 import { AuthService } from '@shibuya/auth';
 
+/**
+ * Klassischer Showcase AuthGuard für SHIBUYA.
+ * Da wir nun im reinen Browser-Modus (SPA) arbeiten, entfällt die SSR-Logik.
+ */
 export const authGuard = () => {
-  const platformId = inject(PLATFORM_ID);
+  const authService = inject(AuthService);
 
-  // Wenn wir auf dem Server/beim Build sind, lassen wir die Route durch,
-  // damit das Rendering nicht abbricht.
-  if (isPlatformServer(platformId)) {
+  // 1. Falls der User eingeloggt ist, darf er die Route passieren.
+  if (authService.isLoggedIn()) {
     return true;
   }
 
-  // Hier kommt deine normale Logik für den Browser
-  const authService = inject(AuthService);
-  return authService.isLoggedIn() || authService.login();
+  // 2. Falls nicht eingeloggt, leiten wir sofort zu Keycloak weiter.
+  // Ohne SSR gibt es kein "Flickering" von Server-Inhalten.
+  console.log('AuthGuard: Redirecting to Keycloak login...');
+
+  authService.login().catch((err) => {
+    console.error('AuthGuard: Login redirect failed', err);
+  });
+
+  // Navigation blockieren, während der Redirect läuft.
+  return false;
 };

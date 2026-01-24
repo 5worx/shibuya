@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { AuthService } from '@shibuya/auth';
 
 @Component({
@@ -8,9 +8,14 @@ import { AuthService } from '@shibuya/auth';
 })
 export class ProtectedPage {
   private auth = inject(AuthService);
-  user = () => this.auth.getUser();
 
-  stringified = JSON.stringify(this.user(), null, 2);
+  // Wir nutzen Signale oder Computeds für reaktive Daten
+  user = computed(() => this.auth.getUser());
+
+  stringified = computed(() => {
+    const userData = this.user();
+    return userData ? JSON.stringify(userData, null, 2) : '';
+  });
 
   logout() {
     this.auth.logout();

@@ -5,21 +5,21 @@
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker-compose -p fads-keycloak up -d keycloak-db keycloak-dev",
+        "command": "docker compose -p fads-keycloak up -d keycloak-db keycloak-dev",
         "cwd": "infrastructure/keycloak"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker-compose -p fads-keycloak up -d keycloak-db keycloak-test",
+        "command": "docker compose -p fads-keycloak up -d keycloak-db keycloak-test",
         "cwd": "infrastructure/keycloak"
       }
     },
     "down": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker-compose -p fads-keycloak stop"],
+        "commands": ["docker compose -p fads-keycloak stop"],
         "parallel": false
       }
     }

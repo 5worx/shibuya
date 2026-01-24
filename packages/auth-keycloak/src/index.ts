@@ -79,8 +79,8 @@ export class AuthService {
   /**
    * Triggert den Redirect zum Keycloak Login-Server.
    */
-  public login(): void {
-    this.instance.login();
+  public async login(options?: { redirectUri?: string }): Promise<void> {
+    await this.instance.login(options);
   }
 
   /**

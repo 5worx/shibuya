@@ -1,6 +1,13 @@
 <html>
   <body>
     <script>
+      var q = window.location.search.substring(1).split('&');
+      var vars = {};
+      for (var i = 0; i < q.length; i++) {
+        var pair = q[i].split('=');
+        vars[pair[0]] = pair[1];
+      }
+      // Keycloak erwartet die Nachricht an das Parent-Window
       parent.postMessage(location.href, location.origin);
     </script>
   </body>
