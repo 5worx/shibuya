@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "first:install": "./helper/first_install.sh",
-    "start": "node ./orchestrator.js start --apps=angular-app",
+    "forge": "node ./orchestrator.js forge --apps=angular-app",
     "dev": "node ./orchestrator.js dev --apps=angular-app",
+    "start": "node ./orchestrator.js start --apps=angular-app",
+    "stop": "node ./orchestrator.js stop --apps=angular-app",
     "clean:all": "./helper/clean_all.sh",
     "ports:urls": "node ./port.config.js --urls"
   },

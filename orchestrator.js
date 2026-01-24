@@ -124,7 +124,7 @@ const cleanup = (signal) => {
     );
 
     console.log(
-      `💡 Tipp: Nutze "pnpm start", um sie zu prüfen oder Docker Desktop zum Stoppen.`,
+      `💡 Tipp: Nutze "pnpm start", um sie zu prüfen oder "pnpm stop" zum Stoppen.`,
     );
   } else if (infraToCleanup.size > 0) {
     // Nur in anderen Modi (z.B. Test-Pipelines) fahren wir wirklich alles runter

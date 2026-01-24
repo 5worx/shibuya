@@ -1,13 +1,20 @@
 # Hier stehen die Abhängigkeiten, die vor der Entwicklung
-# hochgefahren sein müssen.
+# hochgefahren bzw erstellt sein müssen.
+forge:
+  infrastructure:
+    - fads-keycloak
+# Startet alle dev-server für die Entwicklung
+dev:
+  packages:
+    - auth-keycloak
+# startet Abhängigkeiten
 start:
   infrastructure:
     - fads-keycloak
-
-dev:
-  # Hier stehen die Abhängigkeiten, die mitlaufen müssen
-  packages:
-    - auth-keycloak
+# stoppt Abhängigkeiten
+stop:
+  infrastructure:
+    - fads-keycloak
 
 # Optionale Flags für den Start
 settings:

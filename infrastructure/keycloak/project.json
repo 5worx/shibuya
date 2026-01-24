@@ -2,11 +2,32 @@
   "name": "fads-keycloak",
   "projectType": "library",
   "targets": {
-    "start": {
+    "forge": {
       "executor": "nx:run-commands",
       "options": {
         "command": "docker compose -p fads-keycloak up -d keycloak-db keycloak-dev",
         "cwd": "infrastructure/keycloak"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose -p fads-keycloak start",
+        "cwd": "infrastructure/keycloak"
+      }
+    },
+    "stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker compose -p fads-keycloak stop"],
+        "parallel": false
+      }
+    },
+    "melt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker compose -p fads-keycloak down"],
+        "parallel": false
       }
     },
     "test": {
@@ -14,13 +35,6 @@
       "options": {
         "command": "docker compose -p fads-keycloak up -d keycloak-db keycloak-test",
         "cwd": "infrastructure/keycloak"
-      }
-    },
-    "down": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["docker compose -p fads-keycloak stop"],
-        "parallel": false
       }
     }
   }
