@@ -1,0 +1,37 @@
+# SHIBUYA - The Framework Agnostics Development System
+# Zentrales Infrastruktur-Modul für Datenbanken
+
+services:
+  # Der Herzschlag der Datenhaltung
+  shibuya-db:
+    image: postgres:16-alpine
+    container_name: shibuya-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: shibuya_admin
+      POSTGRES_PASSWORD: shibuya_password
+      POSTGRES_DB: shibuya_main
+    ports:
+      - "52202:5432"
+    volumes:
+      - shibuya_db_data:/var/lib/postgresql/data
+      # Initialisierungsskripte für autarke Datenbanken
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  # Datenbank-Verwaltung (pgAdmin)
+  shibuya-pgadmin:
+    image: dpage/pgadmin4
+    container_name: shibuya-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@shibuya.dev
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "52203:80"
+    depends_on:
+      - shibuya-db
+
+# Benannte Volumes für Datenpersistenz
+volumes:
+  shibuya_db_data:

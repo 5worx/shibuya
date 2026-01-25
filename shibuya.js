@@ -30,12 +30,7 @@ appsFlag.forEach((app) => allProjects.add(app));
 
 // 1. Dezentrale YAMLs einsammeln (Nur den angeforderten Mode!)
 appsFlag.forEach((appName) => {
-  const configPath = path.join(
-    process.cwd(),
-    "apps",
-    appName,
-    "orchestrator.yaml",
-  );
+  const configPath = path.join(process.cwd(), "apps", appName, "shibuya.yaml");
 
   if (fs.existsSync(configPath)) {
     const config = yaml.load(fs.readFileSync(configPath, "utf8"));
@@ -54,7 +49,7 @@ appsFlag.forEach((appName) => {
       projectList.forEach((dep) => {
         if (dep === appName) {
           console.warn(
-            `⚠️  Hinweis: "${appName}" listet sich in seiner orchestrator.yaml selbst unter "${type}" auf. Das ist redundant und wurde ignoriert.`,
+            `⚠️  Hinweis: "${appName}" listet sich in seiner shibuya.yaml selbst unter "${type}" auf. Das ist redundant und wurde ignoriert.`,
           );
         } else {
           allProjects.add(dep);
@@ -76,7 +71,7 @@ appsFlag.forEach((appName) => {
       addWithCheck(config.start.infrastructure, "infrastructure");
     }
   } else {
-    console.warn(`⚠️ Keine orchestrator.yaml gefunden unter ${configPath}`);
+    console.warn(`⚠️ Keine shibuya.yaml gefunden unter ${configPath}`);
     allProjects.add(appName);
   }
 });
