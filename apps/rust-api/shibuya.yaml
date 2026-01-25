@@ -5,9 +5,7 @@
 # Definition der Komponenten (Zentrale Datenquelle)
 components:
   infrastructure:
-    - shibuya-keycloak
-  packages:
-    - auth-keycloak
+    - shibuya-database
 
 workflows:
   forge:
@@ -15,7 +13,6 @@ workflows:
 
   # Startet alle dev-server für die Entwicklung
   dev:
-    - components.packages
 
   # startet Abhängigkeiten
   start:

@@ -37,7 +37,7 @@ const CATEGORY_MAP = {
  */
 const APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.PACKAGES]: ["kuroko"],
-  [CATEGORY_MAP.APPS]: ["angular-app"],
+  [CATEGORY_MAP.APPS]: ["angular-app", "rust-api"],
   [CATEGORY_MAP.INFRA]: ["infra-keycloak-pgadmin", "infra-shibuya-pgadmin"],
   [CATEGORY_MAP.DB]: ["infra-keycloak-db", "infra-shibuya-db"],
 };
