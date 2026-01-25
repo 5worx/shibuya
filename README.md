@@ -22,9 +22,9 @@ Hinter den Namen im SHIBUYA-System steckt eine klare Philosophie. Jedes Modul er
 
 ## 🎯 Kernprinzipien
 
-- __App-Zentrisch__: Jede App definiert in ihrer eigenen orchestrator.yaml, was sie zum Arbeiten benötigt.
+- __App-Zentrisch__: Jede App definiert in ihrer eigenen shibuya.yaml, was sie zum Arbeiten benötigt.
 - __Persistent Infra__: Infrastruktur (Docker) wird gestartet, bleibt aber auch nach dem Beenden der Dev-Server aktiv. Kein unnötiges Warten auf Datenbanken.
-- __Modular & Agnostisch__: Egal ob _Angular_, _Stencil_, _React_ oder _Go_ – der Orchestrator bedient jedes Framework über NX-Targets.
+- __Modular & Agnostisch__: Egal ob _Angular_, _Stencil_, _React_ oder _Go_ – der SHIBUYA Orchestrator bedient jedes Framework über NX-Targets.
 - __Parallelität__: Maximale Ausnutzung deiner Hardware durch parallele Task-Ausführung.
 
 ## 🏗 Struktur
@@ -35,11 +35,11 @@ Das System basiert auf einer klaren Trennung von Verantwortlichkeiten:
 .
 ├── apps/                 # Endbenutzer-Anwendungen (z.B. Angular)
 │   └── angular-app/
-│       └── orchestrator.yaml  # Das "Gehirn" der App
+│       └── shibuya.yaml  # Das "Gehirn" der App
 ├── packages/             # Gemeinsam genutzte Libs & Komponenten
 ├── infrastructure/       # Docker-Umgebungen (Keycloak, DBs, etc.)
 ├── helper/               # Setup- & Cleanup-Scripts
-└── orchestrator.js       # Der Dispatcher (SHIBUYA)
+└── shibuya.js            # Der Dispatcher (SHIBUYA)
 ```
 
 > __SHIBUYA__ (nach William Gibson, der als einer der Begründer des Cyberpunk-Genres gilt): _"In der Ästhetik des Cyberpunk ist __SHIBUYA__ das _leuchtende Herz der Vernetzung_ – ein Ort, an dem die Grenze zwischen Hardware und Software verschwimmt. Als Dispatcher übernimmt __SHIBUYA__ diese Rolle im F.A.D.S: Er filtert das Rauschen der Abhängigkeiten und schafft eine klare Struktur inmitten der technologischen Komplexität. Ein digitaler Distrikt, der niemals schläft."_
