@@ -16,6 +16,11 @@ stop:
   infrastructure:
     - fads-keycloak
 
+# entfernt Abhängigkeiten
+melt:
+  infrastructure:
+    - fads-keycloak
+
 # Optionale Flags für den Start
 settings:
   parallel: 20

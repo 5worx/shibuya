@@ -9,6 +9,7 @@
     "dev": "node ./orchestrator.js dev --apps=angular-app",
     "start": "node ./orchestrator.js start --apps=angular-app",
     "stop": "node ./orchestrator.js stop --apps=angular-app",
+    "melt": "node ./orchestrator.js melt --apps=angular-app",
     "clean:all": "./helper/clean_all.sh",
     "ports:urls": "node ./port.config.js --urls"
   },
