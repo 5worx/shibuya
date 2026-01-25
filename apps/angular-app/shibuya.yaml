@@ -1,25 +1,34 @@
 # Hier stehen die Abhängigkeiten, die vor der Entwicklung
 # hochgefahren bzw erstellt sein müssen.
-forge:
+#
+
+# Definition der Komponenten (Zentrale Datenquelle)
+components:
   infrastructure:
-    - fads-keycloak
-# Startet alle dev-server für die Entwicklung
-dev:
+    - shibuya-keycloak
+    - shibuya-database
   packages:
     - auth-keycloak
-# startet Abhängigkeiten
-start:
-  infrastructure:
-    - fads-keycloak
-# stoppt Abhängigkeiten
-stop:
-  infrastructure:
-    - fads-keycloak
 
-# entfernt Abhängigkeiten
-melt:
-  infrastructure:
-    - fads-keycloak
+workflows:
+  forge:
+    - components.infrastructure
+
+  # Startet alle dev-server für die Entwicklung
+  dev:
+    - components.packages
+
+  # startet Abhängigkeiten
+  start:
+    - components.infrastructure
+
+  # stoppt Abhängigkeiten
+  stop:
+    - components.infrastructure
+
+  # entfernt Abhängigkeiten
+  melt:
+    - components.infrastructure
 
 # Optionale Flags für den Start
 settings:

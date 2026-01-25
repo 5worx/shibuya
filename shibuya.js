@@ -4,7 +4,7 @@ import path from "path";
 import yaml from "js-yaml";
 
 const args = process.argv.slice(2);
-const mode = args[0] || "dev"; // 'start' oder 'dev'
+const mode = args[0] || "dev"; // 'start', 'dev', 'stop', 'forge', 'melt'
 const appsFlag =
   args
     .find((a) => a.startsWith("--apps="))
@@ -16,26 +16,23 @@ if (appsFlag.length === 0) {
   process.exit(1);
 }
 
-// ... (oben beim Initialisieren)
 let settings = {
-  parallel: 20, // Default
-  outputStyle: "stream", // Default
+  parallel: 20,
+  outputStyle: "stream",
 };
 
 let allProjects = new Set();
 let infraToCleanup = new Set();
 
-// WICHTIG: Die Apps aus dem Flag direkt als "Haupt-Projekte" hinzufügen
 appsFlag.forEach((app) => allProjects.add(app));
 
-// 1. Dezentrale YAMLs einsammeln (Nur den angeforderten Mode!)
+// 1. Konfiguration verarbeiten
 appsFlag.forEach((appName) => {
   const configPath = path.join(process.cwd(), "apps", appName, "shibuya.yaml");
 
   if (fs.existsSync(configPath)) {
     const config = yaml.load(fs.readFileSync(configPath, "utf8"));
 
-    // Settings aus der YAML lesen, falls vorhanden
     if (config.settings) {
       if (config.settings.parallel)
         settings.parallel = config.settings.parallel;
@@ -43,32 +40,35 @@ appsFlag.forEach((appName) => {
         settings.outputStyle = config.settings.outputStyle;
     }
 
-    // Hilfsfunktion zum Hinzufügen mit Zirkel-Check
     const addWithCheck = (projectList, type) => {
       if (!projectList) return;
       projectList.forEach((dep) => {
-        if (dep === appName) {
-          console.warn(
-            `⚠️  Hinweis: "${appName}" listet sich in seiner shibuya.yaml selbst unter "${type}" auf. Das ist redundant und wurde ignoriert.`,
-          );
-        } else {
+        if (dep !== appName) {
           allProjects.add(dep);
+          // Alles was aus der infrastructure Gruppe kommt, landet im Cleanup
           if (type === "infrastructure") infraToCleanup.add(dep);
         }
       });
     };
 
-    const section = config[mode]; // Hier wird nur 'start' ODER 'dev' geladen
+    // NEUE LOGIK: Auflösen der Workflows
+    const workflow = config.workflows?.[mode];
 
-    if (section) {
-      addWithCheck(section.apps, "apps");
-      addWithCheck(section.packages, "packages");
-      addWithCheck(section.infrastructure, "infrastructure");
+    if (workflow) {
+      workflow.forEach((item) => {
+        if (typeof item === "string" && item.startsWith("components.")) {
+          const group = item.split(".")[1];
+          const resolvedList = config.components?.[group];
+          addWithCheck(resolvedList, group);
+        } else {
+          allProjects.add(item);
+        }
+      });
     }
 
-    // Auch den 'start' Block für Infra prüfen, wenn im dev-Mode
-    if (mode === "dev" && config.start?.infrastructure) {
-      addWithCheck(config.start.infrastructure, "infrastructure");
+    // AUTOMATIK: Im 'dev' Mode wollen wir immer die Infrastruktur dabei haben
+    if (mode === "dev" && config.components?.infrastructure) {
+      addWithCheck(config.components.infrastructure, "infrastructure");
     }
   } else {
     console.warn(`⚠️ Keine shibuya.yaml gefunden unter ${configPath}`);
@@ -85,8 +85,7 @@ if (projectsArray.length === 0) {
 console.log(`\x1b[36m%s\x1b[0m`, `🏙️  SHIBUYA Dispatcher [${mode}]`);
 console.log(`📦 Verbinde Signale für: ${projectsArray.join(", ")}`);
 
-// 2. NX starten mit dem Target, das dem Modus entspricht
-// Wenn mode='start', dann wird 'nx run-many -t start' ausgeführt.
+// 2. NX starten
 const child = spawn(
   "pnpm",
   [
@@ -96,33 +95,24 @@ const child = spawn(
     mode,
     "-p",
     projectsArray.join(","),
-    `--parallel=${settings.parallel}`, // Dynamisch aus YAML
-    `--outputStyle=${settings.outputStyle}`, // Dynamisch aus YAML
+    `--parallel=${settings.parallel}`,
+    `--outputStyle=${settings.outputStyle}`,
   ],
   { stdio: "inherit", shell: true },
 );
 
-// 3. Cleanup Logik
 // 3. Cleanup Logik
 let isCleaningUp = false;
 const cleanup = (signal) => {
   if (isCleaningUp) return;
   isCleaningUp = true;
 
-  // LOGIK-ÄNDERUNG:
-  // Wir fahren die Container NICHT automatisch runter, wenn wir im dev-Modus sind.
-  // Das erlaubt schnelles Re-Starten des Watchers, ohne auf Docker zu warten.
-
   if (mode === "dev") {
     console.log(
       `\n🌆 SHIBUYA schaltet in den Standby. Watcher beendet, Infra aktiv.`,
     );
-
-    console.log(
-      `💡 Tipp: Nutze "pnpm start", um sie zu prüfen oder "pnpm stop" zum Stoppen.`,
-    );
+    console.log(`💡 Tipp: Nutze "pnpm stop" zum Herunterfahren der Container.`);
   } else if (infraToCleanup.size > 0) {
-    // Nur in anderen Modi (z.B. Test-Pipelines) fahren wir wirklich alles runter
     console.log(`\n🧹 SHIBUYA (Signal: ${signal}): Räume den Distrikt auf...`);
     infraToCleanup.forEach((infra) => {
       spawnSync("pnpm", ["nx", "run", `${infra}:down`], {
@@ -138,10 +128,7 @@ const cleanup = (signal) => {
 process.on("SIGINT", () => cleanup("SIGINT"));
 process.on("SIGTERM", () => cleanup("SIGTERM"));
 
-// Falls NX fertig ist (z.B. weil docker-compose up -d ein Kurzläufer ist)
 child.on("close", (code) => {
   console.log(`\n📡 NX-Prozess beendet (Code ${code})`);
-  // Wenn wir nur 'start' aufrufen, ist NX nach dem Docker-Start fertig.
-  // Wir räumen NUR auf, wenn ein Fehler vorlag (code != 0) oder wir explizit abbrechen.
   if (code !== 0 && !isCleaningUp) cleanup("PROCESS_ERROR");
 });

@@ -1,32 +1,33 @@
 {
-  "name": "shibuya-keycloak",
+  "name": "shibuya-database",
   "projectType": "library",
   "targets": {
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-keycloak up -d keycloak-db keycloak-pgadmin",
-        "cwd": "infrastructure/keycloak"
+        "command": "docker compose -p shibuya-database up -d shibuya-db shibuya-pgadmin",
+        "cwd": "infrastructure/database"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-keycloak start",
-        "cwd": "infrastructure/keycloak"
+        "command": "docker compose -p shibuya-database start",
+        "cwd": "infrastructure/database"
       }
     },
     "stop": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -p shibuya-keycloak stop"],
+        "commands": ["docker compose -p shibuya-database stop"],
+        "cwd": "infrastructure/database",
         "parallel": false
       }
     },
     "melt": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -p shibuya-keycloak down"],
+        "commands": ["docker compose -p shibuya-database down"],
         "parallel": false
       }
     }

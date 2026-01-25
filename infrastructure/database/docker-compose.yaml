@@ -5,14 +5,14 @@ services:
   # Der Herzschlag der Datenhaltung
   shibuya-db:
     image: postgres:16-alpine
-    container_name: shibuya-postgres
+    container_name: shibuya-postgres-db
     restart: always
     environment:
       POSTGRES_USER: shibuya_admin
       POSTGRES_PASSWORD: shibuya_password
       POSTGRES_DB: shibuya_main
     ports:
-      - "52202:5432"
+      - "52302:5432"
     volumes:
       - shibuya_db_data:/var/lib/postgresql/data
       # Initialisierungsskripte für autarke Datenbanken
@@ -21,14 +21,14 @@ services:
   # Datenbank-Verwaltung (pgAdmin)
   shibuya-pgadmin:
     image: dpage/pgadmin4
-    container_name: shibuya-pgadmin
+    container_name: shibuya-postgres-pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@shibuya.dev
       PGADMIN_DEFAULT_PASSWORD: admin_password
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
     ports:
-      - "52203:80"
+      - "52202:80"
     depends_on:
       - shibuya-db
 

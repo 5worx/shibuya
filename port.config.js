@@ -23,7 +23,7 @@ const CATEGORY_MAP = {
   PACKAGES: 0, // 520xx: Backend Services, APIs
   APPS: 1, // 521xx: User-Facing Frontends
   INFRA: 2, // 522xx: Admin-Interfaces, CMS
-  UTILITY: 3, // 523xx: Mock Server, Tools
+  DB: 3, // 523xx: Mock Server, Tools
 };
 
 /**
@@ -38,12 +38,8 @@ const CATEGORY_MAP = {
 const APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.PACKAGES]: ["kuroko"],
   [CATEGORY_MAP.APPS]: ["angular-app"],
-  [CATEGORY_MAP.INFRA]: [
-    "infra-keycloak",
-    "infra-shibuya-db",
-    "infra-shibuya-pgadmin",
-  ],
-  [CATEGORY_MAP.UTILITY]: [],
+  [CATEGORY_MAP.INFRA]: ["infra-keycloak-pgadmin", "infra-shibuya-pgadmin"],
+  [CATEGORY_MAP.DB]: ["infra-keycloak-db", "infra-shibuya-db"],
 };
 
 /**

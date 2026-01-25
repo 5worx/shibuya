@@ -1,6 +1,6 @@
 {
   "name": "angular-app",
-  "implicitDependencies": ["auth-keycloak", "fads-keycloak"],
+  "implicitDependencies": ["auth-keycloak", "shibuya-keycloak"],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "targets": {
