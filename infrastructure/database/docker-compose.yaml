@@ -27,8 +27,12 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@shibuya.dev
       PGADMIN_DEFAULT_PASSWORD: admin_password
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
     ports:
       - "52202:80"
+    volumes:
+      # Wir mappen die lokale Datei in den Container
+      - ./servers.json:/pgadmin4/servers.json
     depends_on:
       - shibuya-db
 
