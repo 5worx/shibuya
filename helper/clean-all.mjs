@@ -2,16 +2,15 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
-// Wir definieren die Muster, die wir rekursiv löschen wollen (wie dein 'find')
-const patternsToClean = [
-  "**/node_modules",
-  "**/dist",
-  "**/.nx",
-  "**/.angular",
-  "**/.stencil",
-  "**/build",
-  "**/*.tsbuildinfo",
-  "pnpm-lock.yaml",
+// Die Liste der Verdächtigen
+const targetsToMatch = [
+  "node_modules",
+  "dist",
+  "target", // Rust Artefakte
+  ".nx",
+  ".angular",
+  ".stencil",
+  "build",
   ".pnpm-store",
 ];
 
@@ -20,8 +19,9 @@ async function factoryReset() {
 
   // 1. Infrastruktur & Docker
   try {
-    console.log("📦 Stoppe Infrastruktur und bereinige Container-Daten...");
-    // Wir nutzen deinen nx command
+    console.log(
+      "📦 Stoppe Infrastruktur und bereinige Container-Daten via melt...",
+    );
     execSync("pnpm nx run-many -t melt --all --outputStyle=static", {
       stdio: "inherit",
     });
@@ -33,69 +33,59 @@ async function factoryReset() {
 
   // 2. Rekursives Löschen
   console.log(
-    "🗑️ Lösche alle Artefakte (node_modules, dist, build-infos, caches)...",
+    "🗑️ Lösche alle Artefakte (node_modules, dist, target, build-infos, caches)...",
   );
 
-  // Da wir keine externen Abhängigkeiten wie 'rimraf' erzwingen wollen,
-  // nutzen wir eine kleine rekursive Helferfunktion
-  const deleteRecursive = (dir) => {
-    if (fs.existsSync(dir)) {
-      const files = fs.readdirSync(dir);
-      files.forEach((file) => {
-        const curPath = path.join(dir, file);
-        if (fs.lstatSync(curPath).isDirectory()) {
-          deleteRecursive(curPath);
-        } else {
-          fs.unlinkSync(curPath);
-        }
+  const cleanPaths = (base) => {
+    let allEntries = [];
+    try {
+      // Wir lesen rekursiv ein, fangen aber EACCES ab (für gesperrte Docker-Ordner)
+      allEntries = fs.readdirSync(base, {
+        withFileTypes: true,
+        recursive: true,
       });
-      fs.rmdirSync(dir);
+    } catch (err) {
+      if (err.code === "EACCES") {
+        console.warn(`  ⚠️  Kein Zugriff auf: ${base} (wird übersprungen)`);
+        return;
+      }
+      throw err;
     }
-  };
 
-  // Wir nutzen eine einfachere Variante von fs.rmSync (verfügbar seit Node 14.14+)
-  // Diese ist das Äquivalent zu 'rm -rf'
-  const cleanPaths = (base, patterns) => {
-    // Da wir keine schwere Glob-Lib einbinden wollen, gehen wir die Verzeichnisse durch
-    // oder nutzen Shell-Commands für die Performance, falls verfügbar.
-    // Aber für die echte Plattformunabhängigkeit nutzen wir die native Node-API:
-
-    const allEntries = fs.readdirSync(base, {
-      withFileTypes: true,
-      recursive: true,
-    });
-
-    // Wir filtern die Einträge basierend auf deinen Namen
+    // Wir filtern die Einträge basierend auf Namen oder Endung
     const targets = allEntries
       .filter((entry) => {
         const name = entry.name;
-        return (
-          name === "node_modules" ||
-          name === "dist" ||
-          name === ".nx" ||
-          name === ".angular" ||
-          name === ".stencil" ||
-          name === "build" ||
-          name.endsWith(".tsbuildinfo")
-        );
+        return targetsToMatch.includes(name) || name.endsWith(".tsbuildinfo");
       })
-      .map((entry) => path.join(entry.parentPath || entry.path, entry.name));
+      .map((entry) =>
+        path.join(entry.parentPath || entry.path || base, entry.name),
+      );
 
-    // Einzelne Files wie lock-files hinzufügen
+    // Einzelne Files wie lock-files manuell hinzufügen, falls sie im Root liegen
     if (fs.existsSync("pnpm-lock.yaml")) targets.push("pnpm-lock.yaml");
-    if (fs.existsSync(".pnpm-store")) targets.push(".pnpm-store");
 
-    // Sortieren, damit wir tiefste Pfade zuerst löschen
+    // Sortieren nach Länge (umgekehrte Tiefe), damit wir Unterordner vor Eltern löschen
     targets.sort((a, b) => b.length - a.length);
 
-    targets.forEach((target) => {
+    // Echte Duplikate entfernen (falls durch rekursives Einlesen doppelt erfasst)
+    const uniqueTargets = [...new Set(targets)];
+
+    uniqueTargets.forEach((target) => {
       try {
         if (fs.existsSync(target)) {
           fs.rmSync(target, { recursive: true, force: true });
           console.log(`  - gelöscht: ${target}`);
         }
       } catch (err) {
-        console.error(`  ❌ Fehler bei ${target}:`, err.message);
+        // Falls wir hier doch ein EACCES bekommen (z.B. Keycloak/data), loggen wir es nur
+        if (err.code === "EACCES") {
+          console.error(
+            `  ⚠️  Berechtigungsfehler bei ${target} (Docker-Leiche?)`,
+          );
+        } else {
+          console.error(`  ❌ Fehler bei ${target}:`, err.message);
+        }
       }
     });
   };
