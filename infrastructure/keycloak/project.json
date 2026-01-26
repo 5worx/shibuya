@@ -5,7 +5,7 @@
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-keycloak up -d keycloak-db keycloak-pgadmin",
+        "command": "docker compose -p shibuya-keycloak up -d keycloak-db keycloak-admin",
         "cwd": "infrastructure/keycloak"
       }
     },
@@ -26,7 +26,10 @@
     "melt": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -p shibuya-keycloak down"],
+        "commands": [
+          "docker compose -p shibuya-keycloak -v down",
+          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
+        ],
         "parallel": false
       }
     }

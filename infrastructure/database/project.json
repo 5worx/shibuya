@@ -27,7 +27,11 @@
     "melt": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -p shibuya-database down"],
+        "cwd": "infrastructure/database",
+        "commands": [
+          "docker compose -p shibuya-database -v down",
+          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
+        ],
         "parallel": false
       }
     }

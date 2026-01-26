@@ -13,9 +13,9 @@ services:
     networks:
       - shibuya-keycloak-network
 
-  keycloak-pgadmin:
+  keycloak-admin:
     image: quay.io/keycloak/keycloak:26.0
-    container_name: shibuya-keycloak-pgadmin
+    container_name: shibuya-keycloak-admin
     command: start-dev --import-realm
     environment:
       KC_DB: postgres

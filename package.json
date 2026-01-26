@@ -4,14 +4,14 @@
   "description": "Framework Agnostic Development System",
   "type": "module",
   "scripts": {
-    "first:install": "./helper/first_install.sh",
     "forge": "node ./shibuya.js forge --apps=angular-app,rust-api",
     "dev": "node ./shibuya.js dev --apps=angular-app,rust-api",
     "start": "node ./shibuya.js start --apps=angular-app,rust-api",
     "stop": "node ./shibuya.js stop --apps=angular-app,rust-api",
     "melt": "node ./shibuya.js melt --apps=angular-app,rust-api",
-    "clean:all": "./helper/clean_all.sh",
-    "ports:urls": "node ./port.config.js --urls"
+    "helper:export-realms": "node ./helper/export-keycloak-realm.mjs",
+    "helper:clean": "node ./helper/clean-all.mjs",
+    "ports:urls": "node ./helper/port.config.js --urls"
   },
   "keywords": [
     "framework",
