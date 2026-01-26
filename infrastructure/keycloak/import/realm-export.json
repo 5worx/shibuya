@@ -645,7 +645,7 @@
         "http://localhost:52101/*"
       ],
       "webOrigins": [
-        "http://localhost:52101"
+        "+"
       ],
       "notBefore": 0,
       "bearerOnly": false,
