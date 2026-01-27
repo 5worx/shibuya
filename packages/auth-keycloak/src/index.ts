@@ -10,7 +10,7 @@ export interface AuthUser {
   /** E-Mail-Adresse des Benutzers */
   email?: string;
   /** Eindeutiger Benutzername aus Keycloak */
-  username?: string;
+  preferred_username?: string;
   /** Liste der zugewiesenen Realm-Rollen */
   roles: string[];
 }
@@ -115,7 +115,7 @@ export class AuthService {
     return {
       name: (this.instance.tokenParsed as any).name,
       email: (this.instance.tokenParsed as any).email,
-      username: (this.instance.tokenParsed as any).preferred_username,
+      preferred_username: (this.instance.tokenParsed as any).preferred_username,
       roles: this.instance.realmAccess?.roles || [],
     };
   }

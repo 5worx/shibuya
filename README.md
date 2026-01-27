@@ -55,3 +55,63 @@ Bevor du den Distrikt betrittst, stelle sicher, dass folgende Werkzeuge auf dein
 * **NX CLI**: Global empfohlen via `pnpm add -g nx` (alternativ via `npx nx`)
 
 > Check den Status deiner Umgebung `node -v && pnpm -v && docker compose version`
+
+## Was wir bereits haben
+
+### 1. Systemübersicht
+SHIBUYA ist ein modularer Workspace auf Basis von **NX**, der auf maximale Flexibilität und strikte Trennung von Identität, Logik und Daten ausgelegt ist. 
+
+| Komponente | Technologie | Port | Verantwortung |
+| :--- | :--- | :--- | :--- |
+| **Frontend** | Angular 21 (Signals) | `52101` | User Interface & Token Management |
+| **API (BE)** | Rust (Axum, SQLx) | `52102` | Business Logic & DB-Interaktion |
+| **Auth (IAM)** | Keycloak | `52201` | Identitätsprüfung & JWT-Ausstellung |
+| **Database** | PostgreSQL | `54320` | Persistenz (Relationale Daten) |
+| **Mail** | Mailpit | `52202` | E-Mail Testing (Password Reset etc.) |
+
+---
+
+### 2. Authentifizierungs-Flow (JWT)
+
+Das System nutzt den OpenID Connect (OIDC) Standard zur Absicherung der Ressourcen:
+
+1. **Login:** Der User authentifiziert sich im Angular-Frontend gegen den Keycloak Realm `FADS`.
+2. **Token:** Angular erhält einen **Access Token (JWT)** und speichert diesen im `AuthService`.
+3. **Request:** Der `authInterceptor` in Angular injiziert den Token automatisch in den Header für alle API-Anfragen an `localhost`.
+   - Header: `Authorization: Bearer <JWT>`
+4. **Validierung:** Das Rust-Backend (Axum) validiert den Token bei jedem Request:
+   - Lädt Public Keys (JWKS) von Keycloak.
+   - Prüft Signatur, Issuer (`/realms/FADS`) und Ablaufdatum.
+5. **Identity:** Die `sub` (Subject-UUID) aus dem Token wird extrahiert und zur Filterung von User-Daten (`owner_id`) in der Datenbank genutzt.
+
+---
+
+### 3. Datenbank-Architektur & Migrationen
+Wir setzen auf **SQLx** für typsichere Abfragen und ein automatisiertes Migrations-Management.
+
+- **Storage:** PostgreSQL läuft als Docker-Container.
+- **Migrationen:** SQL-Dateien befinden sich unter `apps/rust-api/migrations/`.
+- **Automatisierung:** Die Rust-API führt anstehende Migrationen beim Startvorgang selbstständig aus (`sqlx::migrate!`).
+- **Sicherheit:** Row-Level-Security Logik wird über die `owner_id` (UUID) in den SQL-Queries abgebildet.
+
+---
+
+### 4. Developer Workflow (Cheat Sheet)
+
+#### System-Reset & Kaltstart
+Wenn der Workspace komplett bereinigt wurde (`pn helper:clean` + Volumes gelöscht):
+
+```bash
+# 1. Infrastruktur & Apps bauen (Docker-Images & Rust Binaries)
+pnpm forge
+
+# 2. Development Mode starten (NX Orchestration)
+pnpm dev
+
+# 3. optional: API test
+pnpx httpyac apps/rust-api/tests/api.http --all
+
+# 4. Troubleshooting
+# Oft ist es die Berechtigung beimKeycloak Container
+sudo chown -R $(id -u):$(id -g) /home/ssch/projects/FADS/infrastructure/keycloak/data
+```

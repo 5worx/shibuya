@@ -14,7 +14,7 @@ const authConfig = {
   clientId: 'angular-app',
 };
 
-const initializeAuth = () => {
+const initializeAuth = async () => {
   const platformId = inject(PLATFORM_ID);
   const authService = inject(AuthService);
 

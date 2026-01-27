@@ -1,5 +1,20 @@
-<p>You can see this, when you are loggedin.</p>
-<div>
-  <pre>{{ stringified() }}</pre>
+<h3>Willkommen, {{ user()?.name }}!</h3>
+
+<p>Du bist eingeloggt und SHIBUYA hat folgende Items für dich aus der Rust-DB geladen:</p>
+
+<div class="item-list">
+  @for (item of items(); track item.id) {
+  <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 4px">
+    <strong>{{ item.title }}</strong><br />
+    <small>{{ item.description }}</small>
+  </div>
+  } @empty {
+  <p>Keine Items gefunden. (Check mal die Rust-Logs!)</p>
+  }
 </div>
+
+<hr />
+<h4>Debug User-Data:</h4>
+<pre>{{ user() | json }}</pre>
+
 <p><button (click)="logout()">Abmelden</button></p>

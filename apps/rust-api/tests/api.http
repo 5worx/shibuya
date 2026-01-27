@@ -1,0 +1,14 @@
+### 1. Token von Keycloak holen
+# @name login
+POST http://localhost:52201/realms/FADS/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id=angular-app&
+username=ssch&
+password=Sven123!!&
+scope=openid
+
+### 2. Rust-API Items abrufen
+GET http://localhost:52102/api/items
+Authorization: Bearer {{login.access_token}}
