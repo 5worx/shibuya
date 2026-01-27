@@ -1,3 +1,6 @@
+import fs from "fs";
+import yaml from "js-yaml";
+import path from "path";
 /**
  * Port-Konfigurationsdatei für das Monorepo.
  *
@@ -15,35 +18,48 @@ const MAX_APPS_PER_CATEGORY = 99;
 const HOST = "http://localhost"; // Standard-Host für die URL-Anzeige
 
 /**
- * Definiert die logischen Kategorien und ihren 1-stelligen Index (Y in 52YZZ).
+ * Definiert die logischen Kategorien und ihren 1-stelligen Index (Y in {MONOREPO_PREFIX}YZZ).
  *
- * > Die Ports mit 529xx dürfen _nicht_ belegt werden!
+ * > Die Ports mit {MONOREPO_PREFIX}9xx dürfen _nicht_ belegt werden!
  */
 const CATEGORY_MAP = {
-  PACKAGES: 0, // 520xx: Backend Services, APIs
-  APPS: 1, // 521xx: User-Facing Frontends
-  INFRA: 2, // 522xx: Admin-Interfaces, CMS
-  DB: 3, // 523xx: Mock Server, Tools
+  PACKAGES: 0, // {MONOREPO_PREFIX}0xx: Backend Services, APIs
+  APPS: 1, // {MONOREPO_PREFIX}1xx: User-Facing Frontends
+  INFRA: 2, // {MONOREPO_PREFIX}2xx: Admin-Interfaces, CMS
+  DB: 3, // {MONOREPO_PREFIX}3xx: Mock Server, Tools
+  SMTP: 4, // {MONOREPO_PREFIX}4xx: SMTP
 };
 
-/**
- * Liste aller Anwendungen, gruppiert nach der Kategorie.
- * Füge hier einfach die Namen deiner Anwendungen immer am Ende hinzu. Die Reihenfolge
- * bestimmt die zugewiesene App-ID (ZZ).
- *
- * > DenkDran!: Nur Anwendungen, die über eine Adresse errechbar sein müssen, sollten hier eingetragen werden. Packages, die nur Skriptressourcen bereitstellen, brauchen keine localhost:PORT Adresse
- *
- * > Die Reihenfolge bestimmt die IP. Einige Anwendungen können dieses Skript verarbeiten und sich den PORT hier rausziehen. Die Docker-Container von bspw Keycloak können das nicht. Daher sollten neue Anwendungen grundsätzlich hinten angehängt werden.
- */
-const APPLICATIONS_CONFIG = {
-  [CATEGORY_MAP.PACKAGES]: ["kuroko"],
-  [CATEGORY_MAP.APPS]: ["angular-app", "rust-api"],
-  [CATEGORY_MAP.INFRA]: ["infra-keycloak-admin", "infra-shibuya-pgadmin"],
-  [CATEGORY_MAP.DB]: ["infra-keycloak-db", "infra-shibuya-db"],
+const configPath = path.join(
+  process.cwd(),
+  "helper",
+  "ports",
+  "port.config.yaml",
+);
+
+let APPLICATIONS_CONFIG = {
+  [CATEGORY_MAP.PACKAGES]: {},
+  [CATEGORY_MAP.APPS]: {},
+  [CATEGORY_MAP.INFRA]: {},
+  [CATEGORY_MAP.DB]: {},
+  [CATEGORY_MAP.SMTP]: {},
 };
 
+if (fs.existsSync(configPath)) {
+  const rawConfig = yaml.load(fs.readFileSync(configPath, "utf8"));
+  APPLICATIONS_CONFIG = {
+    [CATEGORY_MAP.PACKAGES]: rawConfig.PACKAGES || {},
+    [CATEGORY_MAP.APPS]: rawConfig.APPS || {},
+    [CATEGORY_MAP.INFRA]: rawConfig.INFRA || {},
+    [CATEGORY_MAP.DB]: rawConfig.DB || {},
+    [CATEGORY_MAP.SMTP]: rawConfig.SMTP || {},
+  };
+} else {
+  console.warn(`⚠️ Keine port.config.yaml gefunden unter ${configPath}`);
+}
+
 /**
- * Berechnet den endgültigen 5-stelligen Port-Wert (42YZZ).
+ * Berechnet den endgültigen 5-stelligen Port-Wert ({MONOREPO_PREFIX}YZZ).
  *
  * @param {number} categoryIndex Der Index der Kategorie (0, 1, 2, 3).
  * @param {number} appIndex Der sequenzielle Index der App in dieser Kategorie (startet bei 1).
@@ -71,11 +87,12 @@ function generatePortConfig() {
   const portMap = {};
 
   for (const categoryIndex in APPLICATIONS_CONFIG) {
-    const apps = APPLICATIONS_CONFIG[categoryIndex];
+    const categoryApps = APPLICATIONS_CONFIG[categoryIndex];
 
-    apps.forEach((appName, index) => {
-      const appSlotIndex = index + 1;
-      const port = calculatePort(parseInt(categoryIndex, 10), appSlotIndex);
+    // Da categoryApps jetzt ein Objekt { "app-name": ID } ist:
+    Object.entries(categoryApps).forEach(([appName, appId]) => {
+      // Wir nehmen jetzt direkt die appId (ZZ) aus deiner Config!
+      const port = calculatePort(parseInt(categoryIndex, 10), appId);
 
       if (portMap[appName]) {
         console.warn(
@@ -89,7 +106,6 @@ function generatePortConfig() {
 
   return portMap;
 }
-
 // Generiere die finale Konfiguration, die exportiert wird
 const Ports = generatePortConfig();
 
@@ -106,7 +122,9 @@ function displayPortTable() {
       return acc;
     }, {});
 
-    console.log("--- Generierte Monorepo URLs (42XXX Schema) ---");
+    console.log(
+      `--- Generierte Monorepo URLs (${MONOREPO_PREFIX}XXX Schema) ---`,
+    );
     console.table(urlMap);
     console.log("--------------------------------------------------");
   }
