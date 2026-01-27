@@ -66,8 +66,8 @@ SHIBUYA ist ein modularer Workspace auf Basis von **NX**, der auf maximale Flexi
 | **Frontend** | Angular 21 (Signals) | `52101` | User Interface & Token Management |
 | **API (BE)** | Rust (Axum, SQLx) | `52102` | Business Logic & DB-Interaktion |
 | **Auth (IAM)** | Keycloak | `52201` | Identitätsprüfung & JWT-Ausstellung |
-| **Database** | PostgreSQL | `54320` | Persistenz (Relationale Daten) |
-| **Mail** | Mailpit | `52202` | E-Mail Testing (Password Reset etc.) |
+| **Database** | PostgreSQL | `54302` | Persistenz (Relationale Daten) |
+| **Mail** | Mailpit | `52203` | E-Mail Testing (Password Reset etc.) |
 
 ---
 
