@@ -6,6 +6,7 @@
 components:
   infrastructure:
     - shibuya-database
+    - shibuya-mailpit
 
 workflows:
   forge:

@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: fads-mailpit
+    restart: unless-stopped
+    ports:
+      - "52203:8025" # Web UI im Browser
+      - "52301:1025" # SMTP Port für deine Anwendungen
+    environment:
+      - MP_MAX_MESSAGES=500
+      - MP_DATABASE=/data/mailpit.db
+    volumes:
+      - ./data:/data

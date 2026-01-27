@@ -1,0 +1,39 @@
+{
+  "name": "shibuya-mailpit",
+  "projectType": "library",
+  "targets": {
+    "forge": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up -d",
+        "cwd": "infrastructure/mailpit"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose start",
+        "cwd": "infrastructure/mailpit"
+      }
+    },
+    "stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "infrastructure/mailpit",
+        "commands": ["docker compose stop"],
+        "parallel": false
+      }
+    },
+    "melt": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "infrastructure/mailpit",
+        "commands": [
+          "docker compose -v down",
+          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}
