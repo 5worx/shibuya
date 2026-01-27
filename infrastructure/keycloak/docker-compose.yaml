@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     container_name: shibuya-keycloak-db
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - shibuya_keycloak_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -36,6 +36,10 @@ services:
       - keycloak-db
     networks:
       - shibuya-keycloak-network
+
+# Benannte Volumes für Datenpersistenz
+volumes:
+  shibuya_keycloak_data:
 
 networks:
   shibuya-keycloak-network:

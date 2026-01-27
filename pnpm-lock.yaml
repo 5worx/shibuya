@@ -63,7 +63,7 @@ importers:
         version: 21.1.1(3374eda206248684822407d95aa66c4b)
       '@angular/cli':
         specifier: ^21.1.1
-        version: 21.1.1(@types/node@20.19.30)(chokidar@5.0.0)(hono@4.11.6)
+        version: 21.1.1(@types/node@20.19.30)(chokidar@5.0.0)(hono@4.11.7)
       '@angular/compiler-cli':
         specifier: ^21.1.0
         version: 21.1.1(@angular/compiler@21.1.1)(typescript@5.9.3)
@@ -2615,8 +2615,8 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
-  hono@4.11.6:
-    resolution: {integrity: sha512-ofIiiHyl34SV6AuhE3YT2mhO5HRWokce+eUYE82TsP6z0/H3JeJcjVWEMSIAiw2QkjDOEpES/lYsg8eEbsLtdw==}
+  hono@4.11.7:
+    resolution: {integrity: sha512-l7qMiNee7t82bH3SeyUCt9UF15EVmaBvsppY2zQtrbIhl/yzBTny+YUxsVjSjQ6gaqaeVtZmGocom8TzBlA4Yw==}
     engines: {node: '>=16.9.0'}
 
   hosted-git-info@9.0.2:
@@ -4365,14 +4365,14 @@ snapshots:
       - tsx
       - yaml
 
-  '@angular/cli@21.1.1(@types/node@20.19.30)(chokidar@5.0.0)(hono@4.11.6)':
+  '@angular/cli@21.1.1(@types/node@20.19.30)(chokidar@5.0.0)(hono@4.11.7)':
     dependencies:
       '@angular-devkit/architect': 0.2101.1(chokidar@5.0.0)
       '@angular-devkit/core': 21.1.1(chokidar@5.0.0)
       '@angular-devkit/schematics': 21.1.1(chokidar@5.0.0)
       '@inquirer/prompts': 7.10.1(@types/node@20.19.30)
       '@listr2/prompt-adapter-inquirer': 3.0.5(@inquirer/prompts@7.10.1(@types/node@20.19.30))(@types/node@20.19.30)(listr2@9.0.5)
-      '@modelcontextprotocol/sdk': 1.25.2(hono@4.11.6)(zod@4.3.5)
+      '@modelcontextprotocol/sdk': 1.25.2(hono@4.11.7)(zod@4.3.5)
       '@schematics/angular': 21.1.1(chokidar@5.0.0)
       '@yarnpkg/lockfile': 1.1.0
       algoliasearch: 5.46.2
@@ -4827,9 +4827,9 @@ snapshots:
 
   '@exodus/bytes@1.10.0': {}
 
-  '@hono/node-server@1.19.9(hono@4.11.6)':
+  '@hono/node-server@1.19.9(hono@4.11.7)':
     dependencies:
-      hono: 4.11.6
+      hono: 4.11.7
 
   '@inquirer/ansi@1.0.2': {}
 
@@ -5194,9 +5194,9 @@ snapshots:
   '@lmdb/lmdb-win32-x64@3.4.4':
     optional: true
 
-  '@modelcontextprotocol/sdk@1.25.2(hono@4.11.6)(zod@4.3.5)':
+  '@modelcontextprotocol/sdk@1.25.2(hono@4.11.7)(zod@4.3.5)':
     dependencies:
-      '@hono/node-server': 1.19.9(hono@4.11.6)
+      '@hono/node-server': 1.19.9(hono@4.11.7)
       ajv: 8.17.1
       ajv-formats: 3.0.1(ajv@8.17.1)
       content-type: 1.0.5
@@ -6740,7 +6740,7 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hono@4.11.6: {}
+  hono@4.11.7: {}
 
   hosted-git-info@9.0.2:
     dependencies:

@@ -5,6 +5,8 @@ use axum::{
     routing::get,
 };
 use dotenvy::dotenv;
+use lettre::transport::smtp::client::Tls;
+use lettre::{Message, SmtpTransport, Transport};
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use sqlx::postgres::PgPoolOptions;
@@ -163,6 +165,7 @@ async fn main() {
     let app = Router::new()
         .route("/api/status", get(get_status))
         .route("/api/items", get(get_my_items)) // Geschützte Route
+        .route("/api/welcome", get(welcome_handler)) // Geschützte Route
         .layer(CorsLayer::permissive())
         .with_state(state);
 
@@ -221,5 +224,55 @@ async fn get_my_items(
     match items_result {
         Ok(items) => Ok(Json(items)),
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
+    }
+}
+
+// --- HILFSFUNKTION (REINE LOGIK) ---
+// --- HILFSFUNKTION (REINE LOGIK) ---
+pub fn perform_email_dispatch(to_email: &str) -> Result<(), String> {
+    let email = Message::builder()
+        .from(
+            "SHIBUYA System <noreply@shibuya.dev>"
+                .parse()
+                .map_err(|e: lettre::address::AddressError| e.to_string())?,
+        )
+        .to(to_email
+            .parse()
+            .map_err(|e: lettre::address::AddressError| e.to_string())?)
+        .subject("Willkommen bei SHIBUYA!")
+        .body(String::from(
+            "Dein Account wurde erfolgreich im Framework erstellt.",
+        ))
+        .unwrap();
+
+    // Wir nutzen builder_dangerous, um TLS für localhost zu deaktivieren
+    let transport = SmtpTransport::builder_dangerous("localhost")
+        .port(52401)
+        .tls(Tls::None) // Deaktiviert den SSL/TLS Handshake
+        .build();
+
+    match transport.send(&email) {
+        Ok(_) => {
+            println!("📨 Mailer: {} ➔ Delivered", to_email);
+            Ok(())
+        }
+        Err(e) => {
+            eprintln!("❌ SMTP Fehler: {:?}", e); // Mehr Details im Konsolen-Log
+            Err(format!("Versand fehlgeschlagen: {:?}", e))
+        }
+    }
+}
+
+// --- HANDLER (FÜR AXUM ROUTE) ---
+async fn welcome_handler(claims: Claims) -> Result<(StatusCode, String), (StatusCode, String)> {
+    // Wir nehmen die E-Mail aus den Keycloak-Claims
+    let user_email = claims.email.as_deref().unwrap_or("unbekannt@test.de");
+
+    match perform_email_dispatch(user_email) {
+        Ok(_) => Ok((
+            StatusCode::OK,
+            format!("📨 Mailer ➔ Willkommens-Mail an {} gesendet!", user_email),
+        )),
+        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e)),
     }
 }

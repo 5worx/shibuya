@@ -12,3 +12,7 @@ scope=openid
 ### 2. Rust-API Items abrufen
 GET http://localhost:52102/api/items
 Authorization: Bearer {{login.access_token}}
+
+### 3. Welcome mail
+GET http://localhost:52102/api/welcome
+Authorization: Bearer {{login.access_token}}

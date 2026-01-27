@@ -28,10 +28,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/database",
-        "commands": [
-          "docker compose -p shibuya-database -v down",
-          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
-        ],
+        "commands": ["docker compose -p shibuya-database -v down"],
         "parallel": false
       }
     }

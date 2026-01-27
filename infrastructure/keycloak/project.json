@@ -26,10 +26,7 @@
     "melt": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "docker compose -p shibuya-keycloak -v down",
-          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
-        ],
+        "commands": ["docker compose -p shibuya-keycloak -v down"],
         "parallel": false
       }
     }

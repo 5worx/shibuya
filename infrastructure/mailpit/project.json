@@ -5,14 +5,14 @@
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose up -d",
+        "command": "docker compose -p shibuya-mailpit up -d",
         "cwd": "infrastructure/mailpit"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose start",
+        "command": "docker compose -p shibuya-mailpit start",
         "cwd": "infrastructure/mailpit"
       }
     },
@@ -20,7 +20,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/mailpit",
-        "commands": ["docker compose stop"],
+        "commands": ["docker compose -p shibuya-mailpit stop"],
         "parallel": false
       }
     },
@@ -28,10 +28,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/mailpit",
-        "commands": [
-          "docker compose -v down",
-          "docker run --rm -v \"$PWD:/app\" alpine rm -rf /app/{projectRoot}/data"
-        ],
+        "commands": ["docker compose -p shibuya-mailpit -v down"],
         "parallel": false
       }
     }
