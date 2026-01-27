@@ -1,5 +1,5 @@
 {
-  "name": "fads",
+  "name": "shibuya",
   "version": "0.0.1",
   "description": "Framework Agnostic Development System",
   "type": "module",
@@ -11,7 +11,7 @@
     "melt": "node ./shibuya.js melt --apps=angular-app,rust-api",
     "helper:export-realms": "node ./helper/export-keycloak-realm.mjs",
     "helper:clean": "node ./helper/clean-all.mjs",
-    "ports:urls": "node ./helper/port.config.js --urls"
+    "ports:urls": "node ./helper/ports/port.config.js --urls"
   },
   "keywords": [
     "framework",
