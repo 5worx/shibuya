@@ -19,6 +19,7 @@
     "stop": {
       "executor": "nx:run-commands",
       "options": {
+        "cwd": "infrastructure/keycloak",
         "commands": ["docker compose -p shibuya-keycloak stop"],
         "parallel": false
       }
@@ -26,6 +27,7 @@
     "melt": {
       "executor": "nx:run-commands",
       "options": {
+        "cwd": "infrastructure/keycloak",
         "commands": ["docker compose -p shibuya-keycloak -v down"],
         "parallel": false
       }

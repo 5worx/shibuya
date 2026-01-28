@@ -115,7 +115,7 @@ const cleanup = (signal) => {
   } else if (infraToCleanup.size > 0) {
     console.log(`\n🧹 SHIBUYA (Signal: ${signal}): Räume den Distrikt auf...`);
     infraToCleanup.forEach((infra) => {
-      spawnSync("pnpm", ["nx", "run", `${infra}:down`], {
+      spawnSync("pnpm", ["nx", "run", `${infra}:stop`], {
         stdio: "inherit",
         shell: true,
       });
