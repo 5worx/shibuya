@@ -1,5 +1,7 @@
 # SHIBUYA - The Framework Agnostic Development System
 
+![SHIBUYA](helper/boilerplates/logos/shibuya.svg)
+
 __Dein Monorepo. Dein Fokus. Deine Freiheit.__ 
 
 Vergiss starre Skripte und manuelle Setups. SHIBUYA ist das Framework Agnostic Development System, das Komplexität in Einfachheit verwandelt. Mit einer app-zentrischen Orchestrierung, die Infrastruktur und Abhängigkeiten genau dann liefert, wenn du sie brauchst – und sie im Hintergrund laufen lässt, wenn du sie nicht mehr siehst. __Baue Software, kein Setup.__
@@ -56,6 +58,26 @@ Bevor du den Distrikt betrittst, stelle sicher, dass folgende Werkzeuge auf dein
 
 > Check den Status deiner Umgebung `node -v && pnpm -v && docker compose version`
 
+## 👥 Projektbeteiligte
+| Rolle | Name | Kontakt | Fokus |
+| :--- | :--- | :--- | :--- |
+| **Architect** | Sven Schoppe | sven.schoppe@link-innovation.de | Core System, Infrastructure, Angular-App & Rust API |
+| **System** | Kuroko | AI | Design & Brainstorming |
+
+[Details in CONTRIBUTORS.md](./CONTRIBUTORS.md)
+
+---
+
+## 🐛 Bug-Tracking (via git-bug)
+Wir tracken Fehler dezentral. Um den aktuellen Status zu sehen, nutze:
+`git-bug webui` oder `git-bug termui`.
+
+**Aktuelle Top-Bugs:**
+* [x] #1 SMTP TLS Handshake Error (High Priority)
+* [x] #2 Permission Conflict in Docker Volumes
+
+---
+
 ## Was wir bereits haben
 
 ### 1. Systemübersicht
@@ -110,8 +132,4 @@ pnpm dev
 
 # 3. optional: API test
 pnpx httpyac apps/rust-api/tests/api.http --all
-
-# 4. Troubleshooting
-# Oft ist es die Berechtigung beimKeycloak Container
-sudo chown -R $(id -u):$(id -g) /home/ssch/projects/FADS/infrastructure/keycloak/data
 ```
