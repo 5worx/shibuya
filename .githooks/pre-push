@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Prüfen, ob git-bug installiert ist
+if command -v git-bug >/dev/null 2>&1; then
+    echo "🐞 SHIBUYA: Pushe Bugs zu origin..."
+    git-bug push origin
+else
+    echo "⚠️  SHIBUYA: git-bug nicht gefunden. Bugs wurden nicht synchronisiert."
+fi
+
+exit 0

@@ -72,5 +72,34 @@ if (fs.existsSync("./mokuroku")) {
   log("  ⚠️  Mokuroku fehlt. Erstelle es mit 'pnpm mokuroku'.", "warn");
 }
 
+// 5. Githooks
+log("\n5. Git Hooks anmelden...");
+if (fs.existsSync("./.githooks")) {
+  try {
+    // Prüfen, ob der Pfad bereits auf .githooks zeigt
+    const currentPath = execSync("git config core.hooksPath").toString().trim();
+    if (currentPath === ".githooks") {
+      log(
+        "  ✅ Git-Hooks sind bereits korrekt auf .githooks/ konfiguriert.",
+        "success",
+      );
+    }
+  } catch (e) {
+    // Falls core.hooksPath noch gar nicht gesetzt ist, wirft Git einen Fehler
+  }
+
+  try {
+    execSync("git config core.hooksPath .githooks");
+    log(
+      "  ✅ Git-Hooks Pfad wurde erfolgreich auf .githooks/ umgestellt.",
+      "success",
+    );
+  } catch (e) {
+    log("  ❌ Fehler beim Setzen des Hook-Pfades.", "error");
+  }
+} else {
+  log("  ❌ Fehler beim Setzen des Hook-Pfades.", "error");
+}
+
 log("\n" + "=".repeat(30));
 log("Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!\n");

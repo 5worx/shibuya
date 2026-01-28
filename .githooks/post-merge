@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if command -v git-bug >/dev/null 2>&1; then
+    echo "🐞 SHIBUYA: Synchronisiere Bugs von origin..."
+    git-bug pull origin
+else
+    echo "⚠️  SHIBUYA: git-bug nicht gefunden."
+fi
