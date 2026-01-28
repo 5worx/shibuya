@@ -1,1 +1,1 @@
-{"author":{"id":"670dad8d70614a1c8917bfbaefe146f89021e3bb1842a8b4a7bc2aca8032d7f7"},"ops":[{"type":1,"timestamp":1769600728,"nonce":"4XIypk2QEHLVefs6UOZIXvWThaw=","title":"check git-bug hooks","message":"","files":null}]}
+{"author":{"id":"670dad8d70614a1c8917bfbaefe146f89021e3bb1842a8b4a7bc2aca8032d7f7"},"ops":[{"type":3,"timestamp":1769600778,"nonce":"6XjVbAIy690+jK1YixPZpcmOjTs=","message":"Der Prozess hinter dem Erfassen der Bugs muss getestet werden","files":null}]}
