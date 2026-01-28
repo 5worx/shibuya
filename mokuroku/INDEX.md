@@ -10,9 +10,11 @@ Welche Art von Infos geteilt werden müssen, hängt auch vom Projekt und den zu 
 Die SHIBUYA-Phiosophie besagt, dass alles was wichtig ist, auch in SHIBUYA bleibt. Das beinhaltet, dass die Infos sich mit dem Repostand decken müssen. Nur so kriegt man eine eindeutige Historie über den Projektverlauf hin, die sich sogar automatisiert visualisieren liesse. Denn dafür sind Versionskontrollen ja schließlich da.
 
 ## 🏛️ Philosophie
+
 Alles, was für den Projekterfolg wichtig ist, bleibt in SHIBUYA. Wir synchronisieren Informationen mit dem Repository-Stand, um eine lückenlose und ehrliche Projekthistorie zu gewährleisten.
 
 ## 🗺️ Navigation
+
 - [👥 Projektbeteiligte & Rollen](./CONTRIBUTORS.md)
 - [🏗️ Architektur-Entscheidungen (ADR)](./adr/INDEX.md)
 - [🛠️ Tooling & Onboarding](../GETTING_STARTED.md)
@@ -49,5 +51,7 @@ Dieses Projekt folgt dem **SHIBUYA**-Prinzip: Maximale Autonomie der Komponenten
 
 
 ## 🐛 Defekt-Management
+
 Bugs werden dezentral via `git-bug` verwaltet.
+
 - `git-bug webui` zur grafischen Übersicht.
