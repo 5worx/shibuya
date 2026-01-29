@@ -13,7 +13,7 @@ Nach dem Clone: `pnpm install`:
 
 Nachdem die erforderliche Software und die Abhängigkeiten installiert sind, müssen noch evtl kleinere Einstellungen vorgenommen werden, damit nicht nur die Anwendungsentwicklung, sondern auch das Drumherum reibungslos läuft.
 
-Check der Umgebung `pnpm helper:check`:
+Check der *Umgebung* `pnpm helper:check`:
 
 ```sh
 🏙️  SHIBUYA - Environment Check
