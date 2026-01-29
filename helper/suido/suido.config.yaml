@@ -13,9 +13,9 @@ INFRA:
   infra-shibuya-pgadmin: 2
   infra-shibuya-mailpit-web: 3
 
-DB:
+STORAGE:
   infra-keycloak-db: 1
   infra-shibuya-db: 2
 
-SMTP:
+COMM:
   infra-shibuya-mailpit-smtp: 1

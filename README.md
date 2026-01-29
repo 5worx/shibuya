@@ -2,6 +2,8 @@
 
 ![SHIBUYA](helper/boilerplates/logos/shibuya.svg)
 
+> __SHIBUYA__ (nach William Gibson, der als einer der Begründer des Cyberpunk-Genres gilt): _"In der Ästhetik des Cyberpunk ist __SHIBUYA__ das _leuchtende Herz der Vernetzung_ – ein Ort, an dem die Grenze zwischen Hardware und Software verschwimmt. Als Dispatcher übernimmt __SHIBUYA__ diese Rolle im F.A.D.S: Er filtert das Rauschen der Abhängigkeiten und schafft eine klare Struktur inmitten der technologischen Komplexität. Ein digitaler Distrikt, der niemals schläft."_
+
 __Dein Monorepo. Dein Fokus. Deine Freiheit.__ 
 
 Vergiss starre Skripte und manuelle Setups. SHIBUYA ist das Framework Agnostic Development System, das Komplexität in Einfachheit verwandelt. Mit einer app-zentrischen Orchestrierung, die Infrastruktur und Abhängigkeiten genau dann liefert, wenn du sie brauchst – und sie im Hintergrund laufen lässt, wenn du sie nicht mehr siehst. __Baue Software, kein Setup.__
@@ -12,26 +14,30 @@ Hinter den Namen im SHIBUYA-System steckt eine klare Philosophie. Jedes Modul er
 
 ### 🏗️ KIBAN (基盤) – Das Fundament
 * **Bedeutung:** Basis / Infrastruktur / Unterbau.
-* **Rolle:** Beherbergt die unsichtbare Logik. Hier liegen Serialisierung, Transformationen und grundlegende JS-Klassen, die framework-übergreifend in den Anwendungen genutzt werden können. Ohne Kiban gibt es keine Stabilität in den Datenströmen.
+* **Rolle:** Beherbergt die unsichtbare Logik. Hier liegen Serialisierung, Transformationen und grundlegende JS-Klassen, die framework-übergreifend in den Anwendungen genutzt werden können. Ohne Kiban gibt es keine Stabilität durch wiederverwendbare Komponenten.
 
-### 🎭 KUROKO (黒衣) – Die unsichtbaren Helfer
+### 🎭 KUROKO (黒衣) – Die unsichtbaren Bühnen(Frontend) -Helfer
 * **Bedeutung:** Die in Schwarz gekleideten Bühnenhelfer im japanischen Theater.
 * **Rolle:** Unsere Stencil Web Components. Wie die Kuroko arbeiten sie hochgradig effizient im Verborgenen (Shadow DOM), um die visuelle Show zu ermöglichen, ohne dass die Apps sich um die komplexe UI-Logik kümmern müssen.
 
 ### 🚦 SHIBUYA Orchestrator
 * **Bedeutung:** Das pulsierende Herz der Vernetzung.
-* **Rolle:** Der Dispatcher, der alles zusammenhält. Er koordiniert die Ströme zwischen Kiban (Logik), Kuroko (UI) und den darauf aufgebauten Anwendungen.
+* **Rolle:** Der Dispatcher, der alles zusammenhält. Er koordiniert die Ströme zwischen Kiban (Logik), Kuroko (UI) und den darauf aufgebauten Anwendungen und ist der "Kleber" der Infrastruktur.
 
-### 📜 SHIBUYA Mokuroku (目録)
+### 📜 MOKUROKU (目録)
 * **Bedeutung:** Das Inventar / Der Katalog
-* **Rolle:** Technisches Verzeichnis und Dokumentation der Bestandteile
+* **Rolle:** Technisches Verzeichnis und Dokumentation der Bestandteile.
+
+### 📜 SUIDO (水道)
+* **Bedeutung:** Wasserweg oder Kanalisation
+* **Rolle:** Logische und eindeutiges Schema zur Port-Vergabe unterhalb Shibuyas
 
 ## 🎯 Kernprinzipien
 
 - __App-Zentrisch__: Jede App definiert in ihrer eigenen shibuya.yaml, was sie zum Arbeiten benötigt.
 - __Persistent Infra__: Infrastruktur (Docker) wird gestartet, bleibt aber auch nach dem Beenden der Dev-Server aktiv. Kein unnötiges Warten auf Datenbanken.
 - __Modular & Agnostisch__: Egal ob _Angular_, _Stencil_, _React_ oder _Go_ – der SHIBUYA Orchestrator bedient jedes Framework über NX-Targets.
-- __Parallelität__: Maximale Ausnutzung deiner Hardware durch parallele Task-Ausführung.
+- __Parallelität__: Maximale Ausnutzung der Hardware durch parallele Task-Ausführung.
 
 ## 🏗 Struktur
 
@@ -42,13 +48,11 @@ Das System basiert auf einer klaren Trennung von Verantwortlichkeiten:
 ├── apps/                 # Endbenutzer-Anwendungen (z.B. Angular)
 │   └── angular-app/
 │       └── shibuya.yaml  # Das "Gehirn" der App
-├── packages/             # Gemeinsam genutzte Libs & Komponenten
+├── packages/             # Gemeinsam genutzte Libs & Komponenten (Kiban, Kuroko)
 ├── infrastructure/       # Docker-Umgebungen (Keycloak, DBs, etc.)
-├── helper/               # Setup- & Cleanup-Scripts
+├── helper/               # Setup-, Helper- & Cleanup-Scripts
 └── shibuya.js            # Der Dispatcher (SHIBUYA)
 ```
-
-> __SHIBUYA__ (nach William Gibson, der als einer der Begründer des Cyberpunk-Genres gilt): _"In der Ästhetik des Cyberpunk ist __SHIBUYA__ das _leuchtende Herz der Vernetzung_ – ein Ort, an dem die Grenze zwischen Hardware und Software verschwimmt. Als Dispatcher übernimmt __SHIBUYA__ diese Rolle im F.A.D.S: Er filtert das Rauschen der Abhängigkeiten und schafft eine klare Struktur inmitten der technologischen Komplexität. Ein digitaler Distrikt, der niemals schläft."_
 
 > Das erste Mal hier? -> [🛠️ Tooling & Onboarding](./GETTING_STARTED.md)
 

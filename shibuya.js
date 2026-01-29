@@ -113,6 +113,8 @@ const cleanup = (signal) => {
     );
     console.log(`💡 Tipp: Nutze "pnpm stop" zum Herunterfahren der Container.`);
   } else if (infraToCleanup.size > 0) {
+    // 🔥 WICHTIG: Hier prüfen wir, ob wir wirklich aufräumen wollen
+    // Wenn der Prozess sauber durchgelaufen ist (Code 0), wollen wir bei 'forge' oder 'start' NICHT stoppen.
     console.log(`\n🧹 SHIBUYA (Signal: ${signal}): Räume den Distrikt auf...`);
     infraToCleanup.forEach((infra) => {
       spawnSync("pnpm", ["nx", "run", `${infra}:stop`], {
@@ -130,5 +132,17 @@ process.on("SIGTERM", () => cleanup("SIGTERM"));
 
 child.on("close", (code) => {
   console.log(`\n📡 NX-Prozess beendet (Code ${code})`);
-  if (code !== 0 && !isCleaningUp) cleanup("PROCESS_ERROR");
+
+  // LOGIK-FIX:
+  // Wenn der Code 0 ist (Erfolg), rufen wir cleanup NICHT auf,
+  // außer wir sind im 'melt' Modus oder ähnlichem.
+  // Bei 'forge' wollen wir, dass die Container oben bleiben!
+
+  if (code !== 0 && !isCleaningUp) {
+    cleanup("PROCESS_ERROR");
+  } else {
+    // Prozess war erfolgreich, wir beenden einfach das Skript,
+    // OHNE die infraToCleanup-Schleife zu triggern.
+    process.exit(0);
+  }
 });

@@ -2,12 +2,9 @@ import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
 /**
- * Port-Konfigurationsdatei für das Monorepo.
- *
- * Implementiert das 5-stellige Schema: 52XXX
- * XX (42): Monorepo-Präfix
- * Y: Kategorie-Index (0=API, 1=UI, 2=Admin etc.)
- * ZZ: Eindeutige App-ID innerhalb der Kategorie (01 bis 99)
+ * SUIDO (水道) - Das Port-Leitsystem für SHIBUYA.
+ * * Diese Strategie kanalisiert den Datenverkehr des Monorepos über
+ * ein deterministisches 5-stelliges Schema: {PREFIX}{DISTRICT}{ID}
  */
 
 // Anpassen, falls mehrere Monorepos auf einer Workstation
@@ -26,23 +23,23 @@ const CATEGORY_MAP = {
   PACKAGES: 0, // {MONOREPO_PREFIX}0xx: Backend Services, APIs
   APPS: 1, // {MONOREPO_PREFIX}1xx: User-Facing Frontends
   INFRA: 2, // {MONOREPO_PREFIX}2xx: Admin-Interfaces, CMS
-  DB: 3, // {MONOREPO_PREFIX}3xx: Mock Server, Tools
-  SMTP: 4, // {MONOREPO_PREFIX}4xx: SMTP
+  STORAGE: 3, // {MONOREPO_PREFIX}3xx: Mock Server, Tools
+  COMM: 4, // {MONOREPO_PREFIX}4xx: SMTP
 };
 
 const configPath = path.join(
   process.cwd(),
   "helper",
-  "ports",
-  "port.config.yaml",
+  "suido",
+  "suido.config.yaml",
 );
 
 let APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.PACKAGES]: {},
   [CATEGORY_MAP.APPS]: {},
   [CATEGORY_MAP.INFRA]: {},
-  [CATEGORY_MAP.DB]: {},
-  [CATEGORY_MAP.SMTP]: {},
+  [CATEGORY_MAP.STORAGE]: {},
+  [CATEGORY_MAP.COMM]: {},
 };
 
 if (fs.existsSync(configPath)) {
@@ -51,8 +48,8 @@ if (fs.existsSync(configPath)) {
     [CATEGORY_MAP.PACKAGES]: rawConfig.PACKAGES || {},
     [CATEGORY_MAP.APPS]: rawConfig.APPS || {},
     [CATEGORY_MAP.INFRA]: rawConfig.INFRA || {},
-    [CATEGORY_MAP.DB]: rawConfig.DB || {},
-    [CATEGORY_MAP.SMTP]: rawConfig.SMTP || {},
+    [CATEGORY_MAP.STORAGE]: rawConfig.STORAGE || {},
+    [CATEGORY_MAP.COMM]: rawConfig.COMM || {},
   };
 } else {
   console.warn(`⚠️ Keine port.config.yaml gefunden unter ${configPath}`);
@@ -85,21 +82,22 @@ function calculatePort(categoryIndex, appIndex) {
  */
 function generatePortConfig() {
   const portMap = {};
+  const usedPorts = new Set(); // SUIDO-Guard: Verhindert Rohrbrüche
 
   for (const categoryIndex in APPLICATIONS_CONFIG) {
     const categoryApps = APPLICATIONS_CONFIG[categoryIndex];
 
-    // Da categoryApps jetzt ein Objekt { "app-name": ID } ist:
     Object.entries(categoryApps).forEach(([appName, appId]) => {
-      // Wir nehmen jetzt direkt die appId (ZZ) aus deiner Config!
       const port = calculatePort(parseInt(categoryIndex, 10), appId);
 
-      if (portMap[appName]) {
-        console.warn(
-          `WARNUNG: Doppelte Anwendung gefunden: ${appName}. Bitte Namen in APPLICATIONS_CONFIG prüfen.`,
+      if (usedPorts.has(port)) {
+        throw new Error(
+          `🛑 SUIDO-KOLLISION: Port ${port} wird mehrfach beansprucht! ` +
+            `Prüfe die ID ${appId} in Kategorie ${categoryIndex}.`,
         );
       }
 
+      usedPorts.add(port);
       portMap[appName] = port;
     });
   }
@@ -123,7 +121,7 @@ function displayPortTable() {
     }, {});
 
     console.log(
-      `--- Generierte Monorepo URLs (${MONOREPO_PREFIX}XXX Schema) ---`,
+      `\n\x1b[34m--- 💧 SUIDO Port-Matrix [Prefix: ${MONOREPO_PREFIX}] ---\x1b[0m`,
     );
     console.table(urlMap);
     console.log("--------------------------------------------------");
@@ -131,7 +129,7 @@ function displayPortTable() {
 }
 
 // Führe die Ausgabe nur aus, wenn das Skript direkt über Node.js aufgerufen wird
-if (process.argv[1] && process.argv[1].endsWith("port.config.js")) {
+if (process.argv[1] && process.argv[1].endsWith("suido.js")) {
   displayPortTable();
 }
 

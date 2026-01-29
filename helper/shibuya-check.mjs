@@ -113,23 +113,5 @@ try {
   );
 }
 
-// 7. Git-Bug Template-Automatisierung
-log("\n7. Konfiguriere Bug-Templates...");
-const templatePath = ".git-bug/templates/bug.md";
-
-if (fs.existsSync(templatePath)) {
-  try {
-    // Erstellt das Alias 'git bug-new', das das Template nutzt
-    execSync(
-      `git config --local alias.bug-new "!git-bug bug new --message-file ${templatePath}"`,
-    );
-    log("  ✅ Alias 'git bug-new' wurde konfiguriert.", "success");
-  } catch (e) {
-    log("  ❌ Fehler beim Setzen des Git-Alias.", "error");
-  }
-} else {
-  log(`  ⚠️  Template unter ${templatePath} nicht gefunden!`, "warn");
-}
-
 log("\n" + "=".repeat(30));
 log("Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!\n");
