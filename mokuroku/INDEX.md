@@ -50,8 +50,9 @@ Dieses Projekt folgt dem **SHIBUYA**-Prinzip: Maximale Autonomie der Komponenten
 | `infrastructure/` | Infra | Docker-Zentrale (DB, Keycloak, Mail) | ⚙️ Stabil |
 
 
-## 🐛 Defekt-Management
+## 🐛 Internes Bugtracking
 
 Bugs werden dezentral via `git-bug` verwaltet.
 
 - `git-bug webui` zur grafischen Übersicht.
+- [Anleitung zum Bugtracking](./BUGTRACKING.md)

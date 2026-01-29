@@ -101,5 +101,35 @@ if (fs.existsSync("./.githooks")) {
   log("  ❌ Fehler beim Setzen des Hook-Pfades.", "error");
 }
 
+// Ergänzung für den Check-Skript:
+log("\n6. Prüfe SSH-Agent...");
+try {
+  execSync("ssh-add -l");
+  log("  ✅ SSH-Agent läuft und Identitäten sind geladen.", "success");
+} catch (e) {
+  log("  ⚠️  SSH-Agent läuft nicht oder keine Schlüssel geladen.", "warn");
+  log(
+    "      Tipp: Führe 'eval `ssh-agent` && ssh-add' aus, um Passworteingaben zu minimieren.",
+  );
+}
+
+// 7. Git-Bug Template-Automatisierung
+log("\n7. Konfiguriere Bug-Templates...");
+const templatePath = ".git-bug/templates/bug.md";
+
+if (fs.existsSync(templatePath)) {
+  try {
+    // Erstellt das Alias 'git bug-new', das das Template nutzt
+    execSync(
+      `git config --local alias.bug-new "!git-bug bug new --message-file ${templatePath}"`,
+    );
+    log("  ✅ Alias 'git bug-new' wurde konfiguriert.", "success");
+  } catch (e) {
+    log("  ❌ Fehler beim Setzen des Git-Alias.", "error");
+  }
+} else {
+  log(`  ⚠️  Template unter ${templatePath} nicht gefunden!`, "warn");
+}
+
 log("\n" + "=".repeat(30));
 log("Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!\n");

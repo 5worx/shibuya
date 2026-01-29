@@ -50,3 +50,35 @@ Es ist nicht bekannt, was für Anwendungen produziert werden. Es können auch no
 * **tree**: Terminal Anwendung zum Anzeigen von Verzeichnis- und Dateistrukturen
 * **LazyDocker**: Terminal GUI zum Anzeigen und Verwalten von Docker-Containern
 * **LazyGit**: Terminal GUI für Git
+
+### 🛠 Workflow-Booster: SSH-Agent Automatisierung
+
+Damit du dein Passwort für git-bug (und Git allgemein) nur einmal pro Session eingeben musst, füge folgendes deiner `.bashrc` oder `.zshrc` hinzu:
+
+```bash
+# SSH-Agent automatisch starten oder bestehenden nutzen
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    # Prüfen, ob bereits ein Agent läuft
+    SSH_AGENT_FILE="$HOME/.ssh/agent-environment"
+    if [ -f "$SSH_AGENT_FILE" ]; then
+        . "$SSH_AGENT_FILE" > /dev/null
+    fi
+    
+    # Wenn kein Agent antwortet, neuen starten
+    if ! ps -p "$SSH_AGENT_PID" > /dev/null 2>&1; then
+        ssh-agent > "$SSH_AGENT_FILE"
+        chmod 600 "$SSH_AGENT_FILE"
+        . "$SSH_AGENT_FILE" > /dev/null
+    fi
+fi
+
+# Schlüssel automatisch hinzufügen (fragt beim ersten Mal nach dem Passwort)
+if [ -z "$(ssh-add -l | grep 'SHA256')" ]; then
+    ssh-add
+fi
+```
+
+Das ist wichtig für:
+
+* **Reibungsloser Sync**: Die `pre-push` und `post-merge` Hooks laufen im Hintergrund ohne Unterbrechung durch.
+* **Identität**: `git-bug` kann deine Einträge sofort signieren, ohne dass ein Editor-Popup oder eine Passwort-Prompts den Flow stört.
