@@ -1,5 +1,5 @@
 import { Component, inject, computed, OnInit } from '@angular/core';
-import { AuthService } from '@shibuya/auth';
+import { AuthService } from '@pckg/auth';
 import { ItemService } from '../../services/item.service'; // Pfad anpassen
 import { JsonPipe } from '@angular/common';
 

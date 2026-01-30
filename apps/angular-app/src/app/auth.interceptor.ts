@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '@shibuya/auth';
+import { AuthService } from '@pckg/auth';
 
 const TOKEN_ENDPOINT = '/protocol/openid-connect/token';
 

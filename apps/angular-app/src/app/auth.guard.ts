@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { AuthService } from '@shibuya/auth';
+import { AuthService } from '@pckg/auth';
 
 /**
  * Klassischer Showcase AuthGuard für SHIBUYA.
