@@ -48,7 +48,7 @@ Das SUIDO-Prinzip setzt auf **bewusstes Engineering**. Ports werden nicht magisc
 
 * **Keine Zufälle:** Nutze niemals dynamische Ports (`:0`) oder Standard-Ports (`8080`, `5432`), die außerhalb von SUIDO liegen.
 * **Kein Wildwuchs:** Distrikt 9 ist für systemkritische Notfälle reserviert und darf nicht für reguläre Apps genutzt werden.
-* **Dokumentationspflicht:** Jede Änderung an der `port.config.yaml` ist ein administrativer Akt und muss im Commit begründet werden.
+* **Dokumentationspflicht:** Jede Änderung an der `suido.config.yaml` ist ein administrativer Akt und muss im Commit begründet werden.
 
 ---
 *„Absorb what is useful, reject what is useless, and add what is essentially your own.“ — Bruce Lee*
