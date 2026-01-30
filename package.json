@@ -9,7 +9,7 @@
     "start": "node ./shibuya.js start --apps=angular-app,rust-api",
     "stop": "node ./shibuya.js stop --apps=angular-app,rust-api",
     "melt": "node ./shibuya.js melt --apps=angular-app,rust-api",
-    "helper:check": "node ./helper/shibuya-check.mjs",
+    "helper:check": "node ./helper/shibuya-check.mjs && node ./helper/sensei.mjs",
     "helper:clean": "node ./helper/clean-all.mjs",
     "helper:export-realms": "node ./helper/export-keycloak-realm.mjs",
     "mokuroku:view": "node ./helper/mokuroku.mjs view",

@@ -47,6 +47,8 @@ Check der *Umgebung* `pnpm helper:check`:
 Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!
 ```
 
+> **Nützlich?** in der ROOT-`package.json` wird `helper:check` zusammen mit dem `sensei`-Skript ausgeführt. Der Sensei (nicht Sensai, das bedeutet "Deodorant) hilft, die Prinzipien des [Agilen Manifests](https://agilemanifesto.org/iso/de/principles.html) in Erinnerung zu behalten.
+
 ### WSL / Linux Subsystem für Win
 
 > Allen Windowsnutzern wird empfohlen über WSL im Ubuntu-Subsystem zu arbeiten. Auch wenn das Terminal vielleicht anfangs etwas gewöhnungsbedürftig ist, so ist das Arbeiten nach etwas Übung wesentlich angenehmer und vor Allem schneller.
