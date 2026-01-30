@@ -4,6 +4,7 @@
   "description": "Framework Agnostic Development System",
   "type": "module",
   "scripts": {
+    "postinstall": "node ./helper/sensei.mjs",
     "forge": "node ./shibuya.js forge --apps=angular-app,rust-api",
     "dev": "node ./shibuya.js dev --apps=angular-app,rust-api",
     "start": "node ./shibuya.js start --apps=angular-app,rust-api",
@@ -12,8 +13,10 @@
     "helper:check": "node ./helper/shibuya-check.mjs && node ./helper/sensei.mjs",
     "helper:clean": "node ./helper/clean-all.mjs",
     "helper:export-realms": "node ./helper/export-keycloak-realm.mjs",
-    "mokuroku:view": "node ./helper/mokuroku.mjs view",
-    "mokuroku:adr": "node ./helper/mokuroku.mjs adr",
+    "mokuroku:view": "node ./helper/sensei.mjs && node ./helper/mokuroku-viewer.mjs",
+    "mokuroku:retro": "node ./helper/mokuroku.mjs retro",
+    "mokuroku:notes": "node ./helper/mokuroku.mjs notes",
+    "mokuroku:lock": "tar cz -C mokuroku notes | gpg -c -o mokuroku/notes.tar.gpg && rm -rf mokuroku/notes/*.md",
     "suido:urls": "node ./helper/suido/suido.js --urls"
   },
   "keywords": [
@@ -31,7 +34,10 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "nx": "^22.4.0"
+    "express": "^5.2.1",
+    "marked": "^17.0.1",
+    "nx": "^22.4.0",
+    "open": "^11.0.0"
   },
   "dependencies": {
     "js-yaml": "^4.1.1"

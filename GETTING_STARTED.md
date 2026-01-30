@@ -6,6 +6,7 @@ Bevor du den Distrikt betrittst, stelle sicher, dass folgende Werkzeuge auf dein
 * **pnpm**: Version 10.28.x oder höher (`npm install -g pnpm`)
 * **Git**: Version 2.43 oder höher
 * **git-bug**: Version 0.10.x oder höher
+* **git-crypt**: Version 0.7.x oder höher
 * **Docker & Docker Compose**: Zum Hosten der Infrastruktur (Keycloak, DBs)
 * **NX CLI**: Global empfohlen via `pnpm add -g nx` (alternativ via `npx nx`)
 

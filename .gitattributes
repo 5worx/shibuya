@@ -1,0 +1,5 @@
+# mokuroku/notes soll komplett verschlüsselt werden
+mokuroku/notes/** filter=git-crypt diff=git-crypt
+
+# Falls es sensible Templates gibt
+mokuroku/.templates/secret-*.md filter=git-crypt diff=git-crypt
