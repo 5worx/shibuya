@@ -52,7 +52,7 @@ if (fs.existsSync(configPath)) {
     [CATEGORY_MAP.COMM]: rawConfig.COMM || {},
   };
 } else {
-  console.warn(`⚠️ Keine port.config.yaml gefunden unter ${configPath}`);
+  console.warn(`⚠️ Keine suido.config.yaml gefunden unter ${configPath}`);
 }
 
 /**

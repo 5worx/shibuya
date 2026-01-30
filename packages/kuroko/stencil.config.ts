@@ -1,10 +1,9 @@
 import { Config } from '@stencil/core';
-import { Ports } from '../../port.config.js';
 
 export const config: Config = {
   namespace: 'kuroko',
   devServer: {
-    port: Ports['kuroko'],
+    port: 52001,
     openBrowser: false,
   },
   outputTargets: [
