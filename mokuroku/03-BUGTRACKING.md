@@ -1,6 +1,8 @@
 # Bugtracking mit git-bug
 
-Git hat schon lange sein internes Bugtracking. Allerdings ein sehr rudimentäres, das weder die Verknüpfung untereinander, noch eine Einordnung nach Kategorien oder Priorität erlaubt. Man knn auch keine Anhänge oder Grafiken dazupacken.
+Git hat schon lange sein internes Bugtracking. Allerdings ein sehr rudimentäres, das weder die Verknüpfung untereinander, noch eine Einordnung nach Kategorien oder Priorität erlaubt. Man kann auch keine Anhänge oder Grafiken dazupacken.
+
+> Sollte es kein Issuetracking im Projekt geben oder nicht klar ist, empfehle ich diese Lösung, da fast alle Manager wie Jira in der Lage sind, die mit `git-bug` erfassten Issues zu importieren.
 
 ## Einmaliges Setup (Onboarding)
 
@@ -53,3 +55,14 @@ Dieses System besteht aus vier Bereichen: `apps/`, `packages/`, `infrastructure/
 - `scope:packages`
 - `scope:infra`
 - `scope:helper`
+
+### Bearbeiter/ Prozess
+
+Natürlich müssen wir auch wissen, wer den Task bearbeitet und in welchem Zustand er ist. Auch hier machen wir uns die Label zunutze. Damit wir aber nicht den ganzen Bereich mit LAbel zumüllen, kombinieren wir den User mit dem Prozess.
+
+Beispiele
+
+- `bunke:new`
+- `ssch:in_progress`
+- `galibaeva:ready_for_review`
+- `m.strobelt:done`
