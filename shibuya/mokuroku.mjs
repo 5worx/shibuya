@@ -62,7 +62,7 @@ switch (command) {
     break;
   case "view":
     // Hier rufen wir deinen Express-Viewer auf
-    execSync("node helper/tools/mokuroku-viewer.mjs", { stdio: "inherit" });
+    execSync("node shibuya/tools/mokuroku-viewer.mjs", { stdio: "inherit" });
     break;
 
   default:

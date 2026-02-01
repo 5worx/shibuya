@@ -29,7 +29,7 @@ const CATEGORY_MAP = {
 
 const configPath = path.join(
   process.cwd(),
-  "helper",
+  "shibuya",
   "suido",
   "suido.config.yaml",
 );

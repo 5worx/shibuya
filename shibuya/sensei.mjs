@@ -1,4 +1,4 @@
-// helper/tools/sensei.mjs
+// shibuya/tools/sensei.mjs
 
 const principles = [
   "Individuen und Interaktionen mehr als Prozesse und Werkzeuge",
@@ -36,7 +36,7 @@ function wrapText(text, limit) {
   return lines;
 }
 
-// helper/tools/sensei.mjs
+// shibuya/tools/sensei.mjs
 
 function drawBox(text) {
   const boxWidth = 40; // Etwas breiter für bessere Lesbarkeit

@@ -36,7 +36,7 @@ Jeder Port im System folgt einer strengen 5-stelligen Logik, um Kollisionen zu v
 
 Das SUIDO-Prinzip setzt auf **bewusstes Engineering**. Ports werden nicht magisch zugewiesen, sondern aktiv definiert:
 
-1.  **ID reservieren:** Prüfe die `helper/suido/suido.config.yaml`, welche IDs in deinem Distrikt noch frei sind.
+1.  **ID reservieren:** Prüfe die `shibuya/suido/suido.config.yaml`, welche IDs in deinem Distrikt noch frei sind.
 2.  **Eintragen:** Füge deine neue App mit der nächsten freien ID hinzu.
 3.  **Implementieren:** Übernimm diesen Port manuell in deine Docker-Konfiguration, Umgebungsvariablen oder `project.json`.
 

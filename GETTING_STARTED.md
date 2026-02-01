@@ -14,7 +14,8 @@ Nach dem Clone: `pnpm install`:
 
 Nachdem die erforderliche Software und die Abhängigkeiten installiert sind, müssen noch evtl kleinere Einstellungen vorgenommen werden, damit nicht nur die Anwendungsentwicklung, sondern auch das Drumherum reibungslos läuft.
 
-Check der *Umgebung* `pnpm helper:check`:
+Check der *Umgebung* `pnpm 
+:check`:
 
 ```sh
 🏙️  SHIBUYA - Environment Check
@@ -48,7 +49,7 @@ Check der *Umgebung* `pnpm helper:check`:
 Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!
 ```
 
-> **Nützlich?** in der ROOT-`package.json` wird `helper:check` zusammen mit dem `sensei`-Skript ausgeführt. Der Sensei (nicht Sensai, das bedeutet "Deodorant) hilft, die Prinzipien des [Agilen Manifests](https://agilemanifesto.org/iso/de/principles.html) in Erinnerung zu behalten.
+> **Nützlich?** in der ROOT-`package.json` wird `shibuya:check` zusammen mit dem `sensei`-Skript ausgeführt. Der Sensei (nicht Sensai, das bedeutet "Deodorant) hilft, die Prinzipien des [Agilen Manifests](https://agilemanifesto.org/iso/de/principles.html) in Erinnerung zu behalten.
 
 ### WSL / Linux Subsystem für Win
 

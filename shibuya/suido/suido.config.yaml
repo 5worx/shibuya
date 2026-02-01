@@ -8,6 +8,8 @@ PACKAGES:
 APPS:
   angular-app: 1
   rust-api: 2
+  laravel-app: 3
+  laravel-api: 4
 
 INFRA:
   infra-keycloak-admin: 1

@@ -49,12 +49,12 @@ Es gibt eigentlich nur wenige Aufgabentypen. Es gibt die **`Story`**, die eine k
 
 ### Bereich (Scope)
 
-Dieses System besteht aus vier Bereichen: `apps/`, `packages/`, `infrastructure/`, `helper/`. Und imgrunde können nur hier Aufgaben anfallen. Um auch über die Typo der Labels sofort Zuordnungen machen zu können, haben die Bereichslabels ein andere Schreibweise:
+Dieses System besteht aus vier Bereichen: `apps/`, `packages/`, `infrastructure/`, `shibuya/`. Und imgrunde können nur hier Aufgaben anfallen. Um auch über die Typo der Labels sofort Zuordnungen machen zu können, haben die Bereichslabels ein andere Schreibweise:
 
 - `scope:apps`
 - `scope:packages`
 - `scope:infra`
-- `scope:helper`
+- `scope:shibuya`
 
 ### Bearbeiter/ Prozess
 

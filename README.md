@@ -1,6 +1,6 @@
 # SHIBUYA - The Framework Agnostic Development System
 
-![SHIBUYA](helper/boilerplates/logos/shibuya.svg)
+![SHIBUYA](shibuya/boilerplates/logos/shibuya.svg)
 
 > __SHIBUYA__ (nach William Gibson, der als einer der Begründer des Cyberpunk-Genres gilt): _"In der Ästhetik des Cyberpunk ist __SHIBUYA__ das _leuchtende Herz der Vernetzung_ – ein Ort, an dem die Grenze zwischen Hardware und Software verschwimmt. Als Dispatcher übernimmt __SHIBUYA__ diese Rolle im F.A.D.S: Er filtert das Rauschen der Abhängigkeiten und schafft eine klare Struktur inmitten der technologischen Komplexität. Ein digitaler Distrikt, der niemals schläft."_
 
@@ -50,7 +50,7 @@ Das System basiert auf einer klaren Trennung von Verantwortlichkeiten:
 │       └── shibuya.yaml  # Das "Gehirn" der App
 ├── packages/             # Gemeinsam genutzte Libs & Komponenten (Kiban, Kuroko)
 ├── infrastructure/       # Docker-Umgebungen (Keycloak, DBs, etc.)
-├── helper/               # Setup-, Helper- & Cleanup-Scripts
+├── shibuya/               # Setup-, Helper- & Cleanup-Scripts
 └── shibuya.js            # Der Dispatcher (SHIBUYA)
 ```
 
@@ -103,7 +103,7 @@ Wir setzen auf **SQLx** für typsichere Abfragen und ein automatisiertes Migrati
 
 #### System-Reset & Kaltstart
 
-Wenn der Workspace komplett bereinigt wurde (`pn helper:clean` + Volumes gelöscht):
+Wenn der Workspace komplett bereinigt wurde (`pn shibuya:clean` + Volumes gelöscht):
 
 ```bash
 # 1. Infrastruktur & Apps bauen (Docker-Images & Rust Binaries)
