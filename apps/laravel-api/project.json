@@ -1,0 +1,16 @@
+{
+  "name": "laravel",
+  "implicitDependencies": [],
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "composer run dev",
+        "cwd": "apps/laravel-api"
+      }
+    }
+  },
+  "tags": []
+}
