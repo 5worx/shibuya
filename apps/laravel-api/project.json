@@ -4,6 +4,13 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "targets": {
+    "install": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/laravel-api",
+        "commands": ["composer install"]
+      }
+    },
     "dev": {
       "executor": "nx:run-commands",
       "options": {

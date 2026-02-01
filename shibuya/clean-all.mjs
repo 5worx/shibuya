@@ -2,98 +2,136 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
-// Die Liste der Verdächtigen
-const targetsToMatch = [
-  "node_modules",
+const buildTargets = [
   "dist",
-  "target", // Rust Artefakte
+  "build",
   ".nx",
   ".angular",
   ".stencil",
-  "build",
-  ".pnpm-store",
+  "*.tsbuildinfo",
 ];
 
-async function factoryReset() {
-  console.log("🌆 SHIBUYA: Initialisiere vollständigen Factory Reset...");
+const dependencyTargets = [
+  "node_modules",
+  ".pnpm-store",
+  "vendor",
+  "pnpm-lock.yaml",
+  "package-lock.json",
+  "yarn.lock",
+  "composer.lock",
+];
 
-  // 1. Infrastruktur & Docker
-  try {
-    console.log(
-      "📦 Stoppe Infrastruktur und bereinige Container-Daten via melt...",
-    );
-    execSync("pnpm nx run-many -t melt --all --outputStyle=static", {
-      stdio: "inherit",
-    });
-  } catch (error) {
-    console.log(
-      "⚠️ Hinweis: Infrastruktur konnte nicht gestoppt werden (vielleicht schon offline).",
-    );
+async function factoryReset(options = {}) {
+  const {
+    cleanInfra = false,
+    cleanBuilds = false,
+    cleanDependencies = false,
+    cleanEverything = false,
+  } = options;
+
+  console.log("🌆 SHIBUYA: Initialisiere Bereinigung...");
+
+  // Infrastruktur stoppen
+  if (cleanInfra || cleanEverything) {
+    try {
+      console.log("📦 Stoppe Infrastruktur via melt...");
+      execSync("pnpm nx run-many -t melt --all --outputStyle=static", {
+        stdio: "inherit",
+      });
+    } catch (error) {
+      console.log("⚠️ Infrastruktur konnte nicht gestoppt werden.");
+    }
   }
 
-  // 2. Rekursives Löschen
-  console.log(
-    "🗑️ Lösche alle Artefakte (node_modules, dist, target, build-infos, caches)...",
-  );
-
+  // Rekursive Bereinigung mit präzisen Regeln
   const cleanPaths = (base) => {
-    let allEntries = [];
-    try {
-      // Wir lesen rekursiv ein, fangen aber EACCES ab (für gesperrte Docker-Ordner)
-      allEntries = fs.readdirSync(base, {
-        withFileTypes: true,
-        recursive: true,
-      });
-    } catch (err) {
-      if (err.code === "EACCES") {
-        console.warn(`  ⚠️  Kein Zugriff auf: ${base} (wird übersprungen)`);
-        return;
-      }
-      throw err;
-    }
+    const findTargets = (dir, targets) => {
+      let results = [];
 
-    // Wir filtern die Einträge basierend auf Namen oder Endung
-    const targets = allEntries
-      .filter((entry) => {
-        const name = entry.name;
-        return targetsToMatch.includes(name) || name.endsWith(".tsbuildinfo");
-      })
-      .map((entry) =>
-        path.join(entry.parentPath || entry.path || base, entry.name),
-      );
-
-    // Einzelne Files wie lock-files manuell hinzufügen, falls sie im Root liegen
-    if (fs.existsSync("pnpm-lock.yaml")) targets.push("pnpm-lock.yaml");
-
-    // Sortieren nach Länge (umgekehrte Tiefe), damit wir Unterordner vor Eltern löschen
-    targets.sort((a, b) => b.length - a.length);
-
-    // Echte Duplikate entfernen (falls durch rekursives Einlesen doppelt erfasst)
-    const uniqueTargets = [...new Set(targets)];
-
-    uniqueTargets.forEach((target) => {
       try {
-        if (fs.existsSync(target)) {
-          fs.rmSync(target, { recursive: true, force: true });
-          console.log(`  - gelöscht: ${target}`);
-        }
-      } catch (err) {
-        // Falls wir hier doch ein EACCES bekommen (z.B. Keycloak/data), loggen wir es nur
-        if (err.code === "EACCES") {
-          console.error(
-            `  ⚠️  Berechtigungsfehler bei ${target} (Docker-Leiche?)`,
+        const entries = fs.readdirSync(dir, {
+          withFileTypes: true,
+          recursive: true,
+        });
+
+        entries.forEach((entry) => {
+          const fullPath = path.join(
+            entry.parentPath || entry.path || dir,
+            entry.name,
           );
-        } else {
-          console.error(`  ❌ Fehler bei ${target}:`, err.message);
+
+          // Spezielle Behandlung für Builds: Nicht in node_modules suchen
+          if (cleanBuilds && fullPath.includes("node_modules")) {
+            return;
+          }
+
+          // Bei Dependencies alle node_modules, vendor und Lock-Dateien rekursiv
+          const matchCondition =
+            cleanDependencies || cleanEverything
+              ? targets.some(
+                  (target) =>
+                    entry.name === target ||
+                    (target.includes("*") &&
+                      new RegExp(target.replace("*", ".*")).test(entry.name)),
+                )
+              : cleanBuilds &&
+                targets.some(
+                  (target) =>
+                    entry.name === target ||
+                    (target.includes("*") &&
+                      new RegExp(target.replace("*", ".*")).test(entry.name)),
+                );
+
+          if (matchCondition) {
+            results.push(fullPath);
+          }
+        });
+      } catch (err) {
+        if (err.code !== "EACCES") {
+          console.error("Fehler beim Scannen:", err);
         }
       }
-    });
+
+      return results;
+    };
+
+    let targetsToRemove = findTargets(
+      base,
+      cleanBuilds
+        ? buildTargets
+        : cleanDependencies
+          ? dependencyTargets
+          : [...buildTargets, ...dependencyTargets],
+    );
+
+    // Sortieren nach Pfadlänge für verschachtelte Löschung
+    targetsToRemove
+      .sort((a, b) => b.length - a.length)
+      .forEach((target) => {
+        try {
+          if (fs.existsSync(target)) {
+            fs.rmSync(target, { recursive: true, force: true });
+            console.log(`  - gelöscht: ${target}`);
+          }
+        } catch (err) {
+          console.error(`Fehler beim Löschen von ${target}:`, err.message);
+        }
+      });
   };
 
   cleanPaths(process.cwd());
 
-  console.log("\n✨ Der Distrikt ist im Auslieferungszustand.");
-  console.log("🚀 SHIBUYA: System bereit für Neu-Installation (pnpm install).");
+  console.log("\n✨ Bereinigung abgeschlossen.");
+  console.log("🚀 System bereit für Neu-Installation.");
 }
 
-factoryReset();
+// Argument-basierte Ausführung
+const args = process.argv.slice(2);
+const options = {
+  cleanInfra: args.includes("--infrastructure"),
+  cleanBuilds: args.includes("--builds"),
+  cleanDependencies: args.includes("--dependencies"),
+  cleanEverything: args.includes("--all"),
+};
+
+factoryReset(options);
