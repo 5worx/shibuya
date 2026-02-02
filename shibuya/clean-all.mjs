@@ -2,9 +2,17 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
+/**
+ * Sollten die apps/ eigene oder andere "build"-Ordner haben,
+ * müssen sie hier hinzugefügt werden.
+ *
+ * Wie bspw "target" für den Rust-Build
+ */
+
 const buildTargets = [
   "dist",
   "build",
+  "target",
   ".nx",
   ".angular",
   ".stencil",

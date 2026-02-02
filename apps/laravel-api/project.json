@@ -8,7 +8,16 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/laravel-api",
-        "commands": ["composer install", "php artisan migrate"]
+        "commands": ["composer install"],
+        "parallel": false
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/laravel-api",
+        "commands": ["php artisan migrate"],
+        "parallel": false
       }
     },
     "dev": {

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "postinstall": "node ./shibuya/sensei.mjs && nx run-many -t install",
-    "forge": "node ./shibuya.js forge --apps=angular-app,rust-api,laravel",
+    "forge": "node ./shibuya.js forge --apps=angular-app,rust-api,laravel &&  nx run-many -t migrate",
     "dev": "node ./shibuya.js dev --apps=angular-app,rust-api,laravel",
     "start": "node ./shibuya.js start --apps=angular-app,rust-api,laravel",
     "stop": "node ./shibuya.js stop --apps=angular-app,rust-api,laravel",
