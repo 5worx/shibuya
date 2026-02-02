@@ -13,22 +13,27 @@ Vergiss starre Skripte und manuelle Setups. SHIBUYA ist das Framework Agnostic D
 Hinter den Namen im SHIBUYA-System steckt eine klare Philosophie. Jedes Modul erfüllt eine spezifische Rolle im "Distrikt":
 
 ### 🏗️ KIBAN (基盤) – Das Fundament
+
 * **Bedeutung:** Basis / Infrastruktur / Unterbau.
 * **Rolle:** Beherbergt die unsichtbare Logik. Hier liegen Serialisierung, Transformationen und grundlegende JS-Klassen, die framework-übergreifend in den Anwendungen genutzt werden können. Ohne Kiban gibt es keine Stabilität durch wiederverwendbare Komponenten.
 
 ### 🎭 KUROKO (黒衣) – Die unsichtbaren Bühnen(Frontend) -Helfer
+
 * **Bedeutung:** Die in Schwarz gekleideten Bühnenhelfer im japanischen Theater.
 * **Rolle:** Unsere Stencil Web Components. Wie die Kuroko arbeiten sie hochgradig effizient im Verborgenen (Shadow DOM), um die visuelle Show zu ermöglichen, ohne dass die Apps sich um die komplexe UI-Logik kümmern müssen.
 
 ### 🚦 SHIBUYA Orchestrator
+
 * **Bedeutung:** Das pulsierende Herz der Vernetzung.
 * **Rolle:** Der Dispatcher, der alles zusammenhält. Er koordiniert die Ströme zwischen Kiban (Logik), Kuroko (UI) und den darauf aufgebauten Anwendungen und ist der "Kleber" der Infrastruktur.
 
 ### 📜 MOKUROKU (目録)
+
 * **Bedeutung:** Das Inventar / Der Katalog
 * **Rolle:** Technisches Verzeichnis und Dokumentation der Bestandteile.
 
 ### 📜 SUIDO (水道)
+
 * **Bedeutung:** Wasserweg oder Kanalisation
 * **Rolle:** Logische und eindeutiges Schema zur Port-Vergabe unterhalb Shibuyas
 
@@ -50,7 +55,7 @@ Das System basiert auf einer klaren Trennung von Verantwortlichkeiten:
 │       └── shibuya.yaml  # Das "Gehirn" der App
 ├── packages/             # Gemeinsam genutzte Libs & Komponenten (Kiban, Kuroko)
 ├── infrastructure/       # Docker-Umgebungen (Keycloak, DBs, etc.)
-├── shibuya/               # Setup-, Helper- & Cleanup-Scripts
+├── shibuya/              # Setup-, Helper- & Cleanup-Scripts
 └── shibuya.js            # Der Dispatcher (SHIBUYA)
 ```
 

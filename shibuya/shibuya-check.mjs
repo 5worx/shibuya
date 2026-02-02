@@ -1,5 +1,13 @@
 import { execSync } from "child_process";
 import fs from "fs";
+import yaml from "js-yaml";
+import { fileURLToPath } from "url";
+import path from "path";
+
+// Pfad-Logik (falls noch nicht oben im Skript vorhanden)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Wir gehen davon aus, dass das Skript in /helper/ liegt und die yaml im Root (../)
+const REQUIREMENTS_PATH = path.join(__dirname, "../requirements.yaml");
 
 const log = (msg, type = "info") => {
   const colors = {
@@ -111,6 +119,52 @@ try {
   log(
     "      Tipp: Führe 'eval `ssh-agent` && ssh-add' aus, um Passworteingaben zu minimieren.",
   );
+}
+
+// --- NEU: Dynamische Stack-Prüfung ---
+log("\n7. Prüfe projektspezifische Stacks (requirements.yaml)...");
+
+if (fs.existsSync(REQUIREMENTS_PATH)) {
+  try {
+    const config = yaml.load(fs.readFileSync(REQUIREMENTS_PATH, "utf8"));
+
+    for (const [stackName, stack] of Object.entries(config.stacks)) {
+      log(`\n--- Stack: ${stack.description} (${stackName}) ---`);
+      stack.tools.forEach((tool) => {
+        checkCommand(tool.cmd, tool.desc);
+      });
+    }
+  } catch (e) {
+    log(`  ❌ Fehler beim Lesen der requirements.yaml: ${e.message}`, "error");
+  }
+} else {
+  // Debug-Hilfe: Wo sucht er eigentlich?
+  log(
+    `  ℹ️ requirements.yaml nicht gefunden unter: ${REQUIREMENTS_PATH}`,
+    "warn",
+  );
+  log("  Überspringe Stacks.");
+}
+
+// --- NEU: git-crypt Check (für die SM/PL) ---
+log("\n8. Prüfe Verschlüsselung (git-crypt)...");
+if (checkCommand("git-crypt", "git-crypt")) {
+  try {
+    // Prüfe ob der notes Ordner gesperrt ist
+    const status = execSync(
+      "git-crypt status mokuroku/notes 2>/dev/null",
+    ).toString();
+    if (status.includes("encrypted")) {
+      // Wenn git-crypt status "encrypted" meldet, die Datei aber binär aussieht
+      // oder git-crypt uns sagt, dass sie locked ist:
+      log("  ✅ git-crypt ist aktiv.", "success");
+    }
+  } catch (e) {
+    log(
+      "  ⚠️ git-crypt ist installiert, aber das Repo ist evtl. noch locked.",
+      "warn",
+    );
+  }
 }
 
 log("\n" + "=".repeat(30));

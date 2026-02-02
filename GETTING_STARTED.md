@@ -311,7 +311,7 @@ net start winnat
 
 Das sollte genügen. Ein Neustart des Rechner reicht eventuell auch aus. Aber der Neustart von `winnat` hat den Fehler immer behoben.
 
-## Webadressen über Ports:urls
+## Webadressen über suido:urls
 
 Sind die Container gebaut, stellen sie verschiedenste Webadressen zur Verfügung. Ein Übersicht, kann man sich mit `pnpm suido:urls` anzeigen lassen.
 

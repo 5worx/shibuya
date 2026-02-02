@@ -12,7 +12,7 @@ Für Devs sollte das Arbeiten mit der Versionskontrolle und mit verschiedenen Da
 
 Aber so ganz frei vom Einsatz "ungewohnter Software" und dann auch noch über ein Terminal wird es nicht funktionieren. Wer sich darauf nicht einlassen kann oder nicht will, muss andere Lösungen für das Management finden.
 
-Wer sich das zutraut, wird sehr schnell feststellen, dass es nach dem Überwinden der Anfangshürde sehr viel einfacher wird und Verwaltungsaufwand sich reduziert.
+Wer sich das zutraut, wird sehr schnell feststellen, dass es nach dem Überwinden der Anfangshürde sehr viel einfacher wird und der Verwaltungsaufwand sich signifikant reduziert.
 
 Und dann gibt es noch die Informationen, die nicht für jedermanns Augen bestimmt sind. **Interne und sensible Informationen müssen verschlüsselt werden!**
 
@@ -23,7 +23,7 @@ Alles, was für den Projekterfolg wichtig ist, bleibt in SHIBUYA. Wir synchronis
 ## 🗺️ Navigation
 
 - [👥 Projektbeteiligte & Rollen](./02-CONTRIBUTORS.md)
-- 🛠️ Tooling & Onboarding - `GETTING_STARTED.md`
+- [🛠️ Tooling & Onboarding](./../GETTING_STARTED.md)
 
 ## 🔗 Schnellzugriff & Links
 
@@ -53,6 +53,6 @@ Bugs werden dezentral via `git-bug` verwaltet.
 - `git-bug webui` zur grafischen Übersicht.
 - [Anleitung zum Bugtracking](./03-BUGTRACKING.md)
 
-## Scrummaster / Projektleiter - eigene Projektnotizen
+## Scrummaster / Projektleiter - eigene verschlüsselte Projektnotizen
 
-Man kommt ja nicht drumherum. Es muss einen Ort für Informationen geben, die nichts mit dem Quelltext oder der technischen Dokumentation zu tun hat. Das ist die Welt der **Scrummaster** und **Projektleiter**, aber auch für den Vertrieb, den Technischen Projektleiter und die Geschäftsführung, die zumindest reinschauen können muss.
+Man kommt ja nicht drumherum. Es muss einen Ort für Informationen geben, die nichts mit dem Quelltext oder der technischen Dokumentation zu tun hat. Das ist die Welt der **Scrummaster** und **Projektleiter**, aber auch für den Vertrieb, den Technischen Projektleiter und die Geschäftsführung, die zumindest reinschauen können muss. Da kann es auch mal zu sensiblen Daten kommen, die nicht von jedem im Projekt einsehbar sein dürfen. Normalerweise liegen die dann irgendwo im Netzwerk von Link oder noch schlimmer: auf den Workstations der KollegInnen. Vertragsunterlagen, Auftragsbestätigungen usw haben hier nichts zu suchen. Das ist alleine Aufgabe des Vertriebs. Aber die Konsequenz daraus durchaus. 
