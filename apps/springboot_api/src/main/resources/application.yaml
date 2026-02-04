@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: springboot_api
+
+  datasource:
+    url: jdbc:postgresql://localhost:52302/springboot_db
+    username: springboot_user
+    password: springboot_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    # Wir nutzen hier die direkten Werte, um Initialisierungs-Races zu vermeiden
+    url: jdbc:postgresql://localhost:52302/springboot_db
+    user: springboot_user
+    password: springboot_password
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:52201/realms/FADS
+          jwk-set-uri: http://localhost:52201/realms/FADS/protocol/openid-connect/certs
+
+# Optional: Damit die API nicht auf Port 8080 mit anderen Services kollidiert
+server:
+  port: 52102

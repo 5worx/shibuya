@@ -1,10 +1,10 @@
-package com.shibuya.sprinboot_api;
+package com.shibuya.springboot_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SprinbootApiApplicationTests {
+class SpringbootApiApplicationTests {
 
 	@Test
 	void contextLoads() {
