@@ -12,6 +12,8 @@ build
 res/testserver/localhost.crt
 res/testserver/localhost.key
 
+*:Zone.Identifier
+
 # the readme doc files of the stencil webcomponents
 # are generated during build.
 # It is not recommended to leave them in versioncontrol

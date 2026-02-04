@@ -20,14 +20,40 @@ stacks:
   #     - { cmd: "go", desc: "Go Programming Language" }
   #     - { cmd: "golangci-lint", desc: "Go Linter (Static Analysis)" }
 
+  # angular:
+  #   description: "Angular Development"
+  #   tools:
+  #     - { cmd: "ng", desc: "Angular CLI" }
+
+  # java:
+  #   description: "Enterprise Legacy & Tooling"
+  #   tools:
+  #     - { cmd: "sdk", desc: "SDKMAN! (The SDK Manager for Java/Maven)" }
+  #     - { cmd: "java", desc: "Java Runtime Environment" }
+  #     - { cmd: "javac", desc: "Java Compiler" }
+  #     - { cmd: "mvn", desc: "Apache Maven (Build Tool)" }
+
+  # Samurai Stacks
   angular:
-    description: "Angular Development"
+    description: "Angular Frontend Development"
+    responsible: "Samurai"
     tools:
-      - { cmd: "ng", desc: "Angular CLI" }
+      - { cmd: "ng", desc: "Angular CLI", v_args: "--version", v_expect: "21" }
 
   java:
     description: "Enterprise Legacy & Tooling"
+    responsible: "Samurai"
     tools:
-      - { cmd: "java", desc: "Java Runtime Environment" }
+      - {
+          cmd: "java",
+          desc: "Java Runtime",
+          v_args: "-version",
+          v_expect: "21",
+        }
       - { cmd: "javac", desc: "Java Compiler" }
-      - { cmd: "mvn", desc: "Apache Maven (Build Tool)" }
+      - {
+          cmd: "mvn",
+          desc: "Apache Maven",
+          v_args: "-version",
+          v_expect: "3.9",
+        }
