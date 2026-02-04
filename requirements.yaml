@@ -1,24 +1,29 @@
 # SHIBUYA Requirements Configuration
 stacks:
-  rust:
-    description: "Rust API Development"
-    tools:
-      - { cmd: "rustc", desc: "Rust Compiler" }
-      - { cmd: "cargo", desc: "Rust Package Manager" }
-      - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
+  # rust:
+  #   description: "Rust API Development"
+  #   tools:
+  #     - { cmd: "rustc", desc: "Rust Compiler" }
+  #     - { cmd: "cargo", desc: "Rust Package Manager" }
+  #     - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
 
-  laravel:
-    description: "Laravel PHP Backend"
-    tools:
-      - { cmd: "php", desc: "PHP Runtime" }
-      - { cmd: "composer", desc: "PHP Dependency Manager" }
-      - { cmd: "laravel", desc: "Laravel Installer CLI" }
+  # laravel:
+  #   description: "Laravel PHP Backend"
+  #   tools:
+  #     - { cmd: "php", desc: "PHP Runtime" }
+  #     - { cmd: "composer", desc: "PHP Dependency Manager" }
+  #     - { cmd: "laravel", desc: "Laravel Installer CLI" }
 
-  go:
-    description: "Go Services (High-Performance Microservices)"
+  # go:
+  #   description: "Go Services (High-Performance Microservices)"
+  #   tools:
+  #     - { cmd: "go", desc: "Go Programming Language" }
+  #     - { cmd: "golangci-lint", desc: "Go Linter (Static Analysis)" }
+
+  angular:
+    description: "Angular Development"
     tools:
-      - { cmd: "go", desc: "Go Programming Language" }
-      - { cmd: "golangci-lint", desc: "Go Linter (Static Analysis)" }
+      - { cmd: "ng", desc: "Angular CLI" }
 
   java:
     description: "Enterprise Legacy & Tooling"
