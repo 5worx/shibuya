@@ -1,0 +1,4 @@
+# shibuya.workspace.yaml
+active_apps:
+  - angular-app
+  - rust-api

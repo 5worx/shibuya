@@ -48,20 +48,20 @@ stacks:
       - { cmd: "cargo", desc: "Rust Package Manager" }
       - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
 
-  java:
-    description: "Enterprise Legacy & Tooling"
-    responsible: "Samurai"
-    tools:
-      - {
-          cmd: "java",
-          desc: "Java Runtime",
-          v_args: "-version",
-          v_expect: "21",
-        }
-      - { cmd: "javac", desc: "Java Compiler" }
-      - {
-          cmd: "mvn",
-          desc: "Apache Maven",
-          v_args: "-version",
-          v_expect: "3.9",
-        }
+  # java:
+  #   description: "Enterprise Legacy & Tooling"
+  #   responsible: "Samurai"
+  #   tools:
+  #     - {
+  #         cmd: "java",
+  #         desc: "Java Runtime",
+  #         v_args: "-version",
+  #         v_expect: "21",
+  #       }
+  #     - { cmd: "javac", desc: "Java Compiler" }
+  #     - {
+  #         cmd: "mvn",
+  #         desc: "Apache Maven",
+  #         v_args: "-version",
+  #         v_expect: "3.9",
+  #       }

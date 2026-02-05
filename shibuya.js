@@ -4,15 +4,28 @@ import path from "path";
 import yaml from "js-yaml";
 
 const args = process.argv.slice(2);
-const mode = args[0] || "dev"; // 'start', 'dev', 'stop', 'forge', 'melt'
+const mode = args[0] || "dev"; // 'start', 'dev', 'stop', 'forge', 'melt', 'install', 'migrate'
+
+// --- NEU: Laden der aktiven Apps aus der Workspace-Datei ---
+const workspacePath = path.join(process.cwd(), "shibuya.workspaces.yaml");
+let activeApps = [];
+
+if (fs.existsSync(workspacePath)) {
+  const workspaceConfig = yaml.load(fs.readFileSync(workspacePath, "utf8"));
+  activeApps = workspaceConfig.active_apps || [];
+}
+
+// Fallback: Falls --apps= übergeben wurde, hat das Priorität
 const appsFlag =
   args
     .find((a) => a.startsWith("--apps="))
     ?.split("=")[1]
-    ?.split(",") || [];
+    ?.split(",") || activeApps;
 
 if (appsFlag.length === 0) {
-  console.error("❌ Bitte gib mindestens eine App an: --apps=angular-app");
+  console.error(
+    "❌ Keine aktiven Apps gefunden. Definiere sie in shibuya.workspaces.yaml oder nutze --apps=",
+  );
   process.exit(1);
 }
 
@@ -24,6 +37,7 @@ let settings = {
 let allProjects = new Set();
 let infraToCleanup = new Set();
 
+// Initial alle Apps hinzufügen
 appsFlag.forEach((app) => allProjects.add(app));
 
 // 1. Konfiguration verarbeiten
@@ -45,15 +59,13 @@ appsFlag.forEach((appName) => {
       projectList.forEach((dep) => {
         if (dep !== appName) {
           allProjects.add(dep);
-          // Alles was aus der infrastructure Gruppe kommt, landet im Cleanup
           if (type === "infrastructure") infraToCleanup.add(dep);
         }
       });
     };
 
-    // NEUE LOGIK: Auflösen der Workflows
+    // Workflow Auflösung (start, dev, forge, etc.)
     const workflow = config.workflows?.[mode];
-
     if (workflow) {
       workflow.forEach((item) => {
         if (typeof item === "string" && item.startsWith("components.")) {
@@ -66,12 +78,16 @@ appsFlag.forEach((appName) => {
       });
     }
 
-    // AUTOMATIK: Im 'dev' Mode wollen wir immer die Infrastruktur dabei haben
-    if (mode === "dev" && config.components?.infrastructure) {
+    // AUTOMATIK: In den Modi 'dev', 'install', 'migrate' oft Infra nötig
+    // Hier kannst du entscheiden, ob 'install' auch Infra braucht (meist nicht)
+    if (
+      ["dev", "migrate"].includes(mode) &&
+      config.components?.infrastructure
+    ) {
       addWithCheck(config.components.infrastructure, "infrastructure");
     }
   } else {
-    console.warn(`⚠️ Keine shibuya.yaml gefunden unter ${configPath}`);
+    // Für Apps ohne eigene shibuya.yaml (wie dein Mahnmal)
     allProjects.add(appName);
   }
 });
@@ -83,9 +99,11 @@ if (projectsArray.length === 0) {
 }
 
 console.log(`\x1b[36m%s\x1b[0m`, `🏙️  SHIBUYA Dispatcher [${mode}]`);
-console.log(`📦 Verbinde Signale für: ${projectsArray.join(", ")}`);
+console.log(`📦 Aktive Apps: ${appsFlag.join(", ")}`);
+console.log(`📡 Signal-Teilnehmer: ${projectsArray.join(", ")}`);
 
 // 2. NX starten
+// Wir nutzen "pnpm nx", damit NX die Befehle für die Projekte ausführt
 const child = spawn(
   "pnpm",
   [
@@ -101,7 +119,7 @@ const child = spawn(
   { stdio: "inherit", shell: true },
 );
 
-// 3. Cleanup Logik
+// 3. Cleanup Logik (unverändert, aber erweitert um Checks)
 let isCleaningUp = false;
 const cleanup = (signal) => {
   if (isCleaningUp) return;
@@ -111,11 +129,8 @@ const cleanup = (signal) => {
     console.log(
       `\n🌆 SHIBUYA schaltet in den Standby. Watcher beendet, Infra aktiv.`,
     );
-    console.log(`💡 Tipp: Nutze "pnpm stop" zum Herunterfahren der Container.`);
-  } else if (infraToCleanup.size > 0) {
-    // 🔥 WICHTIG: Hier prüfen wir, ob wir wirklich aufräumen wollen
-    // Wenn der Prozess sauber durchgelaufen ist (Code 0), wollen wir bei 'forge' oder 'start' NICHT stoppen.
-    console.log(`\n🧹 SHIBUYA (Signal: ${signal}): Räume den Distrikt auf...`);
+  } else if (infraToCleanup.size > 0 && (mode === "stop" || mode === "melt")) {
+    console.log(`\n🧹 SHIBUYA: Räume den Distrikt auf...`);
     infraToCleanup.forEach((infra) => {
       spawnSync("pnpm", ["nx", "run", `${infra}:stop`], {
         stdio: "inherit",
@@ -123,7 +138,6 @@ const cleanup = (signal) => {
       });
     });
   }
-
   process.exit(0);
 };
 
@@ -131,18 +145,9 @@ process.on("SIGINT", () => cleanup("SIGINT"));
 process.on("SIGTERM", () => cleanup("SIGTERM"));
 
 child.on("close", (code) => {
-  console.log(`\n📡 NX-Prozess beendet (Code ${code})`);
-
-  // LOGIK-FIX:
-  // Wenn der Code 0 ist (Erfolg), rufen wir cleanup NICHT auf,
-  // außer wir sind im 'melt' Modus oder ähnlichem.
-  // Bei 'forge' wollen wir, dass die Container oben bleiben!
-
   if (code !== 0 && !isCleaningUp) {
     cleanup("PROCESS_ERROR");
   } else {
-    // Prozess war erfolgreich, wir beenden einfach das Skript,
-    // OHNE die infraToCleanup-Schleife zu triggern.
     process.exit(0);
   }
 });
