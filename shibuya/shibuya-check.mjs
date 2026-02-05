@@ -5,7 +5,10 @@ import { fileURLToPath } from "url";
 import path from "path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REQUIREMENTS_PATH = path.join(__dirname, "../requirements.yaml");
+const REQUIREMENTS_PATH = path.join(
+  __dirname,
+  "../requirements.workspaces.yaml",
+);
 
 const log = (msg, type = "info") => {
   const colors = {
