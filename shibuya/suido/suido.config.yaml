@@ -7,7 +7,7 @@ PACKAGES:
 
 APPS:
   angular-app: 1
-  springboot_api: 2
+  rust-api: 2
 
 INFRA:
   infra-keycloak-admin: 1

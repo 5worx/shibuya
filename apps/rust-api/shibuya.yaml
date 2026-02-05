@@ -1,0 +1,33 @@
+# Hier stehen die Abhängigkeiten, die vor der Entwicklung
+# hochgefahren bzw erstellt sein müssen.
+#
+
+# Definition der Komponenten (Zentrale Datenquelle)
+components:
+  infrastructure:
+    - shibuya-database
+    - shibuya-mailpit
+
+workflows:
+  forge:
+    - components.infrastructure
+
+  # Startet alle dev-server für die Entwicklung
+  dev:
+
+  # startet Abhängigkeiten
+  start:
+    - components.infrastructure
+
+  # stoppt Abhängigkeiten
+  stop:
+    - components.infrastructure
+
+  # entfernt Abhängigkeiten
+  melt:
+    - components.infrastructure
+
+# Optionale Flags für den Start
+settings:
+  parallel: 20
+  outputStyle: stream

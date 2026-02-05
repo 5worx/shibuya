@@ -40,6 +40,14 @@ stacks:
     tools:
       - { cmd: "ng", desc: "Angular CLI", v_args: "--version", v_expect: "21" }
 
+  rust:
+    description: "Rust API Development"
+    responsible: "Samurai"
+    tools:
+      - { cmd: "rustc", desc: "Rust Compiler" }
+      - { cmd: "cargo", desc: "Rust Package Manager" }
+      - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
+
   java:
     description: "Enterprise Legacy & Tooling"
     responsible: "Samurai"

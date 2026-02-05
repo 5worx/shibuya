@@ -1,0 +1,13 @@
+# --- Rust / Cargo ---
+/target/
+
+# --- Environment & Secrets ---
+.env
+
+# --- SQLx ---
+.sqlx/
+
+# --- Backup / Temp ---
+*.rs.bk
+*.swp
+*.tmp
