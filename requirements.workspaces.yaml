@@ -44,9 +44,32 @@ stacks:
     description: "Rust API Development"
     responsible: "Samurai"
     tools:
-      - { cmd: "rustc", desc: "Rust Compiler" }
-      - { cmd: "cargo", desc: "Rust Package Manager" }
-      - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
+      - {
+          cmd: "rustc",
+          desc: "Rust Compiler",
+          v_args: "--version",
+          v_expect: "1.9",
+        }
+      - {
+          cmd: "cargo",
+          desc: "Rust Package Manager",
+          v_args: "--version",
+          v_expect: "1.9",
+        }
+      - {
+          cmd: "cargo-watch",
+          desc: "Cargo Watch (Development Tool)",
+          install: "cargo install cargo-watch",
+          v_args: "--version",
+          v_expect: "8.5",
+        }
+      - {
+          cmd: "sqlx",
+          desc: "SQLx CLI (Database Migrations)",
+          install: "cargo install sqlx-cli --no-default-features --features postgres",
+          v_args: "--version",
+          v_expect: "0.8",
+        }
 
   # java:
   #   description: "Enterprise Legacy & Tooling"

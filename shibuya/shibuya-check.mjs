@@ -40,20 +40,53 @@ const checkCommand = (cmd, description) => {
 const validateVersion = (cmd, args, expected) => {
   try {
     const output = execSync(`${cmd} ${args} 2>&1`).toString();
-    // Wir nehmen nur die erste Zeile der Ausgabe für den Check
     const firstLine = output.split("\n")[0];
 
-    if (firstLine.includes(expected)) {
-      log(`     ℹ️  Version: ${expected} bestätigt.`, "success");
+    // Extrahiert die Versionsnummer (z.B. 1.93.0)
+    const match = firstLine.match(/(\d+\.\d+(\.\d+)?)/);
+
+    if (match) {
+      const current = match[0];
+      const currentParts = current.split(".").map(Number);
+      const expectedParts = expected.split(".").map(Number);
+
+      let isOlder = false;
+      for (
+        let i = 0;
+        i < Math.max(currentParts.length, expectedParts.length);
+        i++
+      ) {
+        const c = currentParts[i] || 0;
+        const e = expectedParts[i] || 0;
+        if (c < e) {
+          isOlder = true;
+          break;
+        }
+        if (c > e) {
+          break;
+        }
+      }
+
+      if (!isOlder) {
+        log(
+          `      ℹ️  Version: ${current} (Minimum ${expected}) bestätigt.`,
+          "success",
+        );
+      } else {
+        log(
+          `      ⚠️  Version zu alt: Erwartet mindestens '${expected}', gefunden: '${current}'`,
+          "warn",
+        );
+      }
     } else {
-      const current = firstLine.trim();
+      // Fallback
       log(
-        `     ⚠️  Versions-Konflikt: Erwartet '${expected}', gefunden: '${current}'`,
+        `      ⚠️  Konnte Version nicht eindeutig prüfen (Gefunden: '${firstLine.trim()}')`,
         "warn",
       );
     }
   } catch (e) {
-    log(`     ❌ Versionsprüfung für ${cmd} fehlgeschlagen.`, "error");
+    log(`      ❌ Versionsprüfung für ${cmd} fehlgeschlagen.`, "error");
   }
 };
 
@@ -144,20 +177,27 @@ if (fs.existsSync("./mokuroku")) {
   log("  ✅ Mokuroku-Verzeichnis vorhanden.", "success");
 }
 
-log("\n4.1 Prüfe projektspezifische Stacks (requirements.yaml)...");
+// 4.1 Prüfe projektspezifische Stacks (requirements.workspaces.yaml)...
 if (fs.existsSync(REQUIREMENTS_PATH)) {
   try {
     const config = yaml.load(fs.readFileSync(REQUIREMENTS_PATH, "utf8"));
 
-    for (const [stackName, stack] of Object.entries(config.stacks)) {
+    // Beachte: In deiner YAML hieß der Key 'stacks', stell sicher, dass das
+    // mit der Struktur (z.B. 'rust:') zusammenpasst.
+    for (const [stackName, stack] of Object.entries(config.stacks || config)) {
       const role = stack.responsible ? ` [Weg des ${stack.responsible}]` : "";
       log(`\n--- Stack: ${stack.description} (${stackName})${role} ---`);
 
       stack.tools.forEach((tool) => {
         const exists = checkCommand(tool.cmd, tool.desc);
 
-        // Wenn in der YAML v_args und v_expect definiert sind, prüfen wir!
-        if (exists && tool.v_args && tool.v_expect) {
+        if (!exists) {
+          // NEU: Wenn das Tool fehlt und ein install-Hinweis existiert
+          if (tool.install) {
+            log(`      💡 Install-Hinweis: ${tool.install}`, "warn");
+          }
+        } else if (tool.v_args && tool.v_expect) {
+          // Wenn es existiert, prüfen wir die Version
           validateVersion(tool.cmd, tool.v_args, tool.v_expect);
         }
       });
