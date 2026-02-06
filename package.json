@@ -10,17 +10,17 @@
     "start": "node ./shibuya.js start",
     "stop": "node ./shibuya.js stop",
     "melt": "node ./shibuya.js melt",
+    "suido:urls": "node ./shibuya/suido/suido.js --urls",
     "shibuya:check": "node ./shibuya/shibuya-check.mjs && node ./shibuya/sensei.mjs",
     "shibuya:clean:all": "node ./shibuya/clean-all.mjs --all",
     "shibuya:clean:builds": "node ./shibuya/clean-all.mjs --builds",
     "shibuya:clean:dependencies": "node ./shibuya/clean-all.mjs --dependencies",
     "shibuya:clean:infra": "node ./shibuya/clean-all.mjs --infrastructure",
-    "keycloak:export-realms": "node ./shibuya/export-keycloak-realm.mjs",
-    "suido:urls": "node ./shibuya/suido/suido.js --urls",
     "mokuroku:view": "node ./shibuya/sensei.mjs && node ./shibuya/mokuroku-viewer.mjs",
     "mokuroku:retro": "node ./shibuya/mokuroku.mjs retro",
     "mokuroku:notes": "node ./shibuya/mokuroku.mjs notes",
-    "mokuroku:lock": "tar cz -C mokuroku notes | gpg -c -o mokuroku/notes.tar.gpg && rm -rf mokuroku/notes/*.md"
+    "mokuroku:lock": "tar cz -C mokuroku notes | gpg -c -o mokuroku/notes.tar.gpg && rm -rf mokuroku/notes/*.md",
+    "keycloak:export-realms": "node ./shibuya/export-keycloak-realm.mjs"
   },
   "keywords": [
     "framework",
