@@ -1,12 +1,5 @@
 # SHIBUYA Requirements Configuration
 stacks:
-  # rust:
-  #   description: "Rust API Development"
-  #   tools:
-  #     - { cmd: "rustc", desc: "Rust Compiler" }
-  #     - { cmd: "cargo", desc: "Rust Package Manager" }
-  #     - { cmd: "cargo-watch", desc: "Cargo Watch (Development Tool)" }
-
   # laravel:
   #   description: "Laravel PHP Backend"
   #   tools:
@@ -19,19 +12,6 @@ stacks:
   #   tools:
   #     - { cmd: "go", desc: "Go Programming Language" }
   #     - { cmd: "golangci-lint", desc: "Go Linter (Static Analysis)" }
-
-  # angular:
-  #   description: "Angular Development"
-  #   tools:
-  #     - { cmd: "ng", desc: "Angular CLI" }
-
-  # java:
-  #   description: "Enterprise Legacy & Tooling"
-  #   tools:
-  #     - { cmd: "sdk", desc: "SDKMAN! (The SDK Manager for Java/Maven)" }
-  #     - { cmd: "java", desc: "Java Runtime Environment" }
-  #     - { cmd: "javac", desc: "Java Compiler" }
-  #     - { cmd: "mvn", desc: "Apache Maven (Build Tool)" }
 
   # Samurai Stacks
   angular:

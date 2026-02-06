@@ -1,12 +1,12 @@
 # Warum die neuen Begriffe
 
 * Abgrenzung: "Scrum Master" und "Product Owner" sind oft durch Jira-Traumata vorbelastet. Die neuen Begriffe schaffen einen neutralen Neuanfang.
-* Struktur: Shibuya ist ein Ort (das Framework), die Rollen sind die Funktionen in diesem Ort.
-* Agnostik: Da das Framework "agnostisch" ist, braucht es eine eigene Sprache, die nicht nach Laravel, Rust oder Jira klingt.
+* Struktur: Shibuya ist ein Ort (das Dev System), die Rollen sind die Funktionen in diesem Ort.
+* Agnostik: Da die Umgebung "agnostisch" ist, braucht es eine eigene Sprache, die nicht nach Laravel, Rust oder Jira klingt.
 
 ## Präzision durch Abstraktion.
 
-Wenn wir Begriffe wie "Interface" nutzen, schleppen wir 30 Jahre Fehlinterpretationen mit uns herum. In SHIBUYA ist ein Begriff ein definierter Zustand innerhalb unseres Kosmos. Der Zyniker in dir kann beruhigt sein: Wir nutzen diese Namen nicht, um uns zu verkleiden, sondern um die babylonische Sprachverwirrung zu beenden.
+Wenn wir Begriffe wie "Interface" nutzen, schleppen wir 30 Jahre Fehlinterpretationen mit uns herum. In SHIBUYA ist ein Begriff ein definierter Zustand innerhalb unseres Kosmos. Wir nutzen diese Namen nicht, um uns zu verkleiden, sondern um die babylonische Sprachverwirrung zu beenden.
 
 ## GLOSSAR
 

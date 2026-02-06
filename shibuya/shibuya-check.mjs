@@ -166,8 +166,10 @@ log("\n3.1 Prüfe optionale Tools (empfohlen)...");
 const optional = [
   { cmd: "glow", desc: "Glow (Markdown Viewer)" },
   { cmd: "tree", desc: "Tree (Struktur Viewer)" },
-  { cmd: "lazygit", desc: "LazyGit" },
-  { cmd: "brew", desc: "Homebrew" },
+  { cmd: "lazygit", desc: "LazyGit - Terminal GUI" },
+  { cmd: "lazydocker", desc: "LazyDocker - Terminal GUI" },
+  { cmd: "brew", desc: "Homebrew MacOS/Linux (Install-Tool)" },
+  { cmd: "sdk", desc: "SDKMAN! (The SDK Manager)" },
 ];
 optional.forEach((s) => checkCommand(s.cmd, s.desc));
 
@@ -178,6 +180,9 @@ if (fs.existsSync("./mokuroku")) {
 }
 
 // 4.1 Prüfe projektspezifische Stacks (requirements.workspaces.yaml)...
+log(
+  "\n4.1 Prüfe anwendungsspezifische Stacks (requirements.workspaces.yaml)...",
+);
 if (fs.existsSync(REQUIREMENTS_PATH)) {
   try {
     const config = yaml.load(fs.readFileSync(REQUIREMENTS_PATH, "utf8"));

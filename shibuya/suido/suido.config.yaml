@@ -11,12 +11,12 @@ APPS:
 
 INFRA:
   infra-keycloak-admin: 1
-  infra-shibuya-pgadmin: 2
-  infra-shibuya-mailpit-web: 3
+  infra-db-pgadmin: 2
+  infra-mailpit-web: 3
 
 STORAGE:
   infra-keycloak-db: 1
-  infra-shibuya-db: 2
+  infra-db: 2
 
 COMM:
-  infra-shibuya-mailpit-smtp: 1
+  infra-mailpit-smtp: 1

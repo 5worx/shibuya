@@ -1,4 +1,4 @@
-# Das Dorf und seine Bewohner
+# Der Distrikt und seine Bewohner
 
 ## 1. Der SHOGUN (Der Architekt / Admin)
 
