@@ -193,17 +193,17 @@ Ist alles soweit installiert, will ich natürlich meiner Entwicklungsaufgabe nac
 
 Dafür müssen die Container in der infrastructure/ gebaut werden und laufen. Auch müssen Datenbaktabellen und vielleicht schon Daten voreingetragen werden, damit man nicht bei jedem Neustart seine Dummydaten neu erfassen muss.
 
-> Um jetzt keine Sprachverwirrung auszulösen, ist der Befehl nicht *build*. Das brauchen wir für das Deployment.
+> Um jetzt keine Sprachverwirrung auszulösen, ist der Befehl nicht *build*. Den brauchen wir für das Deployment.
 
-Wir schmieden unsere Container mit `pnpm forge`. Direkt im Anschluss wird der Befehl für die Migrations-SQLs gefeuert und ich habe eine fertig bestückte Entwicklungsdatenbank.
+Wir schmieden unsere Container mit `pnpm forge`.
 
-> Es liegt leider in der Sache, dass die Container erst gebaut und dann gestartet werden. Liefern diese am Ende eine vom Browser erreichbar Url, muss man manchmal etwas warten, bevor sie erreichbar ist.
+> Es liegt leider in der Sache, dass die Container erst gebaut und dann gestartet werden. Liefern diese am Ende eine im Browser erreichbare Url, muss man manchmal etwas warten, bevor sie erreichbar ist. Gilt besonders für PG Admin.
 
 Wo wir gerade von Urls sprechen. Woher weiß ich jetzt, welche Adressen und Ports zur Verfügung stehen? - In aller Regel ist das ja: `http://localhost:{PORT}`
 
 Die Ports müsste ich mir jetzt zusammensuchen.
 
-Und das ist ein weiterer Stolperstein, der uns weitere 10 Frustpunkte bringt. 
+Ein weiterer Stolperstein, der uns weitere 10 Frustpunkte bringt. 
 
 Wie wäre es mit einem projektweitem Portkonzept, dass sinnvolle Portzuordnungen vorschlägt, die man dann in den apps/ und der infrastructure/ verwendet? Also den SOLL-Zustand zeigt?
 
@@ -219,7 +219,7 @@ Muss ich als Neuling noch was über das Projekt wissen? Tja, keine Ahnung. Wie e
 
 Aber wenn, kann ich ihn mit `pnpm mokuroku:view` besuchen.
 
-> Hier kann man alle relavanten Informationen über die Markdown-Dateien erfassen. Was von Relevanz ist, entscheidet ebenfalls das Projektteam. Sensible Informationen, wie die bekannte "Aktennotiz" kann *verschlüsselt* im Repo eingecheckt werden und nur von den entschlüsselt werden, die den Schlüssel haben! Ein "Kann". Kein "Muss".
+> Hier kann man alle relevanten Informationen über die Markdown-Dateien erfassen. Was von Relevanz ist, entscheidet ebenfalls das Projektteam. Sensible Informationen, wie die bekannte "Aktennotiz" kann *verschlüsselt* im Repo eingecheckt werden und nur von denen entschlüsselt werden, die den Schlüssel haben! Ein "Kann". Kein "Muss".
 
 Die Arbeitsschritte und was dafür nötig ist in einem separaten Workshop!
 
@@ -231,7 +231,7 @@ Während ich am Code arbeite, kann ich jederzeit die Cointainer steuern, Dokumen
 
 SHIBUYA hat nichts Neues. Es ist auch nichts Neues geschaffen worden. Es strukturiert nur die Dinge und gibt ihnen einen Ort und einen Namen.
 
-Was hier geschaffen wurde ist, dass der Anfahrtsweg zur Baustelle asphaltiert, ausgeschildert und beleuchtet wurde. Der Bauplatz selbst Platz für die Fertigung, Verwaltung und Auslieferung vorhält, die voneinander abgegrenzt sind. Von dem kein Teil eine Größenbeschränkung hat und somit voll skalierbar ist. Und das ohne Vorgaben und Einschränkungen für beliebige Vorgehensweisen und unter Ausnutzung von Funktionalitäten, die eh da sind.
+Was hier geschaffen wurde ist, dass der Anfahrtsweg zur Baustelle asphaltiert, ausgeschildert und beleuchtet wurde. Der Bauplatz selbst bietet Platz für die Fertigung, Verwaltung und Auslieferung, die voneinander abgegrenzt sind. Von dem kein Teil eine Größenbeschränkung hat und somit voll skalierbar ist. Und das ohne Vorgaben und Einschränkungen für beliebige Vorgehensweisen und das unter Ausnutzung von Funktionalitäten, die eh da sind.
 
 Um Missverständnisse durch doppeldeutige Bezeichnungen, Namen und Befehle zu verhindern, wurden eigene Namen und Rollen definiert, mit denen man sich hier im Distrikt verständigen kann. Und eine Karte mit Mondrunen entfällt, da alles an einem Ort ist. Und falls man doch eine Karte braucht, befindet sie sich im Katalog.
 

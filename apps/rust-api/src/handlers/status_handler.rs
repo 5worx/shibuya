@@ -17,7 +17,7 @@ pub async fn get_status(State(state): State<AppState>) -> Json<StatusResponse> {
 
     Json(StatusResponse {
         status: "online".to_string(),
-        message: "SHIBUYA Rust Backend ist bereit".to_string(),
+        message: "Rust API ist bereit".to_string(),
         database: db_status.to_string(),
     })
 }
