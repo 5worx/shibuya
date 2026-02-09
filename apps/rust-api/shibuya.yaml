@@ -5,8 +5,8 @@
 # Definition der Komponenten (Zentrale Datenquelle)
 components:
   infrastructure:
-    - shibuya-database
-    - shibuya-mailpit
+    - kpn-database
+    - kpn-mailpit
 
 workflows:
   forge:

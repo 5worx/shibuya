@@ -1,18 +1,18 @@
 {
-  "name": "shibuya-mailpit",
+  "name": "kpn-mailpit",
   "projectType": "library",
   "targets": {
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-mailpit up -d",
+        "command": "docker compose -p kpn-mailpit up -d",
         "cwd": "infrastructure/mailpit"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-mailpit start",
+        "command": "docker compose -p kpn-mailpit start",
         "cwd": "infrastructure/mailpit"
       }
     },
@@ -20,14 +20,14 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/mailpit",
-        "commands": ["docker compose -p shibuya-mailpit stop"]
+        "commands": ["docker compose -p kpn-mailpit stop"]
       }
     },
     "melt": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/mailpit",
-        "commands": ["docker compose -p shibuya-mailpit -v down"],
+        "commands": ["docker compose -p kpn-mailpit -v down"],
         "parallel": false
       }
     }

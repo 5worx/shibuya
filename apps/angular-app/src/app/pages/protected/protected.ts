@@ -1,6 +1,6 @@
 import { Component, inject, computed, OnInit } from '@angular/core';
 import { AuthService } from '@pckg/auth';
-import { ItemService } from '../../services/item.service'; // Pfad anpassen
+import { PeopleService } from '../../services/people.service'; // Pfad anpassen
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -11,15 +11,15 @@ import { JsonPipe } from '@angular/common';
 })
 export class ProtectedPage implements OnInit {
   private auth = inject(AuthService);
-  private itemService = inject(ItemService);
+  private peopleService = inject(PeopleService);
 
   user = computed(() => this.auth.getUser());
   // Wir machen die Items der Komponente verfügbar
-  items = this.itemService.items;
+  people = this.peopleService.people;
 
   ngOnInit() {
     // Sobald die Seite lädt, holen wir die Items vom Rust-Backend
-    this.itemService.loadItems();
+    this.peopleService.loadItems();
   }
 
   logout() {

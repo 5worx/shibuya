@@ -11,10 +11,33 @@
         "commands": ["cargo fetch"]
       }
     },
-    "dev": {
+    "migrate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": ". $HOME/.cargo/env && cargo watch -x run",
+        "command": "sqlx migrate run",
+        "cwd": "apps/rust-api"
+      }
+    },
+    "seed:dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["cargo run --bin seeder -- seeds/persons.dev.json"],
+        "parallel": false,
+        "cwd": "apps/rust-api"
+      }
+    },
+    "seed:test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cargo run --bin seeder -- seeds/persons.test.json",
+        "cwd": "apps/rust-api"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["migrate", "seed:dev"],
+      "options": {
+        "command": ". $HOME/.cargo/env && cargo watch -x \"run --bin rust-api\"",
         "cwd": "apps/rust-api"
       }
     }

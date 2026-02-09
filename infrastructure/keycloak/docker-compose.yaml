@@ -1,9 +1,9 @@
 services:
   keycloak-db:
     image: postgres:16-alpine
-    container_name: shibuya-keycloak-db
+    container_name: kpn-keycloak-db
     volumes:
-      - shibuya_keycloak_data:/var/lib/postgresql/data
+      - kpn_keycloak_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -11,11 +11,11 @@ services:
     ports:
       - "52301:5432"
     networks:
-      - shibuya-keycloak-network
+      - kpn-keycloak-network
 
   keycloak-admin:
     image: quay.io/keycloak/keycloak:26.0
-    container_name: shibuya-keycloak-admin
+    container_name: kpn-keycloak-admin
     command: start-dev --import-realm
     environment:
       KC_DB: postgres
@@ -35,12 +35,12 @@ services:
     depends_on:
       - keycloak-db
     networks:
-      - shibuya-keycloak-network
+      - kpn-keycloak-network
 
 # Benannte Volumes für Datenpersistenz
 volumes:
-  shibuya_keycloak_data:
+  kpn_keycloak_data:
 
 networks:
-  shibuya-keycloak-network:
+  kpn-keycloak-network:
     driver: bridge

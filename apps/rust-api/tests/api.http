@@ -10,7 +10,7 @@ password=Sven123!!&
 scope=openid
 
 ### 2. Rust-API Items abrufen
-GET http://localhost:52102/api/items
+GET http://localhost:52102/api/people
 Authorization: Bearer {{login.access_token}}
 
 ### 3. Welcome mail

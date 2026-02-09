@@ -1,25 +1,25 @@
 {
-  "name": "shibuya-database",
+  "name": "kpn-database",
   "projectType": "library",
   "targets": {
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-database up -d shibuya-db shibuya-pgadmin",
+        "command": "docker compose -p kpn-database up -d kpn-db kpn-pgadmin",
         "cwd": "infrastructure/database"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-database start",
+        "command": "docker compose -p kpn-database start",
         "cwd": "infrastructure/database"
       }
     },
     "stop": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker compose -p shibuya-database stop"],
+        "commands": ["docker compose -p kpn-database stop"],
         "cwd": "infrastructure/database",
         "parallel": false
       }
@@ -28,7 +28,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/database",
-        "commands": ["docker compose -p shibuya-database -v down"],
+        "commands": ["docker compose -p kpn-database -v down"],
         "parallel": false
       }
     }

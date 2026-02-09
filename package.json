@@ -4,8 +4,8 @@
   "description": "Framework Agnostic Development System",
   "type": "module",
   "scripts": {
-    "postinstall": "node ./shibuya/sensei.mjs && node ./shibuya.js install",
-    "forge": "node ./shibuya.js forge && node ./shibuya.js migrate",
+    "postinstall": "node ./shibuya.js install",
+    "forge": "node ./shibuya.js forge && node ./shibuya/sensei.mjs",
     "dev": "node ./shibuya.js dev",
     "start": "node ./shibuya.js start",
     "stop": "node ./shibuya.js stop",

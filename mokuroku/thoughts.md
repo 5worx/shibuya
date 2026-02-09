@@ -2,12 +2,12 @@
 
 ## Die Situationsbeschreibung
 
-> Wenn es zu einer Anwendungsentwicklung kommt, ist der Projektordner mit seinen Anwendungen für 4/5 des gesamten Projektteams eine "BlackBox". Und das kann sich sehr schnell zu einer "PandoraBox" entwickeln.
+> Wenn es zu einer Anwendungsentwicklung kommt, ist der Repoordner mit seinen Anwendungen für 4/5 des gesamten Projektteams eine "BlackBox". Und das kann sich sehr schnell zu einer "PandoraBox" entwickeln.
 
 Eine "Gute Anwendung" zeichnet sich dadurch aus, dass sie den vom Auftraggeber gewünschten Mehrwert bietet und wenn alle Beteiligten flüssig arbeiten und Informationen austauschen können. Den ersten Teil sicherzustellen ist Aufgabe derer, die die Anwendung planen und konzipieren. Dafür gibt es POs und UI/UX-Designer. Der zweite Teil hingegen ist eine Gemeinschaftsaufgabe.
 
 Als Entwickler ist es mein Job, ein System zu entwickeln, von dem ich zu jedem Zeitpunkt eine klare Aussage zum aktuellen Zustand jedem Projektbeteiligtem gegenüber treffen können muss. Das müssen FE, BE, Tester und DevOps gleichermassen tun.
-Als PO/SM muss ich das auch UND habe zusätzlich noch die Bringschuld gegenüber Kunden und Geschäftsführung, was den Kosten-Zeit-Faktor angeht.
+Als PO/SM muss ich das eigentlich auch UND habe zusätzlich noch die Bringschuld gegenüber Kunden und Geschäftsführung, was den Kosten-Zeit-Faktor angeht.
 
 > Ich habe hier Susanne, Tobias, Mark und Nelli als Projetleiter kennengelernt und jedesmal hatte ich den Eindruck, dass sie immer wieder hinter allem herrennen mussten, um Infos zum IST-Zustand zu sammeln. Das ist dann eher der Job eines Pressesprechers: Man ist an keiner Entscheidung beteiligt, muss sie aber vertreten. Nicht schön.
 
@@ -15,63 +15,63 @@ Aus der Vogelperspektive sieht das dann aus wie kleine Inseln in einem Archipel,
 
 > Das ist nicht nur bei uns so. Das kann ich versichern.
 
-Um das Problem zu lösen, verabredeten manche Meetings mit sehr kreativen Namen wie bspw das "Brownbag-Meeting"[^brownbag]. Oder Workshops, Weiterbildungen, Entwicklerrunden und Projektvorstellungen um den anderen Inselbewohnern die eigene Lebensart, Sprache und Kultur vorzustellen. Das schafft nen frischen Genpool und es wird verhindert, dass sich isolierte Lebensräume bilden.
+Um das Problem zu lösen, verabredeten manche Meetings mit sehr kreativen Namen wie bspw das "Brownbag-Meeting"[^brownbag]. Oder Workshops, Weiterbildungen, Entwicklerrunden und Projektvorstellungen um den anderen Inselbewohnern die eigene Lebensart, Sprache und Kultur vorzustellen. Das schafft nen frischen Genpool und es verhindert isolierte Lebensräume.
 
 Das macht viel Spaß und jeder wird mit dem Gefühl der Bereicherung wieder nach Hause schippern... und morgen ist das alles wieder wie immer, weil der eigene Inselalltag wartet.
 
-Bei aller Südsseromantik und dem Wunsch nach dem Ursprünglichem: Lasst uns umziehen. Vom Archipel in einen modernen Stadtteil mit fließend Wasser. Lasst die Inselbewohner ihre eigenen Distrikte beziehen, die jeder jederzeit besuchen kann. Und das möglichst ohne Karte in fremder Sprache, die mit Runen versehen ist, die nur bei Vollmond von einem Elben oder Zauberer gelesen werden können.
+Bei aller Südsseromantik und dem Wunsch nach dem Ursprünglichem: Lasst uns umziehen. Vom Archipel in einen modernen Stadtteil mit fließend Wasser. Lasst die Inselbewohner ihre eigenen Distrikte beziehen, die jeder jederzeit besuchen kann. Vorzugsweise ohne eine Karte mit Mondrunen, die nur von Elben gelesenen werden kann.
 
 ## Die Ausgangssituation
 
-Wie dieser Distrikt aussieht, beschreibe ich gleich, vorher muss ich kurz erläutern, wie es dazu gekommen ist. Denn es war nicht der Plan, dieses Development System zu entwerfen. Das ist eher das Abfallprodukt. Aber wie mein Kunstlehrer zu sagen pflegte: "Manchmal kann man daraus noch was machen."
+Wie dieser Distrikt aussieht, beschreibe ich gleich, vorher muss ich kurz erläutern, wie es dazu gekommen ist. Denn es war nicht der Plan, dieses Development System zu entwerfen. Das ist das Abfallprodukt. Aber wie mein Kunstlehrer zu sagen pflegte: "Manchmal kann man daraus noch was machen."
 
-Wie manchen bekannt sein sollte, haben wir seit Juni eine schwierigere Situation und einige befinden sich in der Weiterbildung. Mein "Auftrag" dabei war, sich in TYPO3 einzuarbeiten. Dann aber auch in Angular und dann wollte jemand wissen, ob man TYPO3 nicht headless betreiben, und mit Angular und WebComponents darstellen könnte. Ich fand die Frage merkwürdig, denn die Antwort ist: "Ja, klar!". Um das zu zeigen, setzte ich TYPO3 auf, ein Angular Projekt und entschied mich für Stencil zum Bauen der WebComponents.
+Einige befinden sich in der Weiterbildung. Mein "Auftrag" dabei war, sich in TYPO3 einzuarbeiten. Dann aber auch in Angular und dann wollte jemand wissen, ob man TYPO3 nicht headless betreiben, und mit Angular und WebComponents darstellen könnte. Ich fand die Frage merkwürdig, denn die Antwort ist natürlich: "Ja, klar!". Um das zu zeigen, setzte ich TYPO3 auf, ein Angular Projekt und entschied mich für Stencil zum Bauen der WebComponents.
 
 > Nur zur Info: Wenn man mit Stencil entwickelt, gibt es localhost-Adresse mit dem Javascript. Für den Build braucht es eine andere Lösung.
 
-Also habe ich die WebComponents-Url in mein Angular als externe Resource eingebunden, einige Beispielseiten in TYPO3 mit Inhalten befüllt und die Adressen als Service in Angular implementiert. Und ja, geht. Zumindest für die Entwicklung.
+Also habe ich die WebComponents-Url in mein Angular als externe Resource eingebunden, einige Beispielseiten in TYPO3 mit Inhalten befüllt und die Adressen als Service in Angular implementiert. Und ja, geht. So kann man entwickeln.
 
 Aber das ist ja nicht die ganze Geschichte. Dazu gehört noch sehr viel mehr.
 
 Es stellte sich die Frage, wie deploye ich das eigentlich? Und dann gleich hinterher: Wie gehe ich mit Änderungen in den WebComponents um? Was müssen die CD-Pipelines machen, damit ein derartiges Konstrukt auch Live gehen kann? Wie koordiniere ich die Arbeiten an den Bestandteilen? Und ... wie erkläre ich das den Kollegen und was müssen denn Scrummaster und der PO darüber wissen, um eine halbwegs zeitgenaue Planung zu erreichen? 
 
-Klar, man kann das alles irgendwie dokumentieren und in irgendwelchen Wikis festhalten. Schon schreibe ich nur noch Dokus und überall liegen Duden und Rechtschreibbücher rum. Und das muss dann auch noch wer lesen wollen und vor allem verstehen können. Das ist Quälerei. Für alle. 
+Klar, man kann das alles irgendwie dokumentieren und in irgendwelchen Wikis festhalten. Schon schreibe ich nur noch Dokus und überall liegen Duden und Rechtschreibbücher rum. Und das muss dann auch noch wer finden, lesen wollen und vor allem verstehen können. Das ist Quälerei. Für alle. 
 
-> Der Beruf des "Technischen Redakteurs" ist nicht grundlos ein Akademischer. Und das sind wir nicht. Deswegen sind die meisten Rufe nach ausufernder Dokumentation mit Diagrammen und Berechnungen oft Teil des Problems anstatt Teil der Lösung. Wie sagte der britische Autor Douglas Adams? "Woran erkennt man unzureichend gut entwickelte Technik? - Wenn ein Handbuch dabei liegt.". Nebenbei gesagt, haben diese Handbücher auch eher den Charakter der Vorlage für den oben erwähnten Pressesprecher.
+> Der Beruf des "Technischen Redakteurs" ist nicht grundlos ein Akademischer. Und das sind wir nicht. Deswegen sind die meisten Rufe nach ausufernder Dokumentation mit Diagrammen und Berechnungen oft Teil des Problems anstatt Teil der Lösung. Wie sagte der britische Autor Douglas Adams? "Woran erkennt man unzureichend gut entwickelte Technik? - Wenn ein Handbuch dabei liegt.". Nebenbei gesagt, haben diese Handbücher auch den Charakter der Vorlage für den oben erwähnten Pressesprecher.
 
-Und so stellte sich heraus, das die Frage eigentlich hätte lauten sollen: "Wie würde man mit einer derartigen Architektur aus Headless-CMS + DB, MVVM-Framework und Component-Framework entwickeln?". Die Antwort war schnell gefunden: "Unter großen Schwierigkeiten!" - Und das ist keine befriedigende Antwort. 
+Und so stellte sich heraus, das die Frage eigentlich hätte lauten sollen: "Wie würde man mit einer derartigen Architektur aus Headless-CMS + DB, MVVM-Framework und Component-Framework produzieren?". Die Antwort war schnell gefunden: "Unter großen Schwierigkeiten!" - Und das ist keine befriedigende Antwort. 
 
-Ohne jetzt weiter ins Detail gehen zu wollen, man muss eine Menge Abhängigkeiten schaffen, die sofort genau diesen Doku-Aufwand nach sich ziehen. Das ist bestimmt mal möglich. Aber dann kennen sich auch nur wieder die damit aus, die sich das Konstrukt damals ausgedacht haben und die Doku lesen können, was immer zu Störungen im Arbeitsfluss derer führt, die Resourcen und Verfügbarkeiten im Unternehmen dirigieren und delegieren müssen. Denn gerade für die ist eine eindeutige Aussage zum Zustand des Projektes von essentieller Natur.
+Ohne jetzt weiter ins Detail gehen zu wollen, man muss eine Menge Abhängigkeiten schaffen, die sofort genau diesen Doku-Aufwand nach sich ziehen. Das ist bestimmt mal möglich. Aber dann kennen sich auch nur wieder die damit aus, die sich das Konstrukt damals ausgedacht haben und die Doku lesen können (wenn sie überhaupt geschrieben wurde), was immer zu Störungen im Arbeitsfluss derer führt, die Resourcen und Verfügbarkeiten im Unternehmen dirigieren und delegieren müssen. Denn gerade für die ist eine eindeutige Aussage zum Zustand des Projektes von essentieller Natur.
 
-> Und wollen einen "WorkFLOW" und nicht "WorkStopAndGo". 
+> Und wir wollen einen "WorkFLOW" und nicht "WorkStopAndGo". 
 
-Tja, und dann ändert sich auf einmal der TechStack und ich steh im "WorkSTAU". Sackgasse. Ende. Jetzt braucht es die Eloquenz der Geschäftsführer, die die Kuh jetzt irgendwie vom Eis schubsen müssen und das mit Zugeständnissen, die die Weiterarbeit nicht zwingend angenehmer machen und noch seltener im Sinne der Entwickelnden sind.
+Tja, und dann ändert sich auf einmal der TechStack oder das Team und ich steh im "WorkSTAU". Sackgasse. Ende. Jetzt braucht es die Eloquenz der Geschäftsführer, die die Kuh jetzt irgendwie vom Eis schubsen müssen und das mit Zugeständnissen, die die Weiterarbeit nicht zwingend angenehmer machen und noch seltener im Sinne der Entwickelnden sind.
 
 Schätze, wir können uns darauf einigen, dass daran niemand Interesse hat.  
 
-Es hat aber *auch* keiner Interesse daran, auf bestimmte Wege und Arbeitsweisen gezwungen zu werden oder ein hartes Dogma durchzusetzen. Das klappt nämlich nicht. Dazu müssten alle eingesetzten Systeme auf denen das aufbaut, sich niemals ändern. Und das Umfeld ebenfalls nicht.  
+Es hat aber *auch* keiner Interesse daran, auf bestimmte Wege und Arbeitsweisen gezwungen zu werden oder ein hartes Dogma durchzusetzen. Das klappt nämlich nicht. Dazu müssten alle eingesetzten Systeme auf denen das aufbaut, sich niemals ändern. Und das Umfeld ebenfalls nicht. Unrealistisch.   
 Auch hat niemand Bock, ständig hinter irgendwas oder irgendwem herrennen zu müssen auch nicht das Gefühl haben wollen, etwas oder jemand wäre hinter einem her.
 
 ## Die Ich-Situation
 
-Ich bin Webentwickler geworden, um mit den Werkzeugen des Internets Lösungen zu finden, um Projekte und Projektideen umzusetzen bzw zu realisieren.  
+Ich bin Webentwickler geworden, um mit den Werkzeugen des Internets Lösungen zu finden, um Projekte und Projektideen umzusetzen und zu realisieren.  
 
 Das ist ein kreativer Prozess.  
-Und in einem kreativen Prozess stellt man Fragen an sein "Werk".
+Und in einem kreativen Prozess stellt man Fragen.
 
 Um jetzt die eigentliche Frage beantworten zu können, stellte ich also Fragen: "Wie will *ich* damit arbeiten und wie kann ich alle aufkommenden Fragen diesbzüglich beantworten, wenn sie gestellt werden?"
 
 Was dann folgte, war eine längere Abfolge aufgesetzter Systeme und Konstellationen und wie man sie zusammen spielen lassen muss, um das zu beantworten. Und jedesmal stellte ich die gleichen Fragen an den Code.
 
-Keine Angst, ich gehe das nicht durch. Könnte ich auch nicht, davon ist Vieles defenstriert. Aber das war ein ziemlich guter Chrashkurs durch die GettingStarted-Kapitel vieler verschiedener Frameworks und wie man sie konfiguerieren muss. Und unterm Strich lässt sich der gemeinsame Nenner finden.
+Keine Angst, ich gehe das nicht durch. Könnte ich auch nicht, davon ist Vieles defenstriert. Aber das war ein ziemlich guter Chrashkurs durch die GettingStarted-Kapitel vieler verschiedener Frameworks und wie man sie konfigurieren muss. Kann ich nur empfehlen.
 
-Ich zeige das Ergebnis. Also gleich.
+Ich zeige das Ergebnis meiner Exkursionen. Also gleich.
 
-Nachdem ich mich dann also aus der EgoShooter-Perspektive Richtung ThirdPersonShooter bewege, veränderte sich die Fragestellung: "Was muss ich tun bzw gewährleisten, damit jmd anderes sofort seine nächsten Schritte darauf aufbauen kann?"
+Nachdem ich mich dann also aus der EgoShooter-Perspektive Richtung ThirdPersonShooter bewege, veränderte sich die Fragestellung: "Was muss ich tun bzw gewährleisten, damit jmd anderes sofort seine nächsten Schritte darauf aufbauen kann?" - "Ich muss meinen Blickwinkel ändern."
 
 ## Die Wir-Situation
 
-Alle an der Produktion digitaler Projekte beteiligten Personen müssen sich mit 5 verschiedenen Systemen auskennen
+Alle an der Produktion digitaler Projekte beteiligten Personen *müssen* sich mit 5 verschiedenen Systemen auskennen
 
 * Frontend-Systeme
 * Backend- oder Api-Systeme
@@ -83,11 +83,11 @@ Alle an der Produktion digitaler Projekte beteiligten Personen müssen sich mit 
 
 Abhängig von Position und Rolle im Projekt ist mal mehr mal weniger Know-How erforderlich. Projektleiter brauchen nicht den letzten geilen Scheiss aus der Datenbankwelt zu wissen. Dafür rennt irgendwo wer rum, den das interessiert oder interessieren muss. 
 
-**Ich fasse kurz zusammen**: Gesucht wird also ein Entwicklungssystem, das von Personen eingesehen und entwickelt wird, die wichtige Rollen bekleiden, Entscheidungen treffen und die Zukunft des Projekts gestalten, die aber komplett unterschiedliche Sprachen sprechen, unterschiedlich motiviert sind und unterschiedliches Handwerk erlernt haben, das nichts miteinander zu hat. Und das in einer Welt, die sich in kürzester Zeit signifikant ändern kann.
+**Ich fasse kurz zusammen**: Gesucht wird also eine Entwicklungsstruktur, die von Personen eingesehen und entwickelt wird, die wichtige Rollen bekleiden, Entscheidungen treffen und die Zukunft des Projekts gestalten, die aber komplett unterschiedliche Sprachen sprechen, unterschiedlich motiviert sind und unterschiedliches Handwerk erlernt haben. Und das in einer Welt, die sich in kürzester Zeit signifikant ändern kann.
 
 Das klingt ja einfach.
 
-> Ich betone das hier nur, um klar zu stellen, dass ich hier keinen cleveren Code vorstelle, um zu beeindrucken, sondern eine Projektstruktur, die es ermöglicht, die **Stärken einer solch heterogenen Umgebung zu nutzen**.
+> Ich betone das hier nur, um klar zu stellen, dass ich hier keinen cleveren Code vorstelle, um zu beeindrucken, sondern eine Projektstruktur, die es ermöglicht, die **Stärken einer solch heterogenen Umgebung zu nutzen**. Dazu muss ich alle versammeln.
 
 Was habe ich also für Möglichkeiten, damit alle in das Projekt während der Produktion einsehen und daraus eine eindeutige Aussage zum Status des Produktes treffen können?
 
@@ -109,9 +109,9 @@ Niemand käme auf die Idee, das Tobias oder Axel beim Auflösen von Mergekonflik
 
 Was wäre denn eine realistische Erwartungshaltung an alle Projektbeteiligten? Das ist eine intressante Debatte, die wir an anderer Stelle diskutieren sollten. Das war im Selbstgespräch schon spannend. Ich habe hinterher nicht mehr mit mir gesprochen, weil rauskam, dass ich selbst auch einen höheren Anspruch an mich selbst hätte stellen müssen.
 
-Zeit ist wertvoll. Meine Zeit ist wertvoll und damit auch automatisch: Deine. Daraus ergibt sich eine klare Konsequenz: "Ich arbeite so, dass andere darauf aufbauen können!" oder wie es meine Chefin bei AB@Media ausdrückte: "Gehe sorgfältig mit der Zeit deines Gegenübers um.". Das findet sich auch in den Prinzipien des Agilen Manifests. 
+Zeit ist wertvoll. Meine Zeit ist wertvoll und damit auch automatisch: Deine. Daraus ergibt sich eine klare Konsequenz: "Ich arbeite so, dass andere darauf aufbauen können!" oder wie es meine Chefin bei AB@Media ausdrückte: "Gehe sorgfältig mit der Zeit deines Gegenübers um.". Das findet sich auch in den Prinzipien des Agilen Manifests. Und wer es philosophischer möchte: Auch bei Kant.
 
-Das Entwicklungssystem, dass ich jetzt wirklich gleich vorstellen werde, nimmt Rücksicht. Es ist so ausgelegt, dass man mit den einfachsten Befehlen das Projekt und dessen Status einsehen und sogar mitgestalten kann, ohne sich zusätzlich in was Neues einarbeiten zu müssen.
+Das Entwicklungssystem, dass ich jetzt wirklich gleich vorstellen werde, nimmt darauf Rücksicht. Es ist so ausgelegt, dass man mit den einfachsten Befehlen das Projekt und dessen Status einsehen und sogar mitgestalten kann, ohne sich zusätzlich in was Neues einarbeiten zu müssen. Und mit etwas Übung beim "Lesen" eines Repos kann man schon an der History sehen, was abgeht.
 
 Ja, für einige ist das Arbeiten mit Versionskontrollen eine Hürde. Aber die ist flach und gepolstert. Ich behaupte, dass ich jedem hier im Raum innerhalb einer Stunde alles Notwendige zu einem Repo zeigen und beibringen kann. Und nein, man kann keinen irreversiblen Schaden anrichten. Das müsste man wollen und die Repoberechtigungen dazu haben.
 
@@ -127,7 +127,7 @@ Und bei aller Scheu vor der Kommandozeile oder dem Linux Subsystem. Es lohnt sic
 
 > One Workshop to rule them all!
 
-Ich wollte das Entwicklungssystem zeigen, richtig? - Gleich.
+Ich wollte das Entwicklungssystem zeigen, richtig? - Gleich. Vorher will ich noch auf einen Nebeneffekt eingehen.
 
 Ich habe lange Zeit als Türsteher und Veranstaltungsschützer gearbeitet. Die wirkungsvollste Waffe ist die **Überzeugung**. Nur sie bringt aufgebrachte Menschen dazu, ihre Handlungen zu überdenken. Gewalt erreicht das nicht. Die verbessert nur eure Chancen, heile rauszukommen. 
 
@@ -157,15 +157,15 @@ Ich habe es SHIBUYA getauft und es ist *kein* Framework. Es gibt einem Projekt S
 
 SHIBUYA ist das Framework Agnostic Development System, das die Komplexität der technischen sowie *sozialen* Abhängigkeiten in Einfachheit verwandelt. 
 
-Ich präsentiere die Umgegbung aus Sicht einer Person, die neu in das Projekt kommt, das bereits in seinen Grundzügen vom Admin/SHOGUN aufgesetzt wurde.
+Ich präsentiere die Umgegbung aus Sicht einer Person, die neu in das Projekt kommt (OnBoarding), das bereits in seinen Grundzügen vom Admin/SHOGUN aufgesetzt wurde.
 
 In einem Workshop werde ich zeigen, wie man beliebige Anwendungen und Frameworks in die Umgebung einbindet und die Struktur festzurrt. Das führt hier zu weit. Aber um zu zeigen, dass es völlig egal ist, was für Frameworks eingesetzt werden, zeige ich das Beispielprojekt mit Axum-API in Rust und dem etwas bekannterem Angular.
 
-> Ich hatte hier mehrere APIs und FE-Frameworks angebunden, darunter: Nuxt, Astro, SvelteKit, ReactNative, Phoenix, TYPO3, .NET8, Java SpringBoot, Laravel. Alle haben funktioniert. Selbst eine ElectronJS-App kann hiermit betrieben und entwickelt werden. Und ich sehe auch kein Hindernis, hiermit andere Desktop-Anwendungen mit Python oder C++ zu entwickeln.
+> Ich hatte hier mehrere APIs und FE-Frameworks angebunden, darunter: Nuxt, Astro, SvelteKit, ReactNative, Phoenix, TYPO3, .NET8, Java SpringBoot, Laravel und FastAPI in Python. Alle haben funktioniert. Selbst eine ElectronJS-App kann hiermit betrieben und entwickelt werden. Und ich sehe auch kein Hindernis, hiermit andere Desktop-Anwendungen mit Python oder C++ zu entwickeln.
 
 ## Das "KundenProjektName"-Projekt
 
-Der erste Schritt ist immer, sich das Projekt aus der Versionskontrolle zu holen. Das habe ich schon gemacht. Der Stand, der hier zu sehen ist, ist kurz nach dem `clone`. Der nächste Schritt ist immer der Installation der Abhängigkeiten.
+Beim Onboarding ist der erste Schritt immer, sich das Projekt aus der Versionskontrolle zu holen. Das habe ich schon gemacht. Der Stand, der hier zu sehen ist, ist kurz nach dem `clone`. Der nächste Schritt ist immer der Installation der Abhängigkeiten.
 
 > Die ersten Befehle und Handlungen, die nach dem `clone` ausgeführt und geprüft werden müssen, stehen immer in der obersten README.md-Datei!
 

@@ -1,2 +1,2 @@
-pub mod item;
+pub mod person;
 // Später einfach: pub mod user;

@@ -1,6 +1,6 @@
 use crate::AppState;
 use axum::{Router, routing::get};
-mod item_routes;
+mod people_routes;
 
 pub fn create_router(state: AppState) -> Router {
     Router::new()
@@ -14,7 +14,6 @@ pub fn create_router(state: AppState) -> Router {
             "/api/welcome",
             get(crate::handlers::email_handler::welcome_handler),
         )
-        // Verschachtelte Routen (Items)
-        .nest("/api/items", item_routes::routes())
+        .nest("/api/people", people_routes::routes())
         .with_state(state)
 }

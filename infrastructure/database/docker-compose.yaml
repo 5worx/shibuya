@@ -3,28 +3,28 @@
 
 services:
   # Der Herzschlag der Datenhaltung
-  shibuya-db:
+  kpn-db:
     image: postgres:16-alpine
-    container_name: shibuya-postgres-db
+    container_name: kpn-postgres-db
     restart: always
     environment:
-      POSTGRES_USER: shibuya_admin
-      POSTGRES_PASSWORD: shibuya_password
-      POSTGRES_DB: shibuya_main
+      POSTGRES_USER: kpn_admin
+      POSTGRES_PASSWORD: kpn_password
+      POSTGRES_DB: kpn_main
     ports:
       - "52302:5432"
     volumes:
-      - shibuya_db_data:/var/lib/postgresql/data
+      - kpn_db_data:/var/lib/postgresql/data
       # Initialisierungsskripte für autarke Datenbanken
       - ./init-db:/docker-entrypoint-initdb.d
 
   # Datenbank-Verwaltung (pgAdmin)
-  shibuya-pgadmin:
+  kpn-pgadmin:
     image: dpage/pgadmin4
-    container_name: shibuya-postgres-pgadmin
+    container_name: kpn-postgres-pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@shibuya.dev
+      PGADMIN_DEFAULT_EMAIL: admin@kpn.dev
       PGADMIN_DEFAULT_PASSWORD: admin_password
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
       PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
@@ -34,8 +34,8 @@ services:
       # Wir mappen die lokale Datei in den Container
       - ./servers.json:/pgadmin4/servers.json
     depends_on:
-      - shibuya-db
+      - kpn-db
 
 # Benannte Volumes für Datenpersistenz
 volumes:
-  shibuya_db_data:
+  kpn_db_data:

@@ -1,12 +1,15 @@
 <h3>Willkommen, {{ user()?.name }}!</h3>
 
-<p>Du bist eingeloggt und SHIBUYA hat folgende Items für dich aus der Rust-DB geladen:</p>
+<p>
+  Du bist eingeloggt und das KundenProjektName hat folgende Personen für dich aus der Rust-DB
+  geladen:
+</p>
 
 <div class="item-list">
-  @for (item of items(); track item.id) {
+  @for (person of people(); track person.id) {
   <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 4px">
-    <strong>{{ item.title }}</strong><br />
-    <small>{{ item.description }}</small>
+    <strong>{{ person.firstname }} {{ person.lastname }}</strong><br />
+    <small>{{ person.email }}</small>
   </div>
   } @empty {
   <p>Keine Items gefunden. (Check mal die Rust-Logs!)</p>

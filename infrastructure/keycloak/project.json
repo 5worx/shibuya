@@ -1,18 +1,18 @@
 {
-  "name": "shibuya-keycloak",
+  "name": "kpn-keycloak",
   "projectType": "library",
   "targets": {
     "forge": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-keycloak up -d keycloak-db keycloak-admin",
+        "command": "docker compose -p kpn-keycloak up -d keycloak-db keycloak-admin",
         "cwd": "infrastructure/keycloak"
       }
     },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "docker compose -p shibuya-keycloak start",
+        "command": "docker compose -p kpn-keycloak start",
         "cwd": "infrastructure/keycloak"
       }
     },
@@ -20,7 +20,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/keycloak",
-        "commands": ["docker compose -p shibuya-keycloak stop"],
+        "commands": ["docker compose -p kpn-keycloak stop"],
         "parallel": false
       }
     },
@@ -28,7 +28,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "infrastructure/keycloak",
-        "commands": ["docker compose -p shibuya-keycloak -v down"],
+        "commands": ["docker compose -p kpn-keycloak -v down"],
         "parallel": false
       }
     }

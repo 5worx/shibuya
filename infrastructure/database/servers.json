@@ -1,14 +1,14 @@
 {
   "Servers": {
     "1": {
-      "Name": "SHIBUYA Infrastructure",
+      "Name": "KPN Infrastructure",
       "Group": "Servers",
-      "Host": "shibuya-postgres-db",
+      "Host": "kpn-postgres-db",
       "Port": 5432,
-      "MaintenanceDB": "shibuya_main",
-      "Username": "shibuya_admin",
+      "MaintenanceDB": "kpn_main",
+      "Username": "kpn_admin",
       "SSLMode": "prefer",
-      "Comment": "Automatischer SHIBUYA-Forge-Eintrag"
+      "Comment": "Automatischer KPN-Forge-Eintrag"
     }
   }
 }

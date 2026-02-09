@@ -1,7 +1,7 @@
 services:
   mailpit:
     image: axllent/mailpit:latest
-    container_name: shibuya-mailpit
+    container_name: kpn-mailpit
     restart: unless-stopped
     ports:
       - "52203:8025" # Web UI im Browser
@@ -10,8 +10,8 @@ services:
       - MP_MAX_MESSAGES=500
       - MP_DATABASE=/data/mailpit.db
     volumes:
-      - shibuya_mailpit_data:/data
+      - kpn_mailpit_data:/data
 
 # Benannte Volumes für Datenpersistenz
 volumes:
-  shibuya_mailpit_data:
+  kpn_mailpit_data:

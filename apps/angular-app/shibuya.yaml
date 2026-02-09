@@ -5,7 +5,7 @@
 # Definition der Komponenten (Zentrale Datenquelle)
 components:
   infrastructure:
-    - shibuya-keycloak
+    - kpn-keycloak
   packages:
     - auth-keycloak
 

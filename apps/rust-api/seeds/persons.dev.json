@@ -1,0 +1,20 @@
+[
+  {
+    "firstname": "Kuroko",
+    "lastname": "Sato",
+    "role": "Samurai",
+    "email": "kuroko@shibuya.dev"
+  },
+  {
+    "firstname": "Sven",
+    "lastname": "Schoppe",
+    "role": "Shogun",
+    "email": "sven@shibuya.dev"
+  },
+  {
+    "firstname": "Hattori",
+    "lastname": "Hanzo",
+    "role": "Hatamoto",
+    "email": "h.hanzo@shibuya.dev"
+  }
+]

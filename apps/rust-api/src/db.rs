@@ -15,10 +15,11 @@ pub async fn init_pool() -> PgPool {
 }
 
 pub async fn run_migrations(pool: &PgPool) {
+    // 1. Schema-Migrationen
     sqlx::migrate!("./migrations")
         .run(pool)
         .await
-        .expect("Konnte Migrationen nicht ausführen");
+        .expect("Migrationen fehlgeschlagen");
 
     println!("✅ SHIBUYA: Datenbank-Migrationen erfolgreich angewendet.");
 }
