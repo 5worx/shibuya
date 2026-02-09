@@ -20,7 +20,7 @@
     "mokuroku:retro": "node ./shibuya/mokuroku.mjs retro",
     "mokuroku:notes": "node ./shibuya/mokuroku.mjs notes",
     "mokuroku:lock": "tar cz -C mokuroku notes | gpg -c -o mokuroku/notes.tar.gpg && rm -rf mokuroku/notes/*.md",
-    "keycloak:export-realms": "node ./shibuya/export-keycloak-realm.mjs"
+    "keycloak:export-realms": "nx export-realm kpn-keycloak"
   },
   "keywords": [
     "framework",

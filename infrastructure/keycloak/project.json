@@ -31,6 +31,16 @@
         "commands": ["docker compose -p kpn-keycloak -v down"],
         "parallel": false
       }
+    },
+    "export-realm": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./",
+        "commands": [
+          "node ./shibuya/export-keycloak-realm.mjs --container-name=kpn-keycloak-admin --realm=FADS --target-path=./infrastructure/keycloak/import/realm-export.json"
+        ],
+        "parallel": false
+      }
     }
   }
 }
