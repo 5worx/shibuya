@@ -12,6 +12,7 @@ pub enum AppError {
 }
 
 // Hier passiert die Magie: Wir sagen Axum, wie jeder Fehler als HTTP-Response aussieht
+#[allow(dead_code)]
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let (status, error_message) = match self {
