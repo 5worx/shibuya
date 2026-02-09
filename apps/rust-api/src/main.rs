@@ -39,10 +39,10 @@ async fn main() {
 
     // 6. Server-Konfiguration & Start
     // Wir nutzen die Adresse aus deinem ursprünglichen Code
-    let addr = SocketAddr::from(([127, 0, 0, 1], 52102));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 52102));
 
     println!(
-        "\n🏙️  SHIBUYA - The Framework Agnostics Development System\n\
+        "\n🏙️  SHIBUYA Presentation - The Framework Agnostics Development System\n\
          🚀 API läuft auf http://{}\n\
          📦 Datenbank-Status: Verbunden & Migriert\n",
         addr

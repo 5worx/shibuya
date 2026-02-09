@@ -18,13 +18,13 @@ pub async fn welcome_handler(claims: Claims) -> Result<(StatusCode, String), (St
 // Die reine Logik-Funktion
 pub fn perform_email_dispatch(to_email: &str) -> Result<(), String> {
     let email = Message::builder()
-        .from("SHIBUYA System <noreply@shibuya.dev>".parse().unwrap())
+        .from("KPN System <noreply@kpn.dev>".parse().unwrap())
         .to(to_email
             .parse()
             .map_err(|e: lettre::address::AddressError| e.to_string())?)
-        .subject("Willkommen bei SHIBUYA!")
+        .subject("Willkommen bei KPN!")
         .body(String::from(
-            "Dein Account wurde erfolgreich im Framework erstellt.",
+            "Das ist eine Begrüßungsmail aus der Rust-API.",
         ))
         .unwrap();
 

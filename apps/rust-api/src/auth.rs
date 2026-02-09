@@ -40,7 +40,7 @@ where
         let token = &auth_header[7..];
 
         // 2. Keycloak Public Keys laden (JWKS)
-        // In SHIBUYA laden wir das aktuell live, später können wir das cachen
+        //  laden wir das aktuell live, später können wir das cachen
         let jwks_url = "http://localhost:52201/realms/FADS/protocol/openid-connect/certs";
         let jwks: serde_json::Value = reqwest::get(jwks_url)
             .await

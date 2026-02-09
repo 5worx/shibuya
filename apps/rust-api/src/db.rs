@@ -21,5 +21,5 @@ pub async fn run_migrations(pool: &PgPool) {
         .await
         .expect("Migrationen fehlgeschlagen");
 
-    println!("✅ SHIBUYA: Datenbank-Migrationen erfolgreich angewendet.");
+    println!("✅ Datenbank-Migrationen erfolgreich angewendet.");
 }
