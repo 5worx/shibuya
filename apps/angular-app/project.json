@@ -1,6 +1,6 @@
 {
   "name": "angular-app",
-  "implicitDependencies": ["auth-keycloak", "kpn-keycloak"],
+  "implicitDependencies": ["auth-keycloak", "kpn-keycloak", "rust-api"],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "targets": {
@@ -23,5 +23,5 @@
       "options": { "command": "pnpm dev", "cwd": "apps/angular-app" }
     }
   },
-  "tags": []
+  "tags": ["type:app", "layer:frontend", "tech:angular"]
 }

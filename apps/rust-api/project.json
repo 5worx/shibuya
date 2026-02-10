@@ -1,6 +1,6 @@
 {
   "name": "rust-api",
-  "implicitDependencies": [],
+  "implicitDependencies": ["kpn-mailpit", "kpn-keycloak", "kpn-database"],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "targets": {
@@ -42,5 +42,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["type:app", "layer:backend", "tech:rust"]
 }

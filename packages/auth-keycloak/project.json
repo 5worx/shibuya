@@ -20,5 +20,5 @@
       }
     }
   },
-  "tags": ["library", "authentication", "keycloak"]
+  "tags": ["type:lib", "layer:auth"]
 }
