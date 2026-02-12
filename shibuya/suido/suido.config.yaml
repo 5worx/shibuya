@@ -25,6 +25,6 @@ COMM:
   infra-mailpit-smtp: 1
 
 # SHIBUYA intern
-# Nur Anpassen, wenn die Konsequez bekannt ist.
+# Nur Anpassen, wenn die Konsequenz bekannt ist.
 SHIBUYA:
   mokuroku: 1

@@ -1,12 +1,40 @@
 import express from "express";
+import path from "path";
 import { readFile, readdir, stat } from "fs/promises";
 import { join, relative, sep } from "path";
 import { marked } from "marked";
 import open from "open";
 
 const app = express();
-const PORT = 52200;
+const ROOT_DIR = process.cwd();
+const SUIDO_CONFIG_PATH = path.join(
+  ROOT_DIR,
+  "shibuya",
+  "suido",
+  "suido.config.yaml",
+);
 const MOKUROKU_DIR = join(process.cwd(), "mokuroku");
+
+// --- Die SUIDO-Magie ---
+function getMokurokuPort() {
+  try {
+    const raw = yaml.load(fs.readFileSync(SUIDO_CONFIG_PATH, "utf8"));
+    const prefix = raw.SETTINGS?.portprefix || 52;
+    const category = 8; // SHIBUYA Kategorie
+    const appId = raw.SHIBUYA?.mokuroku || 1;
+
+    // Die SUIDO-Formel: {PREFIX}{CATEGORY}{ID.padStart(2, '0')}
+    return parseInt(
+      `${prefix}${category}${appId.toString().padStart(2, "0")}`,
+      10,
+    );
+  } catch (e) {
+    console.warn("⚠️ SUIDO Config nicht lesbar, weiche auf Default 52801 aus.");
+    return 52801;
+  }
+}
+
+const PORT = getMokurokuPort();
 
 // Rekursive Funktion, um alle .md Dateien zu finden
 async function getAllFiles(dirPath, arrayOfFiles = []) {
@@ -78,6 +106,8 @@ function renderNavigation(files, activeFile) {
   return html + "</ul>";
 }
 
+app.use("/mokuroku", express.static(path.join(ROOT_DIR, "mokuroku")));
+
 app.get("/", async (req, res) => {
   const files = await getAllFiles(MOKUROKU_DIR);
   res.send(
@@ -102,7 +132,7 @@ app.get("/view/:file", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(
-    `\x1b[36m🌊 Mokuroku View aktiv auf http://localhost:${PORT}\x1b[0m`,
+    `\x1b[36m🏙️ Mokuroku View aktiv auf http://localhost:${PORT}\x1b[0m`,
   );
   open(`http://localhost:${PORT}`);
 });
