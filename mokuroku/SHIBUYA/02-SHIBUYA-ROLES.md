@@ -1,11 +1,13 @@
-# Der Distrikt und seine Bewohner
+# Der SHIBUYA-Distrikt und seine Bewohner
+
+Beschreibung der Verantwortlichkeiten der einzelnen SHIBUYA-Rollen.
 
 ## 1. Der SHOGUN (Der Architekt / Admin)
 
 Der Shogun ist der Hüter des Systems. Er setzt das "Dorf" (das Repo) auf und bestimmt die Regeln.
 
-* **Aufgaben**: git-crypt init, Schlüsselverwaltung, requirements.yaml definieren, GitHub/GitLab-Struktur anlegen.
-* **Fokus**: Setup-Kommandos, Key-Management, CI/CD-Integration.
+* **Aufgaben**: Repository- und Schlüsselverwaltung, requirements.yaml definieren, GitHub/GitLab-Struktur anlegen. README.md
+* **Fokus**: Setup-Kommandos, Key-Management, Bereitstellung der Distrikte.
 * **Element**: Leere (Ethereal) – Das große Ganze & die Regeln.
 
 ## 2. Die SAMURAI (Die Entwickler)
@@ -26,9 +28,9 @@ Die Krieger, die den Code in den Distrikten (SUIDO, KIBAN, etc.) schmieden.
 
 ## 4. Die METSUKE (Die Tester / QA)
 
-"Metsuke" waren die Inspektoren im Shogunat. Ihr Job war es, die Einhaltung von Regeln zu prüfen und Berichte über Missstände zu verfassen. Perfekt für Tester!
+"Metsuke" waren die Inspektoren im Shogunat. Ihr Job war es, die Einhaltung von Regeln zu prüfen und Berichte über Missstände zu verfassen. *Tester suchen Fehler. Inspektoren sichern Qualität!*
 
-* **Aufgaben**: Fehler finden, git-bug nutzen, Abnahmetests in den Distrikten.
+* **Aufgaben**: Qualitätssicherung, Abnahmetests in den Distrikten.
 * **Element**: Erde – Die feste Basis der Qualität.
 * Was noch vorbereitet werden muss:
   * Eigener Workflow: pnpm check:test (um zu sehen, ob die Test-Tools da sind).
@@ -40,3 +42,15 @@ Die Krieger, die den Code in den Distrikten (SUIDO, KIBAN, etc.) schmieden.
 * **Bedeutung:** Leibwache des Shoguns
 * **Fokus**: CI/CD-Integration, Infrastruktur, Automatisierung, Build-Pipeline.
 * **Element**: Wind – Die Zirkulation (Pipelines) & Infrastruktur.
+
+---
+
+## Warum die neuen Begriffe
+
+* Abgrenzung: "Scrum Master" und "Product Owner" sind oft durch Jira-Traumata vorbelastet. Die neuen Begriffe schaffen einen neutralen Neuanfang.
+* Struktur: Shibuya ist ein Ort (das Dev System), die Rollen sind die Funktionen in diesem Ort.
+* Agnostik: Da die Umgebung "agnostisch" ist, braucht es eine eigene Sprache, die nicht nach Laravel, Rust oder Jira klingt.
+
+## Präzision durch Abstraktion.
+
+Wenn wir Begriffe wie "Interface" nutzen, schleppen wir 30 Jahre Fehlinterpretationen mit uns herum. In SHIBUYA ist ein Begriff ein definierter Zustand innerhalb unseres Kosmos. Wir nutzen diese Namen nicht, um uns zu verkleiden, sondern um die babylonische Sprachverwirrung zu beenden.

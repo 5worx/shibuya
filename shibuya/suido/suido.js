@@ -7,9 +7,24 @@ import path from "path";
  * ein deterministisches 5-stelliges Schema: {PREFIX}{DISTRICT}{ID}
  */
 
+const CONFIGPATH = path.join(
+  process.cwd(),
+  "shibuya",
+  "suido",
+  "suido.config.yaml",
+);
+
 // Anpassen, falls mehrere Monorepos auf einer Workstation
 // betrieben werden müssen
-const MONOREPO_PREFIX = 52;
+let MONOREPO_PREFIX = 52;
+if (fs.existsSync(CONFIGPATH)) {
+  const rawConfig = yaml.load(fs.readFileSync(CONFIGPATH, "utf8"));
+  MONOREPO_PREFIX = rawConfig.SETTINGS.portprefix;
+} else {
+  console.warn(
+    `⚠️ Kein Eintrag für den PortPrefix in der suido.config.yaml gefunden. Stattdessen den default 52 angenommen.`,
+  );
+}
 
 const MAX_APPS_PER_CATEGORY = 99;
 const HOST = "http://localhost"; // Standard-Host für die URL-Anzeige
@@ -27,13 +42,6 @@ const CATEGORY_MAP = {
   COMM: 4, // {MONOREPO_PREFIX}4xx: SMTP
 };
 
-const configPath = path.join(
-  process.cwd(),
-  "shibuya",
-  "suido",
-  "suido.config.yaml",
-);
-
 let APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.PACKAGES]: {},
   [CATEGORY_MAP.APPS]: {},
@@ -42,8 +50,8 @@ let APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.COMM]: {},
 };
 
-if (fs.existsSync(configPath)) {
-  const rawConfig = yaml.load(fs.readFileSync(configPath, "utf8"));
+if (fs.existsSync(CONFIGPATH)) {
+  const rawConfig = yaml.load(fs.readFileSync(CONFIGPATH, "utf8"));
   APPLICATIONS_CONFIG = {
     [CATEGORY_MAP.PACKAGES]: rawConfig.PACKAGES || {},
     [CATEGORY_MAP.APPS]: rawConfig.APPS || {},
@@ -52,7 +60,7 @@ if (fs.existsSync(configPath)) {
     [CATEGORY_MAP.COMM]: rawConfig.COMM || {},
   };
 } else {
-  console.warn(`⚠️ Keine suido.config.yaml gefunden unter ${configPath}`);
+  console.warn(`⚠️ Keine suido.config.yaml gefunden unter ${CONFIGPATH}`);
 }
 
 /**

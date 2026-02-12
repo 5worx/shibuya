@@ -17,6 +17,13 @@ const principles = [
   "Einfachheit -- die Kunst, die Menge nicht getaner Arbeit zu maximieren -- ist essenziell.",
   "Die besten Architekturen, Anforderungen und Entwürfe entstehen durch selbstorganisierte Teams.",
   "In regelmäßigen Abständen reflektiert das Team, wie es effektiver werden kann und passt sein Verhalten entsprechend an.",
+  "SHIBUYA-Bushido: Ich will, dass andere auf meiner Arbeit aufbauen können.",
+  "SHIBUYA-Bushido: Ich will die Wahrheit im Repo.",
+  "SHIBUYA-Bushido: Ich will Agnostik vor Bequemlichkeit.",
+  'SHIBUYA-Bushido: Ich will "Erfassbarkeit" statt Komplexität.',
+  "SHIBUYA-Bushido: Ich will saubere Pfade hinterlassen.",
+  "SHIBUYA-Bushido: Ich will, dass das System für mich arbeitet, nicht ich für das System.",
+  "SHIBUYA-Bushido: Ich will radikale Transparenz.",
 ];
 
 function wrapText(text, limit) {

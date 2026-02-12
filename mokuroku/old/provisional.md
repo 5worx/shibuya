@@ -16,6 +16,7 @@ Bevor du startest, prüfe, ob dein Rechner bereit ist. Das Skript zeigt dir gena
 ---
 
 ### 📝 2. Dokumentation (Mokuroku)
+3. 
 Wir schreiben keine losen Dokumente mehr, sondern nutzen strukturierte Vorlagen direkt im Projekt.
 
 * **Retro-Beschluss erfassen:**
@@ -31,6 +32,7 @@ Wir schreiben keine losen Dokumente mehr, sondern nutzen strukturierte Vorlagen 
 ---
 
 ### 🔐 3. Sicherheit (Keine Angst vor Git!)
+4. 
 Deine Notizen sind im Repository **verschlüsselt**. Niemand ohne den Tresor-Schlüssel kann deine privaten Notizen lesen.
 
 1.  **Einmalig aufschließen:** Du bekommst von Sven den `shibuya-treasure.key`.

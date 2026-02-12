@@ -1,8 +1,8 @@
 # KundenProjektName
 
-> Willkommen im Distrikt SHIBUYA!
+> Willkommen in SHIBUYA! Auch das hier ist nur ein Beispiel was als *projektbezogene* Information gilt.
 
-Angular-Anwendung mit Rust-Api mit Keycloak-Authentifizierung und PostgreSQL-Datenbank
+Angular-Anwendung mit Rust-Api mit Keycloak-Authentifizierung und PostgreSQL-Datenbank.
 
 ## Getting started
 
@@ -16,7 +16,7 @@ Nach dem Auschecken prüfen, ob alle *Abhängigkeiten* und *Tools* installiert s
 
 Mit `pnpm suido:urls` kann man sich die gültigen URLs ansehen. Diese repräsentieren den **SOLL**-Zustand. Mehr dazu im Mokuroku-Katalog unter *SUIDO*.
 
-> URLs natürlich nur gültig, wenn die Infrastruktur gebaut wurde und die `apps/` mit `pnpm dev` gestartet wurden!
+> URLs natürlich nur gültig, wenn die Infrastruktur gebaut wurde und die `apps/` mit bspw `pnpm dev` gestartet wurden!
 
 ## Infrastruktur bauen
 

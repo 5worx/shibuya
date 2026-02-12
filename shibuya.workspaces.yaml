@@ -1,4 +1,10 @@
 # shibuya.workspace.yaml
+
+project:
+  name: "KundenProjektName"
+  security:
+    vault_key: "../.shibuya-vault/project-kpn.key"
+
 active_apps:
   - angular-app
   - rust-api

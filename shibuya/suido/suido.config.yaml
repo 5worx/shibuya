@@ -2,6 +2,9 @@
 # Schema: {MONOREPO_PREFIX} (Prefix) + Category (1 Digit) + ID (2 Digits)
 # see `mokuroku/SUIDO.md` for more information
 
+SETTINGS:
+  portprefix: 52
+
 PACKAGES:
   kuroko: 1
 

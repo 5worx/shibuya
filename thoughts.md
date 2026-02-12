@@ -2,7 +2,7 @@
 
 ## Die Situationsbeschreibung
 
-> Wenn es zu einer Anwendungsentwicklung kommt, ist der Repoordner mit seinen Anwendungen für 4/5 des gesamten Projektteams eine "BlackBox". Und das kann sich sehr schnell zu einer "PandoraBox" entwickeln.
+> Wenn es zu einer Anwendungsentwicklung kommt, ist der Repoordner mit seinen Anwendungen für den Großteil des gesamten Projektteams eine "BlackBox". Und das kann sich sehr schnell zu einer "PandoraBox" entwickeln, in der kleine Zeitfresser die
 
 Eine "Gute Anwendung" zeichnet sich dadurch aus, dass sie den vom Auftraggeber gewünschten Mehrwert bietet und wenn alle Beteiligten flüssig arbeiten und Informationen austauschen können. Den ersten Teil sicherzustellen ist Aufgabe derer, die die Anwendung planen und konzipieren. Dafür gibt es POs und UI/UX-Designer. Der zweite Teil hingegen ist eine Gemeinschaftsaufgabe.
 

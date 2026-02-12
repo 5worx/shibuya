@@ -1,56 +1,10 @@
-# 🛠 Voraussetzungen
+# 🛠 Für die, die es sich so richtig besorgen wollen
 
-Bevor du den Distrikt betrittst, stelle sicher, dass folgende Werkzeuge auf deinem Host-System installiert sind:
+Alles in SHIBUYA kann auf beliebigen Betriebsystemen mit beliebigen IDEs, Terminals oder anderen Editoren bearbeitet werden. Dokumentation in *MOKUROKU* lassen sich auch direkt über GitLab, Github, Bitbucket usw im Browser erledigen.
 
-* **Node.js**: Version 24.x oder höher (LTS empfohlen)
-* **pnpm**: Version 10.28.x oder höher (`npm install -g pnpm`)
-* **Git**: Version 2.43 oder höher
-* **git-bug**: Version 0.10.x oder höher
-* **git-crypt**: Version 0.7.x oder höher
-* **Docker & Docker Compose**: Zum Hosten der Infrastruktur (Keycloak, DBs)
-* **NX CLI**: Global empfohlen via `pnpm add -g nx` (alternativ via `npx nx`)
+Aber für diejenigen, die es zur Meisterschaft bringen wollen, wird eine wesentlich performantere Umgebung mit kurzen Wegen empfohlen. Diese setzt allerdings fortgeschrittenes Linux-Wissen voraus. 
 
-Nach dem Clone: `pnpm install`:
-
-Nachdem die erforderliche Software und die Abhängigkeiten installiert sind, müssen noch evtl kleinere Einstellungen vorgenommen werden, damit nicht nur die Anwendungsentwicklung, sondern auch das Drumherum reibungslos läuft.
-
-Check der *Umgebung* `pnpm shibuya:check`:
-
-```sh
-🏙️  SHIBUYA - Environment Check
-==============================
-
-1. Prüfe Git-Identität...
-  ✅ Lokal konfiguriert als: Dein Name <dein.name@mailprovider.de>
-
-2. Prüfe erforderliche Software...
-  ✅ 'docker' Docker (docker) gefunden.
-  ✅ 'nx' Monorepo Build Platform, install with 'pnpm add -g nx' (nx) gefunden.
-  ✅ 'git-bug' (Issue Tracking) (git-bug) gefunden.
-
-3. Prüfe optionale Tools (empfohlen)...
-  ✅ 'glow' Glow (Markdown Viewer) (glow) gefunden.
-  ✅ 'tree' Directory and File-structure (Viewer) (tree) gefunden.
-  ✅ 'lazydocker' LazyDocker - Docker GUI  (Terminal Viewer) (lazydocker) gefunden.
-  ✅ 'lazygit' LazyGit - Git GUI (Terminal Viewer) (lazygit) gefunden.
-
-4. Projektspezifische Checks...
-  ✅ Mokuroku-Verzeichnis vorhanden.
-
-5. Git Hooks anmelden...
-  ✅ Git-Hooks sind bereits korrekt auf .githooks/ konfiguriert.
-  ✅ Git-Hooks Pfad wurde erfolgreich auf .githooks/ umgestellt.
-
-6. Prüfe SSH-Agent...
-  ✅ SSH-Agent läuft und Identitäten sind geladen.
-
-==============================
-Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!
-```
-
-> **Nützlich?** in der ROOT-`package.json` wird `shibuya:check` zusammen mit dem `sensei`-Skript ausgeführt. Der Sensei (nicht Sensai, das bedeutet "Deodorant) hilft, die Prinzipien des [Agilen Manifests](https://agilemanifesto.org/iso/de/principles.html) in Erinnerung zu behalten.
-
-### WSL / Linux Subsystem für Win
+## WSL / Linux Subsystem für Windows
 
 > Allen Windowsnutzern wird empfohlen über WSL im Ubuntu-Subsystem zu arbeiten. Auch wenn das Terminal vielleicht anfangs etwas gewöhnungsbedürftig ist, so ist das Arbeiten nach etwas Übung wesentlich angenehmer und vor Allem schneller.
 
@@ -61,9 +15,19 @@ Folge den offiziellen Anleitungen
 
 Empfohlen wird die **LTS-Version Ubuntu**.
 
-#### Optionale, aber empfohlene Tools und Umgebungen
+### Empfohlene Tools und Umgebungen
 
 Es ist nicht bekannt, was für Anwendungen produziert werden. Es können auch noch zusätzliche Installationen für Go, Rust, Java, .NET, PHP usw erforderlich werden. Das hängt von den Anwendungen und Paketen im Repo ab. 
+
+Aber das hier wird mindestens gebraucht:
+
+* **Node.js**: Version 24.x oder höher (LTS empfohlen)
+* **pnpm**: Version 10.28.x oder höher (`npm install -g pnpm`)
+* **Git**: Version 2.43 oder höher
+* **git-bug**: Version 0.10.x oder höher
+* **git-crypt**: Version 0.7.x oder höher
+* **Docker & Docker Compose**: Zum Hosten der Infrastruktur (Keycloak, DBs)
+* **NX CLI**: Global empfohlen via `pnpm add -g nx` (alternativ via `npx nx`)
 
 Hier ein paar hilfreiche Tools, die ein vereinfachtes strukturiertes Arbeiten ermöglichen.
 
@@ -83,12 +47,12 @@ export EDITOR="nvim"
 # ...
 ```
 
-Das ist wichtig für:
+Das ist wichtig für MOKUROKU, wenn man die Automatisierung für *retro* und die *verschließbaren notes* verwenden will:
 
 * **Reibungsloser Sync**: Die `pre-push` und `post-merge` Hooks laufen im Hintergrund ohne Unterbrechung durch.
 * **Identität**: `git-bug` kann deine Einträge sofort signieren, ohne dass ein Editor-Popup oder eine Passwort-Prompts den Flow stört.
 
-#### Wezterm als Terminal-Emulator unter Windows.
+### Wezterm als Terminal-Emulator unter Windows.
 
 Zugegeben, wer schonmal die MacOS-Terminals oder mit Linux über die Commandline gearbeitet hat, wird mit den nativen Terminal-Emulatoren von Windows nur wenig anfangen können. Glücklicherweise gibt es mittlerweile mehr Alternativen zu dem omnipräsenten _Putty_.
 
@@ -102,7 +66,7 @@ __ODER__
 
 Der zentrale Ort in einem Ubuntu-Subsystem ist: `\\wsl.localhost\Ubuntu-24.04\home\{YOURNAME}\.config\` im Windows-Explorer. Dort legen wir uns den Ordner `wezterm` an und legen wieder eine leere `.wezterm.lua` rein.
 
-Jetzt der Trick über _Symlinks_:
+Jetzt der Trick über _Symlinks_ (wenn gewünscht):
 
 Wir öffnen eine _Powershell_. Wenn nicht anders konfiguriert, öffnet sich die Shell automatisch im Benutzer-Ordner. Wir löschen die hier liegende `.wezterm.lua`, denn wir wollen, dass die Config aus dem Ubuntu-Subsystem gezogen wird, wo auch die restlichen Konfigurationen liegen werden.
 
@@ -249,6 +213,58 @@ config.mouse_bindings = {
 
 return config
 ```
+
+Bevor du den Distrikt betrittst, stelle sicher, dass folgende Werkzeuge auf deinem Host-System installiert sind:
+
+* **Node.js**: Version 24.x oder höher (LTS empfohlen)
+* **pnpm**: Version 10.28.x oder höher (`npm install -g pnpm`)
+* **Git**: Version 2.43 oder höher
+* **git-bug**: Version 0.10.x oder höher
+* **git-crypt**: Version 0.7.x oder höher
+* **Docker & Docker Compose**: Zum Hosten der Infrastruktur (Keycloak, DBs)
+* **NX CLI**: Global empfohlen via `pnpm add -g nx` (alternativ via `npx nx`)
+
+Nach dem Clone: `pnpm install`:
+
+Nachdem die erforderliche Software und die Abhängigkeiten installiert sind, müssen noch evtl kleinere Einstellungen vorgenommen werden, damit nicht nur die Anwendungsentwicklung, sondern auch das Drumherum reibungslos läuft.
+
+Check der *Umgebung* `pnpm shibuya:check`:
+
+```sh
+🏙️  SHIBUYA - Environment Check
+==============================
+
+1. Prüfe Git-Identität...
+  ✅ Lokal konfiguriert als: Dein Name <dein.name@mailprovider.de>
+
+2. Prüfe erforderliche Software...
+  ✅ 'docker' Docker (docker) gefunden.
+  ✅ 'nx' Monorepo Build Platform, install with 'pnpm add -g nx' (nx) gefunden.
+  ✅ 'git-bug' (Issue Tracking) (git-bug) gefunden.
+
+3. Prüfe optionale Tools (empfohlen)...
+  ✅ 'glow' Glow (Markdown Viewer) (glow) gefunden.
+  ✅ 'tree' Directory and File-structure (Viewer) (tree) gefunden.
+  ✅ 'lazydocker' LazyDocker - Docker GUI  (Terminal Viewer) (lazydocker) gefunden.
+  ✅ 'lazygit' LazyGit - Git GUI (Terminal Viewer) (lazygit) gefunden.
+
+4. Projektspezifische Checks...
+  ✅ Mokuroku-Verzeichnis vorhanden.
+
+5. Git Hooks anmelden...
+  ✅ Git-Hooks sind bereits korrekt auf .githooks/ konfiguriert.
+  ✅ Git-Hooks Pfad wurde erfolgreich auf .githooks/ umgestellt.
+
+6. Prüfe SSH-Agent...
+  ✅ SSH-Agent läuft und Identitäten sind geladen.
+
+==============================
+Check beendet. Viel Erfolg bei der Arbeit an SHIBUYA!
+```
+
+> **Nützlich?** in der ROOT-`package.json` wird `shibuya:check` zusammen mit dem `sensei`-Skript ausgeführt. Der Sensei (nicht Sensai, das bedeutet "Deodorant) hilft, die Prinzipien des [Agilen Manifests](https://agilemanifesto.org/iso/de/principles.html) in Erinnerung zu behalten.
+
+
 
 ### 🛠 Workflow-Booster: SSH-Agent Automatisierung (optional)
 

@@ -16,10 +16,11 @@
     "shibuya:clean:builds": "node ./shibuya/clean-all.mjs --builds",
     "shibuya:clean:dependencies": "node ./shibuya/clean-all.mjs --dependencies",
     "shibuya:clean:infra": "node ./shibuya/clean-all.mjs --infrastructure",
-    "mokuroku:view": "node ./shibuya/sensei.mjs && node ./shibuya/mokuroku-viewer.mjs",
+    "mokuroku:view": "node ./shibuya/sensei.mjs && node ./shibuya/mokuroku.mjs unlock && node ./shibuya/mokuroku-viewer.mjs",
     "mokuroku:retro": "node ./shibuya/mokuroku.mjs retro",
     "mokuroku:notes": "node ./shibuya/mokuroku.mjs notes",
-    "mokuroku:lock": "tar cz -C mokuroku notes | gpg -c -o mokuroku/notes.tar.gpg && rm -rf mokuroku/notes/*.md",
+    "mokuroku:lock": "node ./shibuya/mokuroku.mjs lock",
+    "mokuroku:unlock": "node ./shibuya/mokuroku.mjs unlock",
     "keycloak:export-realms": "nx export-realm kpn-keycloak"
   },
   "keywords": [

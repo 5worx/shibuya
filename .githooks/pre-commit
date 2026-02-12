@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# SHIBUYA: Verhindern, dass Klartext-Notizen committet werden
+if [ -d "mokuroku/notes" ]; then
+    echo -e "\x1b[31m🛑 SHIBUYA-Bushido-Veto:\x1b[0m"
+    echo "Dein Tresor ist noch offen (mokuroku/notes existiert)."
+    echo "Bitte führe 'pnpm mokuroku:lock' aus, bevor du committest."
+    exit 1
+fi
+
+exit 0

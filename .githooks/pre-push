@@ -1,6 +1,19 @@
 #!/bin/bash
 
-# Prüfen, ob git-bug installiert ist
+# 1. SHIBUYA MOKUROKU: Tresor-Check
+# Prüfen, ob der notes-Ordner existiert (Klartext vorhanden)
+if [ -d "mokuroku/notes" ]; then
+    echo "🔒 SHIBUYA: Unverschlüsselte Notizen gefunden. Versiegle Tresor..."
+    pnpm mokuroku:lock
+
+    # Da lock die .vault Datei ändert, müssen wir diese Änderungen
+    # eigentlich committen. Im pre-push ist das schwierig.
+    # Empfehlung: Abbruch, damit der User den Vault-Commit bewusst machen kann.
+    echo "⚠️  Notizen wurden versiegelt. Bitte 'notes.vault' committen und erneut pushen."
+    exit 1
+fi
+
+# 2. SHIBUYA git-bug Synchronisation
 if command -v git-bug >/dev/null 2>&1; then
     echo "🐞 SHIBUYA: Pushe Bugs zu origin..."
     git-bug push origin

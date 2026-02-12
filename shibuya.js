@@ -4,7 +4,7 @@ import path from "path";
 import yaml from "js-yaml";
 
 const args = process.argv.slice(2);
-const mode = args[0] || "dev"; // 'start', 'dev', 'stop', 'forge', 'melt', 'install', 'migrate'
+const mode = args[0] || "dev"; // e.g. 'start', 'dev', 'stop', 'forge', 'melt', 'install', 'migrate'
 
 // --- NEU: Laden der aktiven Apps aus der Workspace-Datei ---
 const workspacePath = path.join(process.cwd(), "shibuya.workspaces.yaml");

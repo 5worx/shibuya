@@ -1,22 +1,24 @@
 # 🌊 SUIDO (水道) - Die Port-Architektur
 
-**SUIDO** (Japanisch für *Wasserleitung* oder *Kanalisation*) ist das deterministische Port-Leitsystem für das **SHIBUYA**-Entwicklungs-Framework. 
+**SUIDO** (Japanisch für *Wasserleitung* oder *Kanalisation*) ist das deterministische Port-Leitsystem für das **SHIBUYA**-Entwicklungs-System. 
 
-In einer komplexen Monorepo-Umgebung ist die manuelle Vergabe von Ports oft chaotisch. SUIDO löst dies durch eine mathematische Matrix, die jedem Dienst einen festen, vorhersehbaren Pfad im Netzwerkstack zuweist.
+In einer komplexen Umgebung ist die manuelle Vergabe von Ports oft chaotisch. SUIDO löst dies durch eine mathematische Matrix, die jedem Dienst einen festen, vorhersehbaren Pfad im Netzwerkstack zuweist. Dieser repäsentiert den **SOLL-Zustand** des Projekts.
+
+> Es gäbe natürlich die Möglichkeit für jeden Anwendungstyp ein dynamische Portvergabe zu schreiben. Aber das kann sich schnell in eine weitere Blackbox verwandeln. Einfacher ist eine Vorgabe und dann die Apps darauf zu konfigurieren. Damit tragen wir auch der Philosophie Rechnung, dass die Anwendungsentwicklung und -konfiguration nicht auf magische Art und Weise stattfindet.
+
+Aufrufen der Ports mit `pnpm suido:urls`
 
 ---
 
-## 🧭 Das 52YZZ-Schema
+## 🧭 Das XXYZZ-Schema
 
 Jeder Port im System folgt einer strengen 5-stelligen Logik, um Kollisionen zu vermeiden und die Zugehörigkeit eines Dienstes auf den ersten Blick erkennbar zu machen.
 
-### Formel: `[52][Y][ZZ]`
+### Formel: `[XX][Y][ZZ]`
 
-1.  **52 (Präfix):** Die Kennung für das SHIBUYA-Monorepo.
+1.  **XX (Präfix):** Die Kennung für das SHIBUYA-Monorepo. Definiert in der `suido.config.yaml` - default "52"
 2.  **Y (Distrikt):** Die logische Kategorie des Dienstes (siehe Distrikt-Map).
 3.  **ZZ (ID):** Die eindeutige Kennung (01-99) innerhalb eines Distrikts.
-
-
 
 ---
 
@@ -36,9 +38,9 @@ Jeder Port im System folgt einer strengen 5-stelligen Logik, um Kollisionen zu v
 
 Das SUIDO-Prinzip setzt auf **bewusstes Engineering**. Ports werden nicht magisch zugewiesen, sondern aktiv definiert:
 
-1.  **ID reservieren:** Prüfe die `shibuya/suido/suido.config.yaml`, welche IDs in deinem Distrikt noch frei sind.
+1.  **ID reservieren:** Prüfe die `shibuya/suido/suido.config.yaml`, welche IDs in deinem Distrikt noch frei bzw schon belegt sind.
 2.  **Eintragen:** Füge deine neue App mit der nächsten freien ID hinzu.
-3.  **Implementieren:** Übernimm diesen Port manuell in deine Docker-Konfiguration, Umgebungsvariablen oder `project.json`.
+3.  **Implementieren:** Übernimm diesen Port manuell in deine App- oder Docker-Konfiguration, Umgebungsvariablen oder `project.json`.
 
 > **Warum manuell?** Die bewusste Auseinandersetzung mit dem Port-Layout fördert das Verständnis für die Systemarchitektur und verhindert "Blind-Deployments". *Wer das Rohr legt, muss wissen, wohin es führt.*
 
