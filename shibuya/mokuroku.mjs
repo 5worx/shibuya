@@ -57,48 +57,67 @@ const decrypt = (buffer, key) => {
   return Buffer.concat([decipher.update(enc), decipher.final()]);
 };
 
-// 4. Tresor-Management (Bündeln der Notizen)
+// 4. Tresor-Management (Bewahrt die Ordnerstruktur)
 const unlockNotes = () => {
-  const notesDir = path.join(MOKUROKU_DIR, "notes");
-  if (fs.existsSync(VAULT_FILE) && !fs.existsSync(notesDir)) {
+  if (fs.existsSync(VAULT_FILE)) {
     console.log("\x1b[34m🔓 Öffne Tresor...\x1b[0m");
     const key = getVaultKey();
     const decrypted = decrypt(fs.readFileSync(VAULT_FILE), key);
     const files = JSON.parse(decrypted.toString());
-    fs.mkdirSync(notesDir, { recursive: true });
-    Object.entries(files).forEach(([name, content]) => {
-      fs.writeFileSync(path.join(notesDir, name), content);
+
+    Object.entries(files).forEach(([relPath, content]) => {
+      const fullPath = path.join(MOKUROKU_DIR, relPath);
+      fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+      fs.writeFileSync(fullPath, content);
     });
   }
 };
 
 const lockNotes = () => {
-  const notesDir = path.join(MOKUROKU_DIR, "notes");
-  if (fs.existsSync(notesDir)) {
-    console.log("\x1b[34m🔒 Versiegle Notizen...\x1b[0m");
+  const files = {};
+  const categories = ["notes", "retro"];
+  let foundAny = false;
+
+  categories.forEach((cat) => {
+    const catDir = path.join(MOKUROKU_DIR, cat);
+    if (fs.existsSync(catDir)) {
+      foundAny = true;
+      fs.readdirSync(catDir).forEach((f) => {
+        if (f.endsWith(".md")) {
+          // Speichere relativen Pfad (z.B. "retro/file.md") als Key
+          files[path.join(cat, f)] = fs.readFileSync(
+            path.join(catDir, f),
+            "utf8",
+          );
+        }
+      });
+    }
+  });
+
+  if (foundAny) {
+    console.log("\x1b[34m🔒 Versiegle alle Kategorien...\x1b[0m");
     const key = getVaultKey();
-    const files = {};
-    fs.readdirSync(notesDir).forEach((f) => {
-      if (f.endsWith(".md"))
-        files[f] = fs.readFileSync(path.join(notesDir, f), "utf8");
-    });
     const vaultData = encrypt(Buffer.from(JSON.stringify(files)), key);
     fs.writeFileSync(VAULT_FILE, vaultData);
-    fs.rmSync(notesDir, { recursive: true, force: true });
-    console.log("\x1b[32m✅ Notizen sicher im Vault verstaut.\x1b[0m");
+
+    categories.forEach((cat) => {
+      const catDir = path.join(MOKUROKU_DIR, cat);
+      if (fs.existsSync(catDir))
+        fs.rmSync(catDir, { recursive: true, force: true });
+    });
+    console.log("\x1b[32m✅ Tresor aktualisiert (Struktur gewahrt).\x1b[0m");
   }
 };
 
-// 5. User-Interface & Template Entry Logic (RESTAURIERT)
+// 5. User-Interface & Korrekte Ablage
 const createEntry = (type) => {
   const author = execSync("git config --local user.name").toString().trim();
   const email = execSync("git config --local user.email").toString().trim();
-  const authorString = `${author} <${email}>`;
 
-  const targetDir = path.join(MOKUROKU_DIR, "notes"); // Wir speichern alles im notes-Vault-Ordner
+  // Zielverzeichnis ist nun wieder typspezifisch (retro oder notes)
+  const targetDir = path.join(MOKUROKU_DIR, type);
   if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-  // Argument Parsing für -t
   const args = process.argv.slice(3);
   const tIndex = args.findIndex((arg) => arg === "-t");
   const title =
@@ -109,19 +128,20 @@ const createEntry = (type) => {
   const fileName = `${timestamp}-${title.toLowerCase().replace(/\s+/g, "-")}.md`;
   const fullPath = path.join(targetDir, fileName);
 
-  // Template Logik
   const templatePath = path.join(TEMPLATE_DIR, `${type}.md`);
   let content = fs.existsSync(templatePath)
     ? fs.readFileSync(templatePath, "utf8")
-    : `# ${type.toUpperCase()}: {{TITLE}}\n\nAutor: {{AUTHOR}}\nDatum: {{DATE}}`;
+    : `# ${type.toUpperCase()}: {{TITLE}}\n\nAutor: {{AUTHOR}}`;
 
   content = content
     .replaceAll("{{TITLE}}", title)
     .replaceAll("{{DATE}}", now.toLocaleDateString("de-DE"))
-    .replaceAll("{{AUTHOR}}", authorString);
+    .replaceAll("{{AUTHOR}}", `${author} <${email}>`);
 
   fs.writeFileSync(fullPath, content);
-  console.log(`\x1b[32m🚀 ${type.toUpperCase()} erstellt: ${fileName}\x1b[0m`);
+  console.log(
+    `\x1b[32m🚀 ${type.toUpperCase()} erstellt in ${type}/: ${fileName}\x1b[0m`,
+  );
   execSync(`${process.env.EDITOR || "vi"} ${fullPath}`, { stdio: "inherit" });
 };
 
