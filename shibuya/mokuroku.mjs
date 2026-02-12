@@ -65,12 +65,25 @@ switch (command) {
     execSync("node shibuya/mokuroku-viewer.mjs", { stdio: "inherit" });
     break;
   case "unlock":
-    // Hier nutzen wir nun wieder das echte git-crypt
-    // Wir holen den Key-Pfad aus der Config (angenommen er liegt in ../.shibuya-vault/)
-    console.log("\x1b[34m🔓 Entriegele Repo via git-crypt...\x1b[0m");
-    execSync(`git-crypt unlock ../.shibuya-vault/project-kpn.key`, {
-      stdio: "inherit",
-    });
+    const keyName = config.project?.security?.vault_key || "project.key";
+    const keyPath = path.join(ROOT_DIR, "..", ".shibuya-vault", keyName);
+
+    if (!fs.existsSync(keyPath)) {
+      console.error(`\x1b[31m❌ Key nicht gefunden in: ${keyPath}\x1b[0m`);
+      process.exit(1);
+    }
+
+    console.log(
+      `\x1b[34m🔓 SHIBUYA: Entriegele Tresor mit ${keyName}...\x1b[0m`,
+    );
+    try {
+      execSync(`git-crypt unlock ${keyPath}`);
+      console.log("\x1b[32m✅ Tresor ist offen. Viel Erfolg, Kuroko.\x1b[0m");
+    } catch (e) {
+      console.error(
+        "\x1b[31m❌ Unlock fehlgeschlagen. Ist git-crypt installiert?\x1b[0m",
+      );
+    }
     break;
   default:
     console.log(

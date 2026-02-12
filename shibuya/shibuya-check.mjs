@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const MOKUROKU_DIR = path.join(__dirname, "..", "mokuroku");
 const REQUIREMENTS_PATH = path.join(
   __dirname,
   "../requirements.workspaces.yaml",
@@ -107,18 +108,44 @@ try {
   );
 }
 
-// 1.1 git-crypt
+// 1.1 git-crypt (Verbesserte Version)
 log("\n1.1 Prüfe Verschlüsselung (git-crypt)...");
 if (checkCommand("git-crypt", "git-crypt")) {
-  try {
-    const status = execSync(
-      "git-crypt status mokuroku/notes 2>/dev/null",
-    ).toString();
-    if (status.includes("encrypted")) {
-      log("  ✅ git-crypt ist aktiv.", "success");
+  const notesPath = path.join(MOKUROKU_DIR, "notes");
+
+  if (fs.existsSync(notesPath)) {
+    const files = fs.readdirSync(notesPath).filter((f) => f.endsWith(".md"));
+
+    if (files.length > 0) {
+      try {
+        // Wir prüfen den Status der ersten gefundenen Datei
+        const firstFile = path.join("mokuroku/notes", files[0]);
+        const status = execSync(
+          `git-crypt status "${firstFile}" 2>/dev/null`,
+        ).toString();
+
+        if (status.includes("encrypted")) {
+          log(`  ✅ git-crypt überwacht '${files[0]}'.`, "success");
+        } else {
+          log(
+            `  ⚠️  Datei '${files[0]}' ist noch NICHT verschlüsselt!`,
+            "warn",
+          );
+          log(
+            "      Tipp: Einmal 'git add .' ausführen, damit die .gitattributes greifen.",
+          );
+        }
+      } catch (e) {
+        log("  ⚠️  Fehler beim Abruf des git-crypt Status.", "warn");
+      }
+    } else {
+      log(
+        "  ℹ️  Verzeichnis ist vorhanden, enthält aber keine .md Notizen.",
+        "info",
+      );
     }
-  } catch (e) {
-    log("  ⚠️ git-crypt installiert, aber Repo evtl. locked.", "warn");
+  } else {
+    log("  ❌ mokuroku/notes Verzeichnis fehlt!", "error");
   }
 }
 
