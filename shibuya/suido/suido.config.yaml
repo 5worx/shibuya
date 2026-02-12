@@ -23,3 +23,8 @@ STORAGE:
 
 COMM:
   infra-mailpit-smtp: 1
+
+# SHIBUYA intern
+# Nur Anpassen, wenn die Konsequez bekannt ist.
+SHIBUYA:
+  mokuroku: 1

@@ -59,16 +59,25 @@ Das ist zwar ein vollwertiger Bugtracker, aber lässt nur Einordnung über Tags 
 
 Nutzt folgende Tags für die Definition der Priorität:
 
-> Priorität wird immer in Großbuchstaben angegeben.
-
-1. `DRINGEND` - Alles stehen und liegen lassen. Dieser Bug ist _umsatzkritisch_ oder führt zum _Appsterben_. Sofort beheben!
-2. `WICHTIG` - Diese Aufgabe muss als Nächstes angegangen werden und das zügig. Häufig bei Augfgaben, auf deren Fertigstellung andere aufbauen müssen.
-3. `NORMAL` - Eine übliche Aufgabe.
-4. `NICE2HAVE` - Spätere Ausbaustufen, Verbesserung des Handlings, usw usf
+1. `1` = **DRINGEND** - Alles stehen und liegen lassen. Dieser Bug ist _umsatzkritisch_ oder führt zum _Appsterben_. Sofort beheben!
+2. `2` = **WICHTIG** - Diese Aufgabe muss als Nächstes angegangen werden und das zügig. Häufig bei Augfgaben, auf deren Fertigstellung andere aufbauen müssen.
+3. `3` = **NORMAL** - Eine übliche Aufgabe.
+4. `4` = **NICE2HAVE** - Spätere Ausbaustufen, Verbesserung des Handlings, usw usf
 
 ### Art des Eintrags
 
-Es gibt eigentlich nur wenige Aufgabentypen. Es gibt die **`Story`**, die eine komplette Aufgabe für die Implementierung der Anwendungsfeatures beschreibt. Den **`Task`**, der eine Aufgabe in Anwendungen aber auch organisatorischer Natur beinhalten können, wie bspw eine Protoyperstellung oder ein Bereitstellung von Dokumentationen und Beschreibungen. Aber auch _Technische Schulden (TechDepts)_ werden als **Task** geführt. Und natürlich den **`Fix`**, der wohl selbsterklärend ist.
+Es gibt eigentlich nur wenige Aufgabentypen. Es gibt die **`STORY`**, die eine komplette Aufgabe für die Implementierung der Anwendungsfeatures beschreibt. Den **`TASK`**, der eine Aufgabe in Anwendungen aber auch organisatorischer Natur beinhalten können, wie bspw eine Protoyperstellung oder ein Bereitstellung von Dokumentationen und Beschreibungen. Aber auch _Technische Schulden (TechDepts)_ werden als **TASK** geführt. Und natürlich den **`FIX`**, der wohl selbsterklärend ist.
+
+### Bearbeiter/ Prozess
+
+Natürlich müssen wir auch wissen, wer den Task bearbeitet und in welchem Zustand er ist. Auch hier machen wir uns die Label zunutze. Damit wir aber nicht den ganzen Bereich mit Label zumüllen, kombinieren wir den User mit dem Prozess.
+
+Beispiele
+
+- `bunke:🔵` = 🔵 -> new
+- `ssch:🟠` = 🟠 -> in progress
+- `galibaeva:🟢` = 🟢 -> ready_for_review
+- `m.strobelt:` = ⚪ -> done
 
 ### Bereich (Scope) - optional
 
@@ -78,14 +87,3 @@ Dieses System besteht aus vier Bereichen: `apps/`, `packages/`, `infrastructure/
 - `scope:packages`
 - `scope:infra`
 - `scope:shibuya`
-
-### Bearbeiter/ Prozess
-
-Natürlich müssen wir auch wissen, wer den Task bearbeitet und in welchem Zustand er ist. Auch hier machen wir uns die Label zunutze. Damit wir aber nicht den ganzen Bereich mit Label zumüllen, kombinieren wir den User mit dem Prozess.
-
-Beispiele
-
-- `bunke:new`
-- `ssch:in_progress`
-- `galibaeva:ready_for_review`
-- `m.strobelt:done`

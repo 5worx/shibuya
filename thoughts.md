@@ -231,13 +231,17 @@ Während ich am Code arbeite, kann ich jederzeit die Cointainer steuern, Dokumen
 
 SHIBUYA hat nichts Neues. Es ist auch nichts Neues geschaffen worden. Es strukturiert nur die Dinge und gibt ihnen einen Ort und einen Namen.
 
-Was hier geschaffen wurde ist, dass der Anfahrtsweg zur Baustelle asphaltiert, ausgeschildert und beleuchtet wurde. Der Bauplatz selbst bietet Platz für die Fertigung, Verwaltung und Auslieferung, die voneinander abgegrenzt sind. Von dem kein Teil eine Größenbeschränkung hat und somit voll skalierbar ist. Und das ohne Vorgaben und Einschränkungen für beliebige Vorgehensweisen und das unter Ausnutzung von Funktionalitäten, die eh da sind.
+Was hier geschaffen wurde, ist, dass der Anfahrtsweg zur Baustelle asphaltiert, ausgeschildert und beleuchtet wurde. Der Bauplatz selbst bietet Platz für die Fertigung, Verwaltung und Auslieferung, die voneinander zwar abgegrenzt aber nicht verschlossen sind. Von dem kein Teil eine Größenbeschränkung hat und somit voll skalierbar ist. Und das ohne Vorgaben und Einschränkungen für beliebige Vorgehensweisen, TechStacks oder Eingriffe in die Methodiken der eingesetzten Frameworks und das nur unter Ausnutzung von Funktionalitäten, die eh da sind und mit denen man sich in der IT eh auskennen muss.
 
 Um Missverständnisse durch doppeldeutige Bezeichnungen, Namen und Befehle zu verhindern, wurden eigene Namen und Rollen definiert, mit denen man sich hier im Distrikt verständigen kann. Und eine Karte mit Mondrunen entfällt, da alles an einem Ort ist. Und falls man doch eine Karte braucht, befindet sie sich im Katalog.
+
+Es minimiert den OnBoarding-Prozess, erlaubt Arbeitsteilung, Team-Changes und Orientierungspunkte für die, die an vielen Projekten gleichzeitig arbeiten.
 
 Auch wurde Wert auf die Energiewirtschaft gelegt und Wege kurz gehalten. Tools wie `NX` sorgen für performantes Building und *Präzision der Befehle*.
 
 Der Fokus auf die DeveloperExperience und sich selbst dokumentierende Prozesse beschleunigt die Produktion und die Eindeutigkeit der Kommunikation für Transparenz weit über die eigentliche Entwicklungsarbeit hinaus.
+
+Es bietet einen klar kommunizierbaren (in gewissen Grenzen) vorhersagbaren Projektablauf und damit ein Vertriebsargument. Und damit zusätzlich als Säule/Stütze des Link Innovation Leitbikdes fungieren. Die Konsequenz daraus ist: Ein USP!!!
 
 Klingt das gut?
 

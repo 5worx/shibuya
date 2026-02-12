@@ -40,6 +40,7 @@ const CATEGORY_MAP = {
   INFRA: 2, // {MONOREPO_PREFIX}2xx: Admin-Interfaces, CMS
   STORAGE: 3, // {MONOREPO_PREFIX}3xx: Mock Server, Tools
   COMM: 4, // {MONOREPO_PREFIX}4xx: SMTP
+  SHIBUYA: 8, // {MONOREPO_PREFIX}8xx: Shibuya localhost ports (e.g mokuroku)
 };
 
 let APPLICATIONS_CONFIG = {
@@ -48,6 +49,7 @@ let APPLICATIONS_CONFIG = {
   [CATEGORY_MAP.INFRA]: {},
   [CATEGORY_MAP.STORAGE]: {},
   [CATEGORY_MAP.COMM]: {},
+  [CATEGORY_MAP.SHIBUYA]: {},
 };
 
 if (fs.existsSync(CONFIGPATH)) {
@@ -58,6 +60,7 @@ if (fs.existsSync(CONFIGPATH)) {
     [CATEGORY_MAP.INFRA]: rawConfig.INFRA || {},
     [CATEGORY_MAP.STORAGE]: rawConfig.STORAGE || {},
     [CATEGORY_MAP.COMM]: rawConfig.COMM || {},
+    [CATEGORY_MAP.SHIBUYA]: rawConfig.SHIBUYA || {},
   };
 } else {
   console.warn(`⚠️ Keine suido.config.yaml gefunden unter ${CONFIGPATH}`);

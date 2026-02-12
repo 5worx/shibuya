@@ -73,132 +73,55 @@ Im Vergleich zu den Retro-Protokollen können wir Notizen zusätzlich noch versc
 
 > Die Notizen sind nur von denen zu bearbeiten und einsehbar, die auch im Besitz des Schlüssels sind.
 
+Dieses Projekt nutzt `git-crypt`, um sensible Daten in `mokuroku/notes/` zu schützen. Ohne den passenden Schlüssel sind diese Dateien verschlüsselt (binärer Zeichensalat).
 
-```sh
-# Lege eine Verzeichnisebene über dem Repo einen Ordner für den Schlüssel an
-mkdir -p ./../.shibuya-vault
+### Voraussetzungen
 
-# Generiere ein starkes PAsswort und schreibe die Schlüsseldatei
-# Dateiname kann frei gewählt werden
-openssl rand -base64 32 > ../.shibuya-vault/project-kpn.key
+* `git-crypt` ist installiert (prüfbar via `pnpm shibuya:check`).
+* Du hast die Datei `project-kpn.key` von einem Admin erhalten.
 
-# Passe die Dateiberechtigungen an
-chmod 600 ../.shibuya-vault/project-kpn.key
-```
+### Setup
 
+1. Erstelle den Vault-Ordner **außerhalb** des Repos:
+  `mkdir -p ../.shibuya-vault`
 
+2. Lege den erhaltenen Schlüssel `project-kpn.key` in diesen Ordner.
 
+3. Entsperre das Repository:
+   `pnpm mokuroku:unlock`
 
-### Schlüssel generieren (einmalig)
+Sobald das Repo entsperrt ist, kannst du ganz normal mit den Dateien arbeiten. Beim Committen werden sie automatisch wieder verschlüsselt.
 
-Wir generieren einen Schlüssel und legen ihn *vor* das Repository.
+---
 
-```sh
-# Der Schlüsselname ist nicht beliebig.
-# Die SHIBUYA-Skripte suchen den Key eine Verzeichnis-Ebene vor dem Repo nach diesem Namen.
-# Daher muss er auch in der Ebene mit dem Namen abgelegt werden. 
-openssl rand -base64 32 > ./../.shibuya-vault.key
+> TODO: Dieser Teil gehört ins Handbuch, das Informationen und Anleitungen ausserhalb des Repos führt!
 
-# Dateiberechtigung setzen
-chmod 600 ./../.shibuya-vault.key
-```
+## 🛡️ SHIBUYA Security Admin Guide
 
+Anleitung für die Initialisierung und Verwaltung der Verschlüsselung.
 
-Damit GPG ohne Passwort-Abfrage (bzw. nur mit einmaliger Agent-Freigabe) arbeitet, brauchen wir ein Schlüsselpaar:
+### A. Neues Projekt aufsetzen
 
-* **WICHTIG**: Nutze die E-Mail, die du auch in deinem `checkGitSetup()` im Script verwendest.
-* **Passphrase**: Wenn du eine vergibst, merkt sich der `gpg-agent` diese für deine Session.
+1. **Initialisieren:**
+   Führe im neuen Repo aus:
+   git-crypt init
 
-```sh
-# Erstelle einen neuen Schlüssel (Wähle "RSA and RSA" und "4096" Bit)
-gpg --full-generate-key
+2. **Key exportieren:**
+   Speichere den Key sicher außerhalb des Repos:
+   git-crypt export-key ../.shibuya-vault/project-name.key
 
-gpg (GnuPG) 2.4.4; Copyright (C) 2024 g10 Code GmbH
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+3. **Regeln prüfen:**
+   Die `.gitattributes` muss folgende Zeilen enthalten:
+   mokuroku/notes/** filter=git-crypt diff=git-crypt
+   mokuroku/.templates/secret-*.md filter=git-crypt diff=git-crypt
 
-Please select what kind of key you want:
-   (1) RSA and RSA
-   (2) DSA and Elgamal
-   (3) DSA (sign only)
-   (4) RSA (sign only)
-   (9) ECC (sign and encrypt) *default*
-  (10) ECC (sign only)
-  (14) Existing key from card
-Your selection? 1
-RSA keys may be between 1024 and 4096 bits long.
-What keysize do you want? (3072)
-Requested keysize is 3072 bits
-Please specify how long the key should be valid.
-         0 = key does not expire
-      <n>  = key expires in n days
-      <n>w = key expires in n weeks
-      <n>m = key expires in n months
-      <n>y = key expires in n years
-Key is valid for? (0) 0
-Key does not expire at all
-Is this correct? (y/N) y
+### B. Integrität sicherstellen
 
-GnuPG needs to construct a user ID to identify your key.
+Um den Key im `shibuya:check` zu verifizieren, ermittle den SHA-256 Hash:
+shasum -a 256 ../.shibuya-vault/project-name.key
 
-Real name: Sven Schoppe
-Email address: sven.schoppe@link-innovation.de
-Comment:
-You selected this USER-ID:
-    "Sven Schoppe <sven.schoppe@link-innovation.de>"
+Trage diesen Wert in die `shibuya.workspaces.yaml` unter `project.security.vault_fingerprint` ein.
 
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit?
-```
-
-Dann zeigt das Terminal, was es kann.
-
-```sh
-┌──────────────────────────────────────────────────────┐
-│ Please enter the passphrase to                       │
-│ protect your new key                                 │
-│                                                      │
-│ Passphrase: ********________________________________ │
-│                                                      │
-│       <OK>                              <Cancel>     │
-└──────────────────────────────────────────────────────┘
-
-We need to generate a lot of random bytes. It is a good idea to perform
-some other action (type on the keyboard, move the mouse, utilize the
-disks) during the prime generation; this gives the random number
-generator a better chance to gain enough entropy.
-We need to generate a lot of random bytes. It is a good idea to perform
-some other action (type on the keyboard, move the mouse, utilize the
-disks) during the prime generation; this gives the random number
-generator a better chance to gain enough entropy.
-gpg: /home/ssch/.gnupg/trustdb.gpg: trustdb created
-gpg: directory '/home/ssch/.gnupg/openpgp-revocs.d' created
-gpg: revocation certificate stored as '/home/ssch/.gnupg/openpgp-revocs.d/2913656ECB...E1.rev'
-public and secret key created and signed.
-
-pub   rsa3072 2026-02-11 [SC]
-      2913656ECBAA85F2DED8AE40E4F99CD14E98FAE1
-uid                      Sven Schoppe <sven.schoppe@link-innovation.de>
-sub   rsa3072 2026-02-11 [E]
-```
-
-> **WICHTIG** Die Email-Adresse muss mit der aus der git config übereinstimmen!
-
-```sh
-
-# Prüfen
-gpg --list-secret-keys --keyid-format LONG
-
-gpg: checking the trustdb
-gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
-/home/ssch/.gnupg/pubring.kbx
------------------------------
-sec   rsa3072/E4F99CD14E98FAE1 2026-02-11 [SC]
-      2913656ECBAA85F2DED8AE40E4F99CD14E98FAE1
-uid                 [ultimate] Sven Schoppe <sven.schoppe@link-innovation.de>
-ssb   rsa3072/063EDD4A3F05EA7D 2026-02-11 [E]
-```
-
-Hier passiert nichts automatisch. Das heißt, wenn notes angelegt werden müssen, muss erst `unlock` ausgeführt werden, dann kann man arbeiten, dann wieder `lock` und committen.
-
-> Es könnte jemand auf den Gedanken kommen, dass die Notes dann ja keine Git-Historie über ihre Änderungen erhalten. Das stimmt ja auch. Aber das ist kein Nachteil. Denn an diesen Dateien DARF es weder Änderungen noch Löschungen geben. Sollte sich eine Notiz als falsch erweisen, wird das im Text einfch mit bspw "Notiz obsolet!" erwähnt.
+###  C. Schlüsselverteilung
+* Übermittle den Key nur über sichere Kanäle (1Password, verschlüsselter Vault).
+* Der Key darf **niemals** in das Git-Repository selbst eingecheckt werden.
