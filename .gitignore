@@ -12,6 +12,9 @@ build
 res/testserver/localhost.crt
 res/testserver/localhost.key
 
+# SHIBUYA Vault: Klartext niemals tracken
+mokuroku/notes/
+
 *:Zone.Identifier
 
 # the readme doc files of the stencil webcomponents

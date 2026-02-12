@@ -1,18 +1,20 @@
 #!/bin/bash
 
-#!/bin/bash
-
-# SHIBUYA: Automatische Verschlüsselung vor dem Commit
+# SHIBUYA: Sicherheits-Check für Klartext-Notizen
 if [ -d "mokuroku/notes" ]; then
-    echo "🔒 SHIBUYA: Notizen gefunden. Automatische Versiegelung..."
+    echo -e "\x1b[33m🔒 SHIBUYA: Offener Tresor erkannt. Starte Versiegelung...\x1b[0m"
 
-    # 1. Tresor schließen
+    # 1. Den Tresor-Befehl ausführen (erzeugt vault, löscht Klartext)
     node ./shibuya/mokuroku.mjs lock
 
-    # 2. Die neue Vault-Datei zum Commit hinzufügen
+    # 2. Die neue Vault-Datei automatisch stagen
     git add mokuroku/notes.vault
 
-    echo "✅ Tresor wurde aktualisiert und zum Commit hinzugefügt."
+    # 3. Den aktuellen Commit-Versuch abbrechen
+    echo -e "\x1b[32m✅ Tresor wurde versiegelt und 'notes.vault' gestaged.\x1b[0m"
+    echo -e "\x1b[31m✋ Commit abgebrochen, um Konsistenz zu wahren.\x1b[0m"
+    echo -e "Bitte führe deinen Commit-Befehl jetzt erneut aus (Pfeil-oben + Enter)."
+    exit 1
 fi
 
 exit 0
