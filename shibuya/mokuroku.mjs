@@ -58,63 +58,50 @@ const decrypt = (buffer, key) => {
 };
 
 // 4. Tresor-Management (Bewahrt die Ordnerstruktur)
+// 4. Tresor-Management (NUR für notes)
 const unlockNotes = () => {
-  if (fs.existsSync(VAULT_FILE)) {
-    console.log("\x1b[34m🔓 Öffne Tresor...\x1b[0m");
+  const notesDir = path.join(MOKUROKU_DIR, "notes");
+  if (fs.existsSync(VAULT_FILE) && !fs.existsSync(notesDir)) {
+    console.log("\x1b[34m🔓 Öffne Notiz-Tresor...\x1b[0m");
     const key = getVaultKey();
     const decrypted = decrypt(fs.readFileSync(VAULT_FILE), key);
     const files = JSON.parse(decrypted.toString());
 
-    Object.entries(files).forEach(([relPath, content]) => {
-      const fullPath = path.join(MOKUROKU_DIR, relPath);
-      fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-      fs.writeFileSync(fullPath, content);
+    fs.mkdirSync(notesDir, { recursive: true });
+    Object.entries(files).forEach(([name, content]) => {
+      fs.writeFileSync(path.join(notesDir, name), content);
     });
   }
 };
 
 const lockNotes = () => {
-  const files = {};
-  const categories = ["notes", "retro"];
-  let foundAny = false;
+  const notesDir = path.join(MOKUROKU_DIR, "notes");
+  if (fs.existsSync(notesDir)) {
+    const files = {};
+    const allFiles = fs.readdirSync(notesDir).filter((f) => f.endsWith(".md"));
 
-  categories.forEach((cat) => {
-    const catDir = path.join(MOKUROKU_DIR, cat);
-    if (fs.existsSync(catDir)) {
-      foundAny = true;
-      fs.readdirSync(catDir).forEach((f) => {
-        if (f.endsWith(".md")) {
-          // Speichere relativen Pfad (z.B. "retro/file.md") als Key
-          files[path.join(cat, f)] = fs.readFileSync(
-            path.join(catDir, f),
-            "utf8",
-          );
-        }
-      });
-    }
-  });
+    if (allFiles.length === 0) return;
 
-  if (foundAny) {
-    console.log("\x1b[34m🔒 Versiegle alle Kategorien...\x1b[0m");
+    console.log("\x1b[34m🔒 Versiegle Notizen...\x1b[0m");
     const key = getVaultKey();
+    allFiles.forEach((f) => {
+      files[f] = fs.readFileSync(path.join(notesDir, f), "utf8");
+    });
+
     const vaultData = encrypt(Buffer.from(JSON.stringify(files)), key);
     fs.writeFileSync(VAULT_FILE, vaultData);
 
-    categories.forEach((cat) => {
-      const catDir = path.join(MOKUROKU_DIR, cat);
-      if (fs.existsSync(catDir))
-        fs.rmSync(catDir, { recursive: true, force: true });
-    });
-    console.log("\x1b[32m✅ Tresor aktualisiert (Struktur gewahrt).\x1b[0m");
+    // WICHTIG: Nach dem Lock löschen wir den Klartext
+    fs.rmSync(notesDir, { recursive: true, force: true });
+    console.log("\x1b[32m✅ Notizen im Vault gesichert.\x1b[0m");
   }
 };
 
-// 5. User-Interface & Korrekte Ablage
+// 5. User-Interface
 const createEntry = (type) => {
-  const author = execSync("git config --local user.name").toString().trim();
-  const email = execSync("git config --local user.email").toString().trim();
+  // Wenn es eine Note ist, erst Tresor öffnen (falls zu)
+  if (type === "notes") unlockNotes();
 
-  // Zielverzeichnis ist nun wieder typspezifisch (retro oder notes)
   const targetDir = path.join(MOKUROKU_DIR, type);
   if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
@@ -131,26 +118,28 @@ const createEntry = (type) => {
   const templatePath = path.join(TEMPLATE_DIR, `${type}.md`);
   let content = fs.existsSync(templatePath)
     ? fs.readFileSync(templatePath, "utf8")
-    : `# ${type.toUpperCase()}: {{TITLE}}\n\nAutor: {{AUTHOR}}`;
+    : `# ${type.toUpperCase()}: {{TITLE}}`;
 
   content = content
     .replaceAll("{{TITLE}}", title)
     .replaceAll("{{DATE}}", now.toLocaleDateString("de-DE"))
-    .replaceAll("{{AUTHOR}}", `${author} <${email}>`);
+    .replaceAll(
+      "{{AUTHOR}}",
+      execSync("git config --local user.name").toString().trim(),
+    );
 
   fs.writeFileSync(fullPath, content);
-  console.log(
-    `\x1b[32m🚀 ${type.toUpperCase()} erstellt in ${type}/: ${fileName}\x1b[0m`,
-  );
+  console.log(`\x1b[32m🚀 ${type.toUpperCase()} erstellt: ${fileName}\x1b[0m`);
   execSync(`${process.env.EDITOR || "vi"} ${fullPath}`, { stdio: "inherit" });
 };
 
 // 6. Router
 switch (command) {
   case "retro":
+    createEntry("retro");
+    break; // Retros sind immer "da"
   case "notes":
-    unlockNotes();
-    createEntry(command);
+    createEntry("notes");
     break;
   case "lock":
     lockNotes();
@@ -162,7 +151,9 @@ switch (command) {
     execSync("node shibuya/mokuroku-viewer.mjs", { stdio: "inherit" });
     break;
   default:
+    console.log("Nutze: pnpm mokuroku:[retro|notes] -t 'Titel'");
     console.log(
-      "Nutze: pnpm mokuroku [retro|notes|lock|unlock|view] -t 'Titel'",
+      "Nutze: pnpm mokuroku:[lock|unlock|] zum Ver- oder Entschlüsseln der Notes",
     );
+    console.log("Nutze: pnpm mokuroku:view für den WebView");
 }

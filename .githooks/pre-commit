@@ -1,11 +1,18 @@
 #!/bin/bash
 
-# SHIBUYA: Verhindern, dass Klartext-Notizen committet werden
+#!/bin/bash
+
+# SHIBUYA: Automatische Verschlüsselung vor dem Commit
 if [ -d "mokuroku/notes" ]; then
-    echo -e "\x1b[31m🛑 SHIBUYA-Bushido-Veto:\x1b[0m"
-    echo "Dein Tresor ist noch offen (mokuroku/notes existiert)."
-    echo "Bitte führe 'pnpm mokuroku:lock' aus, bevor du committest."
-    exit 1
+    echo "🔒 SHIBUYA: Notizen gefunden. Automatische Versiegelung..."
+
+    # 1. Tresor schließen
+    node ./shibuya/mokuroku.mjs lock
+
+    # 2. Die neue Vault-Datei zum Commit hinzufügen
+    git add mokuroku/notes.vault
+
+    echo "✅ Tresor wurde aktualisiert und zum Commit hinzugefügt."
 fi
 
 exit 0
