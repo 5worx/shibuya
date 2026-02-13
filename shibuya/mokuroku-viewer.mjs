@@ -4,6 +4,7 @@ import { readFile, readdir, stat } from "fs/promises";
 import { join, relative, sep } from "path";
 import { marked } from "marked";
 import open from "open";
+import { BacklogController } from "./mokuroku-backlog-controller.mjs";
 
 const app = express();
 const ROOT_DIR = process.cwd();
@@ -87,6 +88,11 @@ function renderNavigation(files, activeFile) {
   let html = "<ul>";
   let lastFolder = "";
 
+  /** Backlog Button */
+  html += `<li class="nav-item">
+        <a href="/backlog" class="nav-link ${activeFile === "backlog" ? "active" : ""}" style="color: var(--cyan)">🚀 BACKLOG</a>
+      </li>`;
+
   files.forEach((file) => {
     const parts = file.split(sep);
     const fileName = parts.pop();
@@ -106,6 +112,7 @@ function renderNavigation(files, activeFile) {
   return html + "</ul>";
 }
 
+app.use(express.json());
 app.use("/mokuroku", express.static(path.join(ROOT_DIR, "mokuroku")));
 
 app.get("/", async (req, res) => {
@@ -128,6 +135,94 @@ app.get("/view/:file", async (req, res) => {
   } catch (e) {
     res.status(404).send("Datei nicht gefunden.");
   }
+});
+
+// Die Backlog-Route
+app.get("/backlog", async (req, res) => {
+  const bugs = BacklogController.getBugs();
+  const files = await getAllFiles(MOKUROKU_DIR);
+
+  const sprintNames = ["Backlog", "Sprint 1", "Sprint 2", "Sprint 3"];
+
+  const backlogHtml = `
+    <h1 style="display: flex; justify-content: space-between;">
+        <span>🚀 Agile Backlog</span>
+        <small style="font-size: 0.5em; color: var(--folder)">SUIDO Port: ${PORT}</small>
+    </h1>
+
+    <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+        ${sprintNames
+          .map(
+            (name, index) => `
+            <div class="sprint-column"
+                 ondrop="drop(event, ${index})"
+                 ondragover="allowDrop(event)"
+                 style="background: var(--sidebar); border: 1px solid #414868; border-radius: 8px; flex: 1; min-height: 600px; display: flex; flex-direction: column;">
+
+                <h3 style="padding: 10px; margin: 0; background: #2f3549; border-radius: 8px 8px 0 0; font-size: 0.9rem; text-align: center;">
+                    ${name}
+                </h3>
+
+                <div class="cards-container" style="padding: 10px; flex: 1;">
+                    ${bugs
+                      .filter((b) => b.sprint === index)
+                      .map(
+                        (b) => `
+                        <div id="${b.id}"
+                             draggable="true"
+                             ondragstart="drag(event)"
+                             style="background: var(--bg); border: 1px solid #414868; padding: 12px; margin-bottom: 10px; border-radius: 4px; cursor: grab; font-size: 0.85rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            <div style="color: var(--cyan); font-family: monospace; font-weight: bold; margin-bottom: 5px;">#${b.id}</div>
+                            <div style="color: var(--text)">${b.title}</div>
+                        </div>
+                    `,
+                      )
+                      .join("")}
+                </div>
+            </div>
+        `,
+          )
+          .join("")}
+    </div>
+
+    <script>
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+        async function drop(ev, sprintNum) {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text");
+
+            // UI Feedback
+            const card = document.getElementById(id);
+            card.style.opacity = "0.5";
+            card.style.border = "1px solid var(--folder)";
+
+            const response = await fetch('/api/backlog/move', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id, sprint: sprintNum })
+            });
+
+            if (response.ok) {
+                // Seite neu laden um git-bug Zustand zu spiegeln
+                window.location.reload();
+            } else {
+                alert("Fehler: Eventuell ist die git-bug WebUI offen? (Lock)");
+                card.style.opacity = "1";
+            }
+        }
+    </script>
+  `;
+
+  res.send(layout(backlogHtml, files, "backlog"));
+});
+
+// API Endpunkt zum Verschieben
+app.post("/api/backlog/move", (req, res) => {
+  const { id, sprint } = req.body;
+  BacklogController.setSprint(id, sprint);
+  res.json({ success: true });
 });
 
 app.listen(PORT, () => {

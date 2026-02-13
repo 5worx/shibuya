@@ -1,6 +1,6 @@
 # MOKUROKU HARDBOILED
 
-Mokuroku bietet nicht nur die statische Dokumentation über Markdown-Dateien, sondern bietet darüberhinaus noch eine automatisierbare Erfassung der *Retrospektiv*-Meetings und die Erfassung **verschlüsseler Notizen**.
+Mokuroku bietet nicht nur die statische Dokumentation, sondern bietet darüberhinaus noch eine automatisierbare Erfassung der *Retrospektiv*-Meetings und die Erfassung **verschlüsseler Notizen**.
 
 Das ist was für hartgesottene Terminal-Benutzer und die, die es werden wollen. Und es lohnt sich!
 
@@ -11,7 +11,7 @@ Erforderliche Grundkenntnisse:
 - Editieren einer Datei mit [Vim](https://www.vim.org/download.php) oder [NeoVim](https://neovim.io/)
 - Handhabung des Verschlüsselungskeys beim Anlegen von Notizen. (Sonderfall! Benutzung nur, wenn volle Teamakzeptanz besteht)
 
-> Um der Wahrheit die Ehre zu geben, ist **das Anlegen verschlüsselter Notizen** das einzige Feature, das ich persönlich ziemlich gut finde und es deshalb mit drin gelassen habe. Wohl wissend, dass es nur selten angewendet werden wird, weil es dann doch etwas mehr Handling voraussetzt.
+> Um der Wahrheit die Ehre zu geben, ist **das Anlegen verschlüsselter Notizen** das einzige Feature, das ich persönlich ziemlich gut finde und es deshalb mit drin gelassen habe. Wohl wissend, dass es nur selten angewendet werden wird, weil es dann doch etwas mehr Verständnis für den Prozess voraussetzt.
 
 Der Ablauf ist für die Retrodokumentation und die verschlüsselten Notizen gleich. Nur die Verschlüsselung erfordert extra Schritte. Die kommen später.
 
@@ -65,11 +65,11 @@ Nach der Ausführung wird eine MD-Datei in den `retro`-Ordner gelegt. Der Datein
 
 Der Titel wurde ja beim Aufruf mitgegeben und die Platzhalter werden aus den Umgebungsvariablen von Git befüllt.
 
-Korrigieren kann man jederzeit. Löschen geht auch. Aber da es immer eingecheckt werden muss, sehen wir ja, was mit der Datei über die Zeit passiert ist. Und schon brauche ich keinerlei Zusatzabsprachen und laufe auch nicht Gefahr, das jemand heimlich einen Beschluss ändert. Ein Gefahr, die bei Fremdsystemen durchaus besteht.
+Korrigieren kann man jederzeit. Löschen geht auch. Aber da es immer eingecheckt werden muss, sehen wir ja, was mit der Datei über die Zeit passiert ist. Und schon brauche ich keinerlei Zusatzabsprachen und laufe auch nicht Gefahr, das jemand heimlich einen Beschluss ändert. Eine Gefahr, die bei Fremdsystemen durchaus besteht.
 
 ## mokuroku:notes
 
-Im Vergleich zu den Retro-Protokollen können wir Notizen zusätzlich noch verschlüsseln. Dann sind sie eine Binärdatei, die nicht lesbar ist, wenn man in bspw GitLab, Bitbucket oder Github die Datei anklickt. Für diejenigen, die den Schlüssel nicht besitzen, wird auch nichts entschlüsselt.
+Im Vergleich zu den Retro-Protokollen werden *Notizen* zusätzlich noch verschlüsselt. Dann sind sie eine Binärdatei, die nicht lesbar ist, wenn man in bspw GitLab, Bitbucket oder Github die Datei anklickt. Für diejenigen, die den Schlüssel nicht besitzen, wird auch nichts entschlüsselt.
 
 > Die Notizen sind nur von denen zu bearbeiten und einsehbar, die auch im Besitz des Schlüssels sind.
 
@@ -78,7 +78,7 @@ Dieses Projekt nutzt `git-crypt`, um sensible Daten in `mokuroku/notes/` zu sch�
 ### Voraussetzungen
 
 * `git-crypt` ist installiert (prüfbar via `pnpm shibuya:check`).
-* Du hast die Datei `project-kpn.key` von einem Admin erhalten.
+* Du hast die Datei (bspw `project-kpn.key`) von einem Admin/SHOGUN erhalten.
 
 ### Setup
 
@@ -104,24 +104,17 @@ Anleitung für die Initialisierung und Verwaltung der Verschlüsselung.
 
 1. **Initialisieren:**
    Führe im neuen Repo aus:
-   git-crypt init
+   `git-crypt init`
 
 2. **Key exportieren:**
    Speichere den Key sicher außerhalb des Repos:
-   git-crypt export-key ../.shibuya-vault/project-name.key
+   `git-crypt export-key ../.shibuya-vault/project-name.key`
 
 3. **Regeln prüfen:**
    Die `.gitattributes` muss folgende Zeilen enthalten:
-   mokuroku/notes/** filter=git-crypt diff=git-crypt
-   mokuroku/.templates/secret-*.md filter=git-crypt diff=git-crypt
+   `mokuroku/notes/** filter=git-crypt diff=git-crypt`
+   `mokuroku/.templates/secret-*.md filter=git-crypt diff=git-crypt`
 
-### B. Integrität sicherstellen
-
-Um den Key im `shibuya:check` zu verifizieren, ermittle den SHA-256 Hash:
-shasum -a 256 ../.shibuya-vault/project-name.key
-
-Trage diesen Wert in die `shibuya.workspaces.yaml` unter `project.security.vault_fingerprint` ein.
-
-###  C. Schlüsselverteilung
+###  B. Schlüsselverteilung
 * Übermittle den Key nur über sichere Kanäle (1Password, verschlüsselter Vault).
 * Der Key darf **niemals** in das Git-Repository selbst eingecheckt werden.

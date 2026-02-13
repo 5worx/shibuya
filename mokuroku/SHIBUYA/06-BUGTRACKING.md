@@ -87,3 +87,26 @@ Dieses System besteht aus vier Bereichen: `apps/`, `packages/`, `infrastructure/
 - `scope:packages`
 - `scope:infra`
 - `scope:shibuya`
+
+## Ein Issue erfassen
+
+Das Dumme ist ja, dass es *git-bug* heisst. Wir erfassen allerdings zusätzlich auch TASKS und STORIES.
+
+Wenn man ein Issue erfassen will, geht das auf verschiedene Weise.
+
+### git-bug webui
+
+Man kann die WebUI über das Terminal mit `git bug webui` starten.
+
+> Vielleicht etwas gewöhnungsbedürftig, wenn man andere wesentlich komfortablerer Plattformen kennt. Da will ich niemanden etwas vormachen. Die Einfachheit und Effektivität sieht man erst, wenn man damit arbeitet.
+
+Man erfasst hier etwas im Stop-Motion-Rythmus:
+
+- Klicke auf den Button <kbd>NEW BUG<kbd>
+- Erfasse in der nächsten Maske *nur* den Titel und speichere mit <kbd>SUBMIT NEW BUG</kbd>.
+- Setze in der nächsten Maske die *Labels* (s.  unten)
+-
+
+#### *Labels* setzen
+
+Die Liste der Labels setzt sich aus denn zusammen, die schon einmal verwendet wurden.

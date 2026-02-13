@@ -5,8 +5,8 @@ import yaml from "js-yaml";
 
 // 1. Parameter prüfen
 const [type, title] = [process.argv[2], process.argv[3]];
-if (!["feat", "task", "fix"].includes(type) || !title) {
-  console.error("❌ pnpm bug:add [feat|task|fix] 'Titel'");
+if (!["STORY", "TASK", "FIX"].includes(type) || !title) {
+  console.error("❌ pnpm bug:add [STORY|TASK|FIX] 'Titel'");
   process.exit(1);
 }
 
